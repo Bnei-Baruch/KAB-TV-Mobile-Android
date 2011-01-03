@@ -112,6 +112,7 @@ enum media_player_states {
     MEDIA_PLAYER_PLAYBACK_COMPLETE  = 1 << 8
 };
 
+
 //mms class for connections
 class MMSConnection
 {

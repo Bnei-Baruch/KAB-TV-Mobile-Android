@@ -3,9 +3,20 @@
 
 #define TAG "FFMpegAudioDecoder"
 
+
+#define AV_SYNC_THRESHOLD 0.01
+#define AV_NOSYNC_THRESHOLD 10.0
+#define AUDIO_DIFF_AVG_NB 20
+#define SDL_AUDIO_BUFFER_SIZE 1024
+
+#define SAMPLE_CORRECTION_PERCENT_MAX 10
+
+
 DecoderAudio::DecoderAudio(AVStream* stream) : IDecoder(stream)
 {
 	mStream = stream;
+	mAudio_diff_avg_coef = exp(log(0.01 / AUDIO_DIFF_AVG_NB));
+	mAudio_diff_threshold = 2.0 * SDL_AUDIO_BUFFER_SIZE / codecCtx->sample_rate;
 }
 
 DecoderAudio::~DecoderAudio()
@@ -24,9 +35,19 @@ bool DecoderAudio::prepare()
 
 bool DecoderAudio::process(AVPacket *packet)
 {
+	double pts;
+	int len1, data_size, n;
     int size = mSamplesSize;
     int len = avcodec_decode_audio3(mStream->codec, mSamples, &size, packet);
 
+	
+	 pts = mAudioClock;
+      //*pts_ptr = pts;
+      n = 2 * mStream->codec->channels;
+      mAudioClock += (double)size /
+	(double)(n * mStream->codec->sample_rate);
+	
+	
     //call handler for posting buffer to os audio driver
     onDecode(mSamples, size);
 
@@ -64,7 +85,7 @@ bool DecoderAudio::decode(void* ptr)
 
 /* Add or subtract samples to get a better sync, return new
    audio buffer size */
-int  DecoderAudio::synchronize( int16_t * mSamples,int mSamplesSize,double pts)
+double  DecoderAudio::synchronize( int16_t * samples,int samplesSize,double pts)
  {
   int n;
   double ref_clock;
@@ -75,72 +96,72 @@ int  DecoderAudio::synchronize( int16_t * mSamples,int mSamplesSize,double pts)
     double diff, avg_diff;
     int wanted_size, min_size, max_size, nb_samples;
     
-    ref_clock = get_video_clock(is);
-    diff = get_audio_clock(is) - ref_clock;
+    ref_clock = global_video_pkt_pts;
+    diff = get_audio_clock() - ref_clock;
 
     if(diff < AV_NOSYNC_THRESHOLD) {
       // accumulate the diffs
-      is->audio_diff_cum = diff + is->audio_diff_avg_coef
-	* is->audio_diff_cum;
-      if(is->audio_diff_avg_count < AUDIO_DIFF_AVG_NB) {
-	is->audio_diff_avg_count++;
+      mAudio_diff_cum = diff + mAudio_diff_avg_coef
+	* mAudio_diff_cum;
+      if(mAudio_diff_avg_count < AUDIO_DIFF_AVG_NB) {
+		mAudio_diff_avg_count++;
       } else {
-	avg_diff = is->audio_diff_cum * (1.0 - is->audio_diff_avg_coef);
-	if(fabs(avg_diff) >= is->audio_diff_threshold) {
-	  wanted_size = samples_size + ((int)(diff * mStream->codec->sample_rate) * n);
-	  min_size = samples_size * ((100 - SAMPLE_CORRECTION_PERCENT_MAX) / 100);
-	  max_size = samples_size * ((100 + SAMPLE_CORRECTION_PERCENT_MAX) / 100);
+	avg_diff = mAudio_diff_cum * (1.0 - mAudio_diff_avg_coef);
+	if(fabs(avg_diff) >= mAudio_diff_threshold) {
+	  wanted_size = samplesSize + ((int)(diff * mStream->codec->sample_rate) * n);
+	  min_size = samplesSize * ((100 - SAMPLE_CORRECTION_PERCENT_MAX) / 100);
+	  max_size = samplesSize * ((100 + SAMPLE_CORRECTION_PERCENT_MAX) / 100);
 	  if(wanted_size < min_size) {
 	    wanted_size = min_size;
 	  } else if (wanted_size > max_size) {
 	    wanted_size = max_size;
 	  }
-	  if(wanted_size < samples_size) {
+	  if(wanted_size < samplesSize) {
 	    /* remove samples */
-	    samples_size = wanted_size;
-	  } else if(wanted_size > samples_size) {
+	    samplesSize = wanted_size;
+	  } else if(wanted_size > samplesSize) {
 	    uint8_t *samples_end, *q;
 	    int nb;
 
 	    /* add samples by copying final sample*/
-	    nb = (samples_size - wanted_size);
-	    samples_end = (uint8_t *)samples + samples_size - n;
+	    nb = (samplesSize - wanted_size);
+	    samples_end = (uint8_t *)samples + samplesSize - n;
 	    q = samples_end + n;
 	    while(nb > 0) {
 	      memcpy(q, samples_end, n);
 	      q += n;
 	      nb -= n;
 	    }
-	    samples_size = wanted_size;
+	    samplesSize = wanted_size;
 	  }
 	}
       }
     } else {
       /* difference is TOO big; reset diff stuff */
-      is->audio_diff_avg_count = 0;
-      is->audio_diff_cum = 0;
+      mAudio_diff_avg_count = 0;
+      mAudio_diff_cum = 0;
     }
   //}
-  return samples_size;
+  return samplesSize;
 }
 
-double DecoderAudio::get_video_clock(VideoState *is) {
+double DecoderAudio::get_video_clock() {
   double delta;
 
-  delta = (av_gettime() - is->video_current_pts_time) / 1000000.0;
-  return is->video_current_pts + delta;
+  delta = (av_gettime() - global_video_pkt_pts) / 1000000.0;
+  return mVideoClock + delta;
 }
 
-double DecoderAudio::get_audio_clock(VideoState *is) {
+double DecoderAudio::get_audio_clock() {
   double pts;
   int hw_buf_size, bytes_per_sec, n;
 
-  pts = is->audio_clock; /* maintained in the audio thread */
-  hw_buf_size = is->audio_buf_size - is->audio_buf_index;
+  pts = mAudioClock; /* maintained in the audio thread */
+  hw_buf_size = audio_buf_size - >audio_buf_index;
   bytes_per_sec = 0;
-  n = is->audio_st->codec->channels * 2;
-  if(is->audio_st) {
-    bytes_per_sec = is->audio_st->codec->sample_rate * n;
+  n = mStream->codec->channels * 2;
+  if(mStream) {
+    bytes_per_sec = mStream->codec->sample_rate * n;
   }
   if(bytes_per_sec) {
     pts -= (double)hw_buf_size / bytes_per_sec;

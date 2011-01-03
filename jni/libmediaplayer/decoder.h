@@ -1,6 +1,8 @@
 #ifndef FFMPEG_DECODER_H
 #define FFMPEG_DECODER_H
 
+
+
 extern "C" {
 	
 #include "libavcodec/avcodec.h"
@@ -8,8 +10,11 @@ extern "C" {
 
 }
 
+
 #include "thread.h"
 #include "packetqueue.h"
+
+static uint64_t global_video_pkt_pts = AV_NOPTS_VALUE;
 
 class IDecoder : public Thread
 {

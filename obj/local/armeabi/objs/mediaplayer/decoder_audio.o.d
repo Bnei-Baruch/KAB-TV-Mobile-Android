@@ -1,9 +1,9 @@
-havlenapetr-FFMpeg-cc53d91//obj/local/armeabi/objs/mediaplayer/decoder_audio.o: \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/decoder_audio.cpp \
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/obj/local/armeabi/objs/mediaplayer/decoder_audio.o: \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder_audio.cpp \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/android/log.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/decoder_audio.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/decoder.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavcodec/avcodec.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder_audio.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavcodec/avcodec.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/errno.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/sys/cdefs.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -11,8 +11,8 @@ havlenapetr-FFMpeg-cc53d91//obj/local/armeabi/objs/mediaplayer/decoder_audio.o: 
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm/errno.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/errno.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/errno-base.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avutil.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/common.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avutil.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/common.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/ctype.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/inttypes.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/stdint.h \
@@ -40,39 +40,39 @@ havlenapetr-FFMpeg-cc53d91//obj/local/armeabi/objs/mediaplayer/decoder_audio.o: 
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/alloca.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/strings.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/memory.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/attributes.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/mem.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/error.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avutil.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/mathematics.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/rational.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/intfloat_readwrite.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/log.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/pixfmt.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avconfig.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavformat/avformat.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/attributes.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/mem.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/error.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avutil.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/mathematics.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/rational.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/intfloat_readwrite.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/log.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/pixfmt.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avconfig.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavformat/avformat.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/time.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/sys/time.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/linux/time.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm/siginfo.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/siginfo.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavformat/avio.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/common.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/thread.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavformat/avio.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/common.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/thread.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/pthread.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/signal.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm/signal.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/signal.h \
  /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/sched.h \
- havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/packetqueue.h
+ /cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/packetqueue.h
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/android/log.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/decoder_audio.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder_audio.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/decoder.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavcodec/avcodec.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavcodec/avcodec.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/errno.h:
 
@@ -88,9 +88,9 @@ havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavcodec/avcodec.h
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/errno-base.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avutil.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avutil.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/common.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/common.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/ctype.h:
 
@@ -146,27 +146,27 @@ havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/common.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/memory.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/attributes.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/attributes.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/mem.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/mem.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/error.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/error.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avutil.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avutil.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/mathematics.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/mathematics.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/rational.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/rational.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/intfloat_readwrite.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/intfloat_readwrite.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/log.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/log.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/pixfmt.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/pixfmt.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/avconfig.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/avconfig.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavformat/avformat.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavformat/avformat.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/time.h:
 
@@ -178,11 +178,11 @@ havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavformat/avformat
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/asm-generic/siginfo.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavformat/avio.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavformat/avio.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/../libffmpeg/libavutil/common.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libffmpeg/libavutil/common.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/thread.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/thread.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/pthread.h:
 
@@ -194,4 +194,4 @@ havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/thread.h:
 
 /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-4/arch-arm/usr/include/sched.h:
 
-havlenapetr-FFMpeg-cc53d91//jni/libmediaplayer/packetqueue.h:
+/cygdrive/e/temp/android-ndk/android-ndk/havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/packetqueue.h:

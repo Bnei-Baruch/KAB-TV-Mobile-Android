@@ -3,7 +3,7 @@
 
 #define TAG "FFMpegVideoDecoder"
 
-static uint64_t global_video_pkt_pts = AV_NOPTS_VALUE;
+
 
 DecoderVideo::DecoderVideo(AVStream* stream) : IDecoder(stream)
 {
@@ -49,6 +49,7 @@ bool DecoderVideo::process(AVPacket *packet)
     int pts = 0;
 
 	// Decode video frame
+	for(;;){
 	avcodec_decode_video(mStream->codec,
 						 mFrame,
 						 &completed,
@@ -72,6 +73,8 @@ bool DecoderVideo::process(AVPacket *packet)
 
 		return true;
 	}
+	}
+	
 	return false;
 }
 

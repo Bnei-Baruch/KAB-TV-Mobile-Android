@@ -11,17 +11,22 @@ public:
     DecoderAudio(AVStream* stream);
 
     ~DecoderAudio();
-
+	double get_audio_clock();
     AudioDecodingHandler		onDecode;
 
 private:
     int16_t*                    mSamples;
     int                         mSamplesSize;
 	AVStream* 					mStream;
+	double						mAudioClock;
+	double						mAudio_diff_avg_coef;
+	double						mAudio_diff_avg_count;
+	double						mAudio_diff_threshold;
     bool                        prepare();
+	double 						get_video_clock();
     bool                        decode(void* ptr);
     bool                        process(AVPacket *packet);
-	
+	double						mAudio_diff_cum;
 	double 						synchronize(int16_t * mSamples,int mSamplesSize,double pts);
 };
 
