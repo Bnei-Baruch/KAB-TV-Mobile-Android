@@ -401,6 +401,7 @@ void MediaPlayer::decodeMovie(void* ptr)
 		}
 	}
 	
+
 	//waits on end of video thread
 	__android_log_print(ANDROID_LOG_ERROR, TAG, "waiting on video thread");
 	int ret = -1;

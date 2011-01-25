@@ -19,7 +19,8 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/../libmediaplayer \
 	$(LOCAL_PATH)/../include \
 	$(LOCAL_PATH)/../include/android \
-	$(LOCAL_PATH)/../include/android/utils
+	$(LOCAL_PATH)/../include/android/utils \
+	$(LOCAL_PATH)/../libmms/jni/libmms/src
 
 LOCAL_SRC_FILES := \
 		onLoad.cpp \
@@ -28,7 +29,8 @@ LOCAL_SRC_FILES := \
 		com_media_ffmpeg_FFMpegAVRational.c \
 		com_media_ffmpeg_FFMpegAVFormatContext.c \
 		com_media_ffmpeg_FFMpegAVCodecContext.cpp \
-		com_media_ffmpeg_FFMpegUtils.cpp
+		com_media_ffmpeg_FFMpegUtils.cpp \
+		
 
 
 ifeq ($(WITH_CONVERTOR),true)
@@ -47,12 +49,15 @@ ifeq ($(IN_NDK),true)
 LOCAL_LDLIBS := liblog
 else
 LOCAL_PRELINK_MODULE := false
-LOCAL_SHARED_LIBRARIES := liblog
+LOCAL_SHARED_LIBRARIES := liblog 
 endif
 
-LOCAL_SHARED_LIBRARIES := libjniaudio libjnivideo liblog libmms
+LOCAL_LDFLAGS := -Wl,-rpath=/data/data/cz.havlena.ffmpeg.ui/lib
 
-LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale libmediaplayer
+
+LOCAL_SHARED_LIBRARIES := liblog libdl libjniaudio libjnivideo libmms
+
+LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale libmediaplayer   
 
 LOCAL_MODULE := libffmpeg_jni
 

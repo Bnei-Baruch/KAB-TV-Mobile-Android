@@ -2,7 +2,7 @@
 #include "decoder_audio.h"
 
 #define TAG "FFMpegAudioDecoder"
-
+# define SYNC_AUDIO "AUDIO_SYNC"
 
 #define AV_SYNC_THRESHOLD 0.01
 #define AV_NOSYNC_THRESHOLD 10.0
@@ -10,18 +10,22 @@
 #define SDL_AUDIO_BUFFER_SIZE 1024
 
 #define SAMPLE_CORRECTION_PERCENT_MAX 10
-
+DecoderAudio *DecoderAudio::myself = NULL;
 
 DecoderAudio::DecoderAudio(AVStream* stream) : IDecoder(stream)
 {
 	mStream = stream;
 	mAudio_diff_avg_coef = exp(log(0.01 / AUDIO_DIFF_AVG_NB));
-	mAudio_diff_threshold = 2.0 * SDL_AUDIO_BUFFER_SIZE / codecCtx->sample_rate;
+	mAudio_diff_threshold = 2.0 * SDL_AUDIO_BUFFER_SIZE / mStream->codec->sample_rate;
+	DecoderAudio::myself = this;
 }
 
 DecoderAudio::~DecoderAudio()
 {
+  delete mSamples;
+  __android_log_print(ANDROID_LOG_INFO, TAG, "destructor called of DecoderAudio");
 }
+
 
 bool DecoderAudio::prepare()
 {
@@ -36,21 +40,65 @@ bool DecoderAudio::prepare()
 bool DecoderAudio::process(AVPacket *packet)
 {
 	double pts;
-	int len1, data_size, n;
+	int len1=0, data_size=0, n,sync_size;
     int size = mSamplesSize;
-    int len = avcodec_decode_audio3(mStream->codec, mSamples, &size, packet);
-
+	uint8_t*  data = packet->data;
+	int pktsize = packet->size;
+	len1=0;
+	do //decoding + sync per frame in the packet until we finish all frames then return
+	{
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "before decoding audio frame packet size is:%d ",packet->size);
+	  size = mSamplesSize;
+      data_size = avcodec_decode_audio3(mStream->codec, mSamples, &size, packet);
+	  __android_log_print(ANDROID_LOG_INFO, TAG, "decoding audio frame size data_size: %d and size:%d",data_size,size);
+	  
+	  
+	if(data_size<0)
+	 {
+	/* If error, output silence */
+	continue; //go to next frame
 	
-	 pts = mAudioClock;
+      } else {
+	
+	
+		
+		
+		 packet->data += data_size;
+         packet->size -= data_size;
+		// memcpy(mTempBuf+len1, mSamples, data_size);
+		 
+		
+		 __android_log_print(ANDROID_LOG_INFO, TAG, "decoding audio frame size added: %d and new packet size:%d ",len1,packet->size);
+      }
+	
+	} while (packet->size>0);
+	
+	
+	 packet->data = data;
+     packet->size = pktsize;
+	//sync_size = synchronize(mSamples,
+	//			       len1, pts);
+	//__android_log_print(ANDROID_LOG_INFO, TAG, "after sync audio suze is: %d",sync_size);
+	
+	//if(sync_size>data_size)
+	//	sync_size=data_size;
+	
+	 pts = IDecoder::mAudioClock;
       //*pts_ptr = pts;
       n = 2 * mStream->codec->channels;
-      mAudioClock += (double)size /
+      IDecoder::mAudioClock += (double)len1 /
 	(double)(n * mStream->codec->sample_rate);
 	
-	
+	//memcpy(mSamples, mSamples, sync_size);
+	//mSamplesSize = sync_size;
     //call handler for posting buffer to os audio driver
-    onDecode(mSamples, size);
-
+    
+	 if(packet->pts != AV_NOPTS_VALUE) 
+      IDecoder::mAudioClock = av_q2d(mStream->codec->time_base)*packet->pts;
+	
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "dumping samples size:%d ",size);				   
+	onDecode(mSamples, size);
+	
     return true;
 }
 
@@ -149,22 +197,26 @@ double DecoderAudio::get_video_clock() {
   double delta;
 
   delta = (av_gettime() - global_video_pkt_pts) / 1000000.0;
-  return mVideoClock + delta;
+  return IDecoder::mVideoClock + delta;
 }
 
 double DecoderAudio::get_audio_clock() {
-  double pts;
-  int hw_buf_size, bytes_per_sec, n;
+  static double pts;
+  static int hw_buf_size, bytes_per_sec, n;
 
-  pts = mAudioClock; /* maintained in the audio thread */
-  hw_buf_size = audio_buf_size - >audio_buf_index;
+  pts = DecoderAudio::mAudioClock; /* maintained in the audio thread */
+   __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "DecoderAudio::mAudioClock: %d",pts);
+  hw_buf_size = DecoderAudio::myself->mSamplesSize;
+   __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "mSamplesSize: %d",hw_buf_size);
   bytes_per_sec = 0;
-  n = mStream->codec->channels * 2;
-  if(mStream) {
-    bytes_per_sec = mStream->codec->sample_rate * n;
+  n = DecoderAudio::myself->mStream->codec->channels * 2;
+  if(DecoderAudio::myself->mStream) {
+    bytes_per_sec = DecoderAudio::myself->mStream->codec->sample_rate * n;
+	 __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "bytes_per_sec: %d",bytes_per_sec);
   }
   if(bytes_per_sec) {
     pts -= (double)hw_buf_size / bytes_per_sec;
+	 __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "pts in Audio: %d",pts);
   }
   return pts;
 }

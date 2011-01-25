@@ -13,6 +13,8 @@ DecoderVideo::DecoderVideo(AVStream* stream) : IDecoder(stream)
 
 DecoderVideo::~DecoderVideo()
 {
+	av_free(mFrame);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "destructor called of DecoderVideo");
 }
 
 bool DecoderVideo::prepare()
@@ -39,17 +41,22 @@ double DecoderVideo::synchronize(AVFrame *src_frame, double pts) {
 	frame_delay = av_q2d(mStream->codec->time_base);
 	/* if we are repeating a frame, adjust clock accordingly */
 	frame_delay += src_frame->repeat_pict * (frame_delay * 0.5);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "frame delay :%d",frame_delay);
 	mVideoClock += frame_delay;
+	__android_log_print(ANDROID_LOG_INFO, TAG, "pst in video thread:%d",pts);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "mVideoClock in video thread:%d", mVideoClock);
 	return pts;
 }
 
 bool DecoderVideo::process(AVPacket *packet)
 {
     int	completed;
-    int pts = 0;
+    double pts = 0;
 
 	// Decode video frame
 	for(;;){
+	pts = 0;
+	global_video_pkt_pts = packet->pts;
 	avcodec_decode_video(mStream->codec,
 						 mFrame,
 						 &completed,
@@ -59,10 +66,16 @@ bool DecoderVideo::process(AVPacket *packet)
 	if (packet->dts == AV_NOPTS_VALUE && mFrame->opaque
 			&& *(uint64_t*) mFrame->opaque != AV_NOPTS_VALUE) {
 		pts = *(uint64_t *) mFrame->opaque;
-	} else if (packet->dts != AV_NOPTS_VALUE) {
+		__android_log_print(ANDROID_LOG_INFO, TAG, "using opaque pts");
+		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%d",pts);
+	} else if (packet->dts != AV_NOPTS_VALUE && packet->dts>0) {
 		pts = packet->dts;
+		__android_log_print(ANDROID_LOG_INFO, TAG, "getting pts from dts");
+		__android_log_print(ANDROID_LOG_INFO, TAG, "dts value :%d",packet->dts);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%d",pts);
 	} else {
 		pts = 0;
+		__android_log_print(ANDROID_LOG_INFO, TAG, "NO PTS VALUE setting 0");
 	}
 	pts *= av_q2d(mStream->time_base);
 

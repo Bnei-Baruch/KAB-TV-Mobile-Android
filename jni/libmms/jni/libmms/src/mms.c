@@ -87,6 +87,14 @@
 #define ASF_MEDIA_PACKET_ID_TYPE	4
 
 
+jint JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+    JNIEnv* env = NULL;
+    jint result = -1;
+	result = JNI_VERSION_1_4;
+    return result;
+}
+
 typedef struct mms_buffer_s mms_buffer_t;
 struct mms_buffer_s {
 	uint8_t *buffer;

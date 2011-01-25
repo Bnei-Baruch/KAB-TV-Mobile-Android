@@ -59,7 +59,7 @@ public class FFMpeg {
     			System.loadLibrary(LIBS[i]);
     		} catch(UnsatisfiedLinkError e) {
     			// fatal error, we can't load some our libs
-    			Log.d("FFMpeg", "Couldn't load lib: " + LIBS[i] + " - " + e.getMessage());
+    			Log.d("FFMpeg", "Couldn't load lib: " + LIBS[i] + " - " + e.getMessage() );
     			err = true;
     		}
 		}

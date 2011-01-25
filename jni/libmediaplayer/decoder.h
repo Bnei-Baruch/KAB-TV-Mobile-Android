@@ -25,10 +25,14 @@ public:
     void						stop();
 	void						enqueue(AVPacket* packet);
 	int							packets();
+	
+	
 
 protected:
     PacketQueue*                mQueue;
     AVStream*             		mStream;
+	static double				mAudioClock;
+	static double				mVideoClock;
 
     virtual bool                prepare();
     virtual bool                decode(void* ptr);

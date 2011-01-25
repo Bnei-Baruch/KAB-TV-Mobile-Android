@@ -45,7 +45,8 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
     private void attachMediaController() {
     	mMediaController = new MediaController(mContext);
         View anchorView = this.getParent() instanceof View ?
-                    (View)this.getParent() : this;
+                   // (View)this.getParent() : this;
+        		 this : this;
         mMediaController.setMediaPlayer(mMediaPlayerControl);
         mMediaController.setAnchorView(anchorView);
         mMediaController.setEnabled(true);
@@ -139,5 +140,24 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
 			//Log.d(TAG, "want buffer percentage");
 			return 0;
 		}
+
+		@Override
+		public boolean canPause() {
+			// TODO Auto-generated method stub
+			return true;
+		}
+
+		@Override
+		public boolean canSeekBackward() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean canSeekForward() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
 	};
 }

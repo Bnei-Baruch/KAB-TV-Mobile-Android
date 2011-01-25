@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <android/log.h>
 #include "jniUtils.h"
+#include <dlfcn.h>
 
 extern "C" {
 
@@ -97,6 +98,10 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 
     __android_log_print(ANDROID_LOG_INFO, TAG, "loading . . .");
 
+	//dlopen("/data/data/cz.havlena.ffmpeg.ui/lib/libjnivideo.so",RTLD_LAZY );
+	//dlopen("/data/data/cz.havlena.ffmpeg.ui/lib/libjniaudio.so",RTLD_LAZY);
+	//dlopen("/data/data/cz.havlena.ffmpeg.ui/lib/libjnimms.so",RTLD_LAZY);
+	
 #ifdef BUILD_WITH_CONVERTOR
     if(register_android_media_FFMpeg(env) != JNI_OK) {
         __android_log_print(ANDROID_LOG_ERROR, TAG, "can't load android_media_FFMpeg");

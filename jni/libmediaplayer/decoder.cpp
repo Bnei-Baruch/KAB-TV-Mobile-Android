@@ -3,6 +3,9 @@
 
 #define TAG "FFMpegIDecoder"
 
+double IDecoder::mAudioClock = 0;
+double IDecoder::mVideoClock = 0;
+
 IDecoder::IDecoder(AVStream* stream)
 {
 	mQueue = new PacketQueue();

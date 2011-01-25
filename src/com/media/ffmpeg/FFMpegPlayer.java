@@ -89,6 +89,7 @@ public class FFMpegPlayer
          * It's easier to create it here than in C++.
          */
         native_setup(new WeakReference<FFMpegPlayer>(this));
+        Log.d(TAG, "Native setup finished");
     }
 
     /**

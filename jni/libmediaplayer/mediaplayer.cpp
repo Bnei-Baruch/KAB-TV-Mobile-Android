@@ -4,7 +4,7 @@
 
 //#define LOG_NDEBUG 0
 #define TAG "FFMpegMediaPlayer"
-
+# define SYNC "VIDEO_SYNC"
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/stat.h>
@@ -26,11 +26,16 @@ extern "C" {
 #include "mediaplayer.h"
 #include "output.h"
 
-#define FPS_DEBUGGING false
+#define FPS_DEBUGGING true
 
+	 double 				MediaPlayer::mLast_video_pts =0;
+	 double				MediaPlayer::mLast_video_delay=0;
+	 double          		MediaPlayer::frame_timer=0;
+	
+	
 static MediaPlayer* sPlayer;
 
-static unsigned char buf[4096];
+static unsigned char buf[32768];
 
 //const char *urlmms = "mms://vod.kab.tv/radioheb";
 
@@ -69,7 +74,7 @@ int64_t seek_data(void *opaque, int64_t offset, int whence)
 	return -1;
 
 }
-
+ 
 int read_data(void *opaque, uint8_t* buf, int buf_size)
 
 {
@@ -84,7 +89,7 @@ int read_data(void *opaque, uint8_t* buf, int buf_size)
 	mmsx_t *this22 = (mmsx_t *)opaque;
 
 	int cnt = mmsx_read(NULL, this22, (char*)buf, buf_size);
-
+	__android_log_print(ANDROID_LOG_INFO, TAG, "read data size:%d",buf_size);
 	/*fwrite(buf, 1, cnt, f);
 
 	fclose(f);*/
@@ -93,6 +98,10 @@ int read_data(void *opaque, uint8_t* buf, int buf_size)
 
 }
 
+
+MMSConnection::MMSConnection(){};
+MMSConnection::~MMSConnection(){};
+	 
 MediaPlayer::MediaPlayer()
 {
     mListener = NULL;
@@ -109,15 +118,18 @@ MediaPlayer::MediaPlayer()
     mLeftVolume = mRightVolume = 1.0;
     mVideoWidth = mVideoHeight = 0;
     sPlayer = this;
+	mLast_video_pts = 0;
+	frame_timer =0;
 
     //sync params
-    double          frame_timer;
+ /*   double          frame_timer;
     double          frame_last_pts;
     double          frame_last_delay;
     double          video_clock; ///<pts of last decoded frame / predicted pts of next decoded frame
     double          video_current_pts; ///<current displayed pts (different from video_clock if frame fifos are used)
     int64_t         video_current_pts_time;  ///<time (av_gettime) at which we updated video_current_pts - used to have running video pts
-
+	*/
+	mMMSConnection = new MMSConnection();
 }
 
 MediaPlayer::~MediaPlayer()
@@ -125,8 +137,19 @@ MediaPlayer::~MediaPlayer()
 	if(mListener != NULL) {
 		free(mListener);
 	}
+	
+	
+	if(mDecoderVideo)
+		delete mDecoderVideo;
+		
+	if(mDecoderAudio)
+		delete mDecoderAudio;
+	
+	if(mMMSConnection)
+		delete mMMSConnection;
+	
 }
-
+ 
 status_t MediaPlayer::prepareAudio()
 {
 	__android_log_print(ANDROID_LOG_INFO, TAG, "prepareAudio");
@@ -326,7 +349,7 @@ status_t MediaPlayer::setDataSource(const char *url)
     //connect to source
     
 
-      	int bandwidth;
+      	int bandwidth = 192000;
 
       	if((this1 = mmsx_connect((mms_io_t*)mms_get_default_io_impl(),data,urlmms,bandwidth) ))
 
@@ -334,7 +357,7 @@ status_t MediaPlayer::setDataSource(const char *url)
 
 
 
-      	if(init_put_byte(&ByteIOCtx, buf, 4096, 0, this1, read_data, NULL, seek_data) < 0)
+      	if(init_put_byte(&ByteIOCtx, buf, 32768, 0, this1, read_data, NULL, seek_data) < 0)
 
       	{
 
@@ -385,6 +408,10 @@ status_t MediaPlayer::suspend() {
 	__android_log_print(ANDROID_LOG_INFO, TAG, "suspend");
 	
 	mCurrentState = MEDIA_PLAYER_STOPPED;
+	
+	
+	
+	
 	if(mDecoderAudio != NULL) {
 		mDecoderAudio->stop();
 	}
@@ -399,16 +426,41 @@ status_t MediaPlayer::suspend() {
 		__android_log_print(ANDROID_LOG_ERROR, TAG, "Couldn't cancel player thread");
 	}
 	
+	
+	 
+	
+	
+	
+	
 	// Close the codec
 	free(mDecoderAudio);
 	free(mDecoderVideo);
 	
-	// Close the video file
-	av_close_input_file(mMovieFile);
+	
+	
+	
 
+	
+	if(this1)
+	{
+	av_close_input_stream(mMovieFile);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "closing mms conections 1/1 ");
+		mmsx_stop(this1);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "closing mms conections 1/2");
+		mmsx_close(this1);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "closing mms conections 1/3");
+	}
+	else
+	{
+		// Close the video file
+	av_close_input_file(mMovieFile);
+	}
 	//close OS drivers
 	Output::AudioDriver_unregister();
 	Output::VideoDriver_unregister();
+	
+	
+	
 
 	__android_log_print(ANDROID_LOG_ERROR, TAG, "suspended");
 
@@ -421,7 +473,7 @@ status_t MediaPlayer::resume() {
 	//pthread_mutex_unlock(&mLock);
     return NO_ERROR;
 }
-
+ 
 status_t MediaPlayer::setVideoSurface(JNIEnv* env, jobject jsurface)
 { 
 	if(Output::VideoDriver_register(env, jsurface) != ANDROID_SURFACE_RESULT_SUCCESS) {
@@ -490,7 +542,8 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 
 	__android_log_print(ANDROID_LOG_INFO, TAG, "2");
 	*/
-
+	__android_log_print(ANDROID_LOG_INFO, TAG, "pts:%d", pts);
+	
 	// Convert the image from its native format to RGB
 	sws_scale(sPlayer->mConvertCtx,
 		      frame->data,
@@ -500,7 +553,58 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 			  sPlayer->mFrame->data,
 			  sPlayer->mFrame->linesize);
 
-	Output::VideoDriver_updateSurface();
+			  
+			  
+	
+	//here we have to synch video to audio before we present it - we delay or skip frames according to the gap it has with audio clock
+	
+	static double actual_delay, delay, sync_threshold, ref_clock, diff;
+	
+	 delay = pts - mLast_video_pts; /* the pts from last time */
+      if(delay <= 0 || delay >= 1.0) {
+	/* if incorrect delay, use previous one */
+	delay = mLast_video_pts;
+      }
+      /* save for next time */
+      mLast_video_delay = delay;
+      mLast_video_pts = pts;
+
+      /* update delay to sync to audio */
+      ref_clock = DecoderAudio::get_audio_clock();
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "(audio clock) ref_clock:%d", pts);
+    diff = pts - ref_clock;
+		 __android_log_print(ANDROID_LOG_INFO, SYNC, "(between pts and ref_clock) diff:%d", diff);
+      /* Skip or repeat the frame. Take delay into account
+	 FFPlay still doesn't "know if this is the best guess." */
+     sync_threshold = (delay > AV_SYNC_THRESHOLD) ? delay : AV_SYNC_THRESHOLD;
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "sync_threshold:%d", sync_threshold);
+//      if(fabs(diff) < AV_NOSYNC_THRESHOLD) {
+//	if(diff <= -sync_threshold) {
+//	  delay = 0;
+//	} else if(diff >= sync_threshold) {
+//	  delay = 2 * delay;
+//	}
+ ///     }
+ //     frame_timer += delay;
+//	  __android_log_print(ANDROID_LOG_INFO, SYNC, "delay:%d", delay);
+//	  __android_log_print(ANDROID_LOG_INFO, SYNC, "frame_timer:%d", frame_timer);
+      /* computer the REAL delay */
+//      actual_delay = frame_timer - (av_gettime() / 1000000.0);
+//	   __android_log_print(ANDROID_LOG_INFO, SYNC, "actual_delay:%d", actual_delay);
+ //     if(actual_delay < 0.010) {
+	/* Really it should skip the picture instead */
+//	__android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
+	
+//	actual_delay = 0.010;
+//	return;
+ //     }
+//	  else
+//	  {
+      /* show the picture! */
+//	  usleep(actual_delay*1000);
+    Output::VideoDriver_updateSurface();
+//	}
+	
 }
 
 /**
@@ -525,9 +629,12 @@ void MediaPlayer::decode(int16_t* buffer, int buffer_size)
 		frames++;
 	}
 
+	  
+	  
 	if(Output::AudioDriver_write(buffer, buffer_size) <= 0) {
 		__android_log_print(ANDROID_LOG_ERROR, TAG, "Couldn't write samples to audio track");
 	}
+	
 }
 
 void MediaPlayer::decodeMovie(void* ptr)
@@ -551,10 +658,11 @@ void MediaPlayer::decodeMovie(void* ptr)
 	{
 		if (mDecoderVideo->packets() > FFMPEG_PLAYER_MAX_QUEUE_SIZE &&
 				mDecoderAudio->packets() > FFMPEG_PLAYER_MAX_QUEUE_SIZE) {
+			__android_log_print(ANDROID_LOG_INFO, TAG, "Sleeping, reached max queue size");
 			usleep(200);
 			continue;
 		}
-		
+		  
 		if(av_read_frame(mMovieFile, &pPacket) < 0) {
 			mCurrentState = MEDIA_PLAYER_DECODED;
 			continue;
@@ -572,6 +680,10 @@ void MediaPlayer::decodeMovie(void* ptr)
 			av_free_packet(&pPacket);
 		}
 	}
+	
+	
+	
+	
 	
 	//waits on end of video thread
 	__android_log_print(ANDROID_LOG_ERROR, TAG, "waiting on video thread");
@@ -660,6 +772,7 @@ status_t MediaPlayer::pause()
 	//pthread_mutex_lock(&mLock);
 	mCurrentState = MEDIA_PLAYER_PAUSED;
 	//pthread_mutex_unlock(&mLock);
+	suspend();
 	return NO_ERROR;
 }
 

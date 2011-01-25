@@ -15,7 +15,10 @@
 
 #include "mms.h"
 
-#define FFMPEG_PLAYER_MAX_QUEUE_SIZE 10
+#define FFMPEG_PLAYER_MAX_QUEUE_SIZE 1000
+
+#define AV_SYNC_THRESHOLD 0.01
+#define AV_NOSYNC_THRESHOLD 10.0
 
 using namespace android;
 
@@ -113,11 +116,13 @@ enum media_player_states {
 };
 
 
+
 //mms class for connections
 class MMSConnection
 {
 public:
 	MMSConnection();
+	 ~MMSConnection();
 	mmsx_t* GetConnectionMMSX(){return mCurrentConnection;};
 	int ResetConnection();
 	
@@ -198,6 +203,9 @@ private:
     AVFormatContext*			mMovieFile;
     int 						mAudioStreamIndex;
     int 						mVideoStreamIndex;
+	static double 				mLast_video_pts;
+	static double				mLast_video_delay;
+	static double          		frame_timer;
     DecoderAudio*				mDecoderAudio;
 	DecoderVideo*             	mDecoderVideo;
 	AVFrame*					mFrame;
@@ -216,6 +224,9 @@ private:
     float                       mRightVolume;
     int                         mVideoWidth;
     int                         mVideoHeight;
+	MMSConnection*				mMMSConnection;
 };
+
+
 
 #endif // FFMPEG_MEDIAPLAYER_H

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">FFMpeg</string>
+    <string name="app_name">66</string>
     <string name="select_input_file">FFMpeg - please select input file</string>
     <string name="processing">Converting . . .</string>
     <string name="type_file">input file</string>
@@ -26,7 +26,7 @@
     <string name="audio_channels_1">1 audio channel</string>
     <string name="audio_channels_2">2 audio channels</string>
     
-    <string name="framerate">13</string>
+    <string name="framerate">20</string>
     
     <!-- used between activities to pass input video path -->
     <string name="input_file">Input_file</string>

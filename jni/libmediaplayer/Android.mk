@@ -30,9 +30,9 @@ endif
 
 LOCAL_LDLIBS := liblog
 
-LOCAL_SHARED_LIBRARIES := libjniaudio libjnivideo libmms
+LOCAL_SHARED_LIBRARIES :=  libjnivideo libjniaudio libmms
 
-LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale 
+LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale  
 
 LOCAL_MODULE := libmediaplayer
 
