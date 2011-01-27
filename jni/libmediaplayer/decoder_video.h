@@ -16,7 +16,7 @@ public:
 private:
 	AVFrame*					mFrame;
 
-    double				mVideoClock;
+    //double				mVideoClock;
     bool                        prepare();
     double 						synchronize(AVFrame *src_frame, double pts);
     bool                        decode(void* ptr);

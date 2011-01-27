@@ -82,21 +82,25 @@ bool DecoderAudio::process(AVPacket *packet)
 	
 	//if(sync_size>data_size)
 	//	sync_size=data_size;
-	
-	 pts = IDecoder::mAudioClock;
+	pts = packet->dts;
+	pts *= av_q2d(mStream->time_base);
+	if(pts != AV_NOPTS_VALUE)
+		IDecoder::mAudioClock =  pts;
       //*pts_ptr = pts;
       n = 2 * mStream->codec->channels;
-      IDecoder::mAudioClock += (double)len1 /
+      IDecoder::mAudioClock += (double)data_size /
 	(double)(n * mStream->codec->sample_rate);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "IDecoder::mAudioClock after decode:%0.3f ",IDecoder::mAudioClock);
 	
 	//memcpy(mSamples, mSamples, sync_size);
 	//mSamplesSize = sync_size;
     //call handler for posting buffer to os audio driver
     
-	 if(packet->pts != AV_NOPTS_VALUE) 
+/*	 if(packet->pts != AV_NOPTS_VALUE) 
       IDecoder::mAudioClock = av_q2d(mStream->codec->time_base)*packet->pts;
-	
-	 __android_log_print(ANDROID_LOG_INFO, TAG, "dumping samples size:%d ",size);				   
+	__android_log_print(ANDROID_LOG_INFO, TAG, "IDecoder::mAudioClock:%0.3f ",IDecoder::mAudioClock);	
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "packet->pts:%0.3f ",packet->pts);	
+__android_log_print(ANDROID_LOG_INFO, TAG, "av_q2d:%0.3f ",av_q2d(mStream->codec->time_base));		 */
 	onDecode(mSamples, size);
 	
     return true;
@@ -204,8 +208,8 @@ double DecoderAudio::get_audio_clock() {
   static double pts;
   static int hw_buf_size, bytes_per_sec, n;
 
-  pts = DecoderAudio::mAudioClock; /* maintained in the audio thread */
-   __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "DecoderAudio::mAudioClock: %d",pts);
+  pts = IDecoder::mAudioClock; /* maintained in the audio thread */
+   __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "pts in audio: %0.3f",pts);
   hw_buf_size = DecoderAudio::myself->mSamplesSize;
    __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "mSamplesSize: %d",hw_buf_size);
   bytes_per_sec = 0;
@@ -215,8 +219,8 @@ double DecoderAudio::get_audio_clock() {
 	 __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "bytes_per_sec: %d",bytes_per_sec);
   }
   if(bytes_per_sec) {
-    pts -= (double)hw_buf_size / bytes_per_sec;
-	 __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "pts in Audio: %d",pts);
+    pts += (double)hw_buf_size / bytes_per_sec;
+	 __android_log_print(ANDROID_LOG_INFO, SYNC_AUDIO, "pts in Audio: %0.3f",pts);
   }
   return pts;
 }

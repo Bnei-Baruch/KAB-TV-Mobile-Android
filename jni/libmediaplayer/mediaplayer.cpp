@@ -245,6 +245,12 @@ status_t MediaPlayer::prepareVideo()
 		return INVALID_OPERATION;
 	}
 
+	//preparing sync params
+	frame_timer = (double)av_gettime() / 1000000.0;
+   mLast_video_delay = 40e-3;
+    mLast_video_pts = av_gettime();
+	
+	
 	void*		pixels;
 	if (Output::VideoDriver_getPixels(stream->codec->width,
 									  stream->codec->height,
@@ -315,7 +321,7 @@ status_t MediaPlayer::setDataSource(const char *url)
 
     //get mms stream
 
-   
+    __android_log_print(ANDROID_LOG_INFO, TAG, "NO PTS VALUE IS :%0.3f", AV_NOPTS_VALUE);
 
     	
 
@@ -542,16 +548,9 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 
 	__android_log_print(ANDROID_LOG_INFO, TAG, "2");
 	*/
-	__android_log_print(ANDROID_LOG_INFO, TAG, "pts:%d", pts);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "pts:%0.3f", pts);
 	
-	// Convert the image from its native format to RGB
-	sws_scale(sPlayer->mConvertCtx,
-		      frame->data,
-		      frame->linesize,
-			  0,
-			  sPlayer->mVideoHeight,
-			  sPlayer->mFrame->data,
-			  sPlayer->mFrame->linesize);
+	
 
 			  
 			  
@@ -563,7 +562,7 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 	 delay = pts - mLast_video_pts; /* the pts from last time */
       if(delay <= 0 || delay >= 1.0) {
 	/* if incorrect delay, use previous one */
-	delay = mLast_video_pts;
+	delay = mLast_video_delay;
       }
       /* save for next time */
       mLast_video_delay = delay;
@@ -571,39 +570,50 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 
       /* update delay to sync to audio */
       ref_clock = DecoderAudio::get_audio_clock();
-	  __android_log_print(ANDROID_LOG_INFO, SYNC, "(audio clock) ref_clock:%d", pts);
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "(audio clock) ref_clock:%0.3f", pts);
     diff = pts - ref_clock;
-		 __android_log_print(ANDROID_LOG_INFO, SYNC, "(between pts and ref_clock) diff:%d", diff);
+		 __android_log_print(ANDROID_LOG_INFO, SYNC, "(between pts and ref_clock) diff:%0.3f", diff);
       /* Skip or repeat the frame. Take delay into account
 	 FFPlay still doesn't "know if this is the best guess." */
      sync_threshold = (delay > AV_SYNC_THRESHOLD) ? delay : AV_SYNC_THRESHOLD;
-	  __android_log_print(ANDROID_LOG_INFO, SYNC, "sync_threshold:%d", sync_threshold);
-//      if(fabs(diff) < AV_NOSYNC_THRESHOLD) {
-//	if(diff <= -sync_threshold) {
-//	  delay = 0;
-//	} else if(diff >= sync_threshold) {
-//	  delay = 2 * delay;
-//	}
- ///     }
- //     frame_timer += delay;
-//	  __android_log_print(ANDROID_LOG_INFO, SYNC, "delay:%d", delay);
-//	  __android_log_print(ANDROID_LOG_INFO, SYNC, "frame_timer:%d", frame_timer);
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "sync_threshold:%0.3f", sync_threshold);
+      if(fabs(diff) < AV_NOSYNC_THRESHOLD) {
+	if(diff <= -sync_threshold) {
+	  delay = 0;
+	} else if(diff >= sync_threshold) {
+	  delay = 2 * delay;
+	}
+     }
+     frame_timer += delay;
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "delay:%0.3f", delay);
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "frame_timer:%0.3f", frame_timer);
       /* computer the REAL delay */
-//      actual_delay = frame_timer - (av_gettime() / 1000000.0);
-//	   __android_log_print(ANDROID_LOG_INFO, SYNC, "actual_delay:%d", actual_delay);
- //     if(actual_delay < 0.010) {
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "xxxxxxxxxxxxxxxxthe av clock is :%0.3fxxxxxxxxxxxxxxxxxxxxxx", (av_gettime() / 1000000.0));
+      actual_delay = frame_timer - (av_gettime() / 1000000.0);
+	   __android_log_print(ANDROID_LOG_INFO, SYNC, "actual_delay:%0.3f", actual_delay);
+      if(actual_delay < 0.010) {
 	/* Really it should skip the picture instead */
-//	__android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
+	__android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
 	
-//	actual_delay = 0.010;
-//	return;
- //     }
-//	  else
-//	  {
+	actual_delay = 0.010;
+	//Output::VideoDriver_updateSurface();
+	return;
+      }
+	  else
+	  {
       /* show the picture! */
-//	  usleep(actual_delay*1000);
+	  if(actual_delay > 0.010)
+		usleep(actual_delay*1000);
+		// Convert the image from its native format to RGB
+	sws_scale(sPlayer->mConvertCtx,
+		      frame->data,
+		      frame->linesize,
+			  0,
+			  sPlayer->mVideoHeight,
+			  sPlayer->mFrame->data,
+			  sPlayer->mFrame->linesize);
     Output::VideoDriver_updateSurface();
-//	}
+	}
 	
 }
 

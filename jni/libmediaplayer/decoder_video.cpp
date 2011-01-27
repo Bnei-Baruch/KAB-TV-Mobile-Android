@@ -2,7 +2,7 @@
 #include "decoder_video.h"
 
 #define TAG "FFMpegVideoDecoder"
-
+# define SYNC "VIDEO_SYNC"
 
 
 DecoderVideo::DecoderVideo(AVStream* stream) : IDecoder(stream)
@@ -32,19 +32,19 @@ double DecoderVideo::synchronize(AVFrame *src_frame, double pts) {
 
 	if (pts != 0) {
 		/* if we have pts, set video clock to it */
-		mVideoClock = pts;
+		IDecoder::mVideoClock = pts;
 	} else {
 		/* if we aren't given a pts, set it to the clock */
-		pts = mVideoClock;
+		pts = IDecoder::mVideoClock;
 	}
 	/* update the video clock */
 	frame_delay = av_q2d(mStream->codec->time_base);
 	/* if we are repeating a frame, adjust clock accordingly */
 	frame_delay += src_frame->repeat_pict * (frame_delay * 0.5);
-	__android_log_print(ANDROID_LOG_INFO, TAG, "frame delay :%d",frame_delay);
-	mVideoClock += frame_delay;
-	__android_log_print(ANDROID_LOG_INFO, TAG, "pst in video thread:%d",pts);
-	__android_log_print(ANDROID_LOG_INFO, TAG, "mVideoClock in video thread:%d", mVideoClock);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "frame delay :%0.3f",frame_delay);
+	IDecoder::mVideoClock += frame_delay;
+	__android_log_print(ANDROID_LOG_INFO, TAG, "pst in video thread:%0.3f",pts);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "mVideoClock in video thread:%0.3f", mVideoClock);
 	return pts;
 }
 
@@ -67,12 +67,12 @@ bool DecoderVideo::process(AVPacket *packet)
 			&& *(uint64_t*) mFrame->opaque != AV_NOPTS_VALUE) {
 		pts = *(uint64_t *) mFrame->opaque;
 		__android_log_print(ANDROID_LOG_INFO, TAG, "using opaque pts");
-		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%d",pts);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%0.3f",pts);
 	} else if (packet->dts != AV_NOPTS_VALUE && packet->dts>0) {
 		pts = packet->dts;
 		__android_log_print(ANDROID_LOG_INFO, TAG, "getting pts from dts");
-		__android_log_print(ANDROID_LOG_INFO, TAG, "dts value :%d",packet->dts);
-		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%d",pts);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "dts value :%0.3f",packet->dts);
+		__android_log_print(ANDROID_LOG_INFO, TAG, "pts value :%0.3f",pts);
 	} else {
 		pts = 0;
 		__android_log_print(ANDROID_LOG_INFO, TAG, "NO PTS VALUE setting 0");
@@ -129,6 +129,9 @@ int DecoderVideo::getBuffer(struct AVCodecContext *c, AVFrame *pic) {
 	int ret = avcodec_default_get_buffer(c, pic);
 	uint64_t *pts = (uint64_t *)av_malloc(sizeof(uint64_t));
 	*pts = global_video_pkt_pts;
+	 __android_log_print(ANDROID_LOG_INFO, SYNC, "new buffer pts value: %0.3f",*pts);
+	 __android_log_print(ANDROID_LOG_INFO, SYNC, "NOPTSVALUE IS: %0.3f",AV_NOPTS_VALUE);
+	 
 	pic->opaque = pts;
 	return ret;
 }
