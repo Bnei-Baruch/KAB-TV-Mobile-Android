@@ -12,6 +12,8 @@ public:
     ~DecoderVideo();
 
     VideoDecodingHandler		onDecode;
+	double dequeue(int packetsNum);
+
 
 private:
 	AVFrame*					mFrame;

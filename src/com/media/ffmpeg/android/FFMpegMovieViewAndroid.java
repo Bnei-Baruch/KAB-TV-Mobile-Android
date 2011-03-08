@@ -42,6 +42,11 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
     	getHolder().addCallback(mSHCallback);
     }
     
+    public void onBackPressed ()
+    {
+    	release();
+    }
+    
     private void attachMediaController() {
     	mMediaController = new MediaController(mContext);
         View anchorView = this.getParent() instanceof View ?
@@ -108,12 +113,13 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
 			// after we return from this we can't use the surface any more
             mSurfaceHolder = null;
         }
+       
     };
     
     MediaPlayerControl mMediaPlayerControl = new MediaPlayerControl() {
 		
 		public void start() {
-			mPlayer.resume();
+			mPlayer.start();
 		}
 		
 		public void seekTo(int pos) {
@@ -121,7 +127,7 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
 		}
 		
 		public void pause() {
-			mPlayer.pause();
+			mPlayer.suspend();
 		}
 		
 		public boolean isPlaying() {

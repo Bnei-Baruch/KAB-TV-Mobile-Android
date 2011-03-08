@@ -27,6 +27,15 @@ void IDecoder::enqueue(AVPacket* packet)
 	mQueue->put(packet);
 }
 
+void IDecoder::dequeue(int packetsNum)
+{
+	AVPacket *pkt;
+	for(int i=1;i<=packetsNum;i++)
+	{
+		mQueue->get(pkt,false);
+	}
+}
+
 int IDecoder::packets()
 {
 	return mQueue->size();

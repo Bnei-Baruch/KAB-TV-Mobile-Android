@@ -114,6 +114,8 @@ bool DecoderAudio::decode(void* ptr)
 
     while(mRunning)
     {
+		//pthread_mutex_lock(&globalMutex);
+		//wait on condition variable to play other wise suspend
         if(mQueue->get(&pPacket, true) < 0)
         {
             mRunning = false;

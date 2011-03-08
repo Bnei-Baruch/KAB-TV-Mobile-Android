@@ -15,7 +15,9 @@ extern "C" {
 #include "packetqueue.h"
 
 static uint64_t global_video_pkt_pts = AV_NOPTS_VALUE;
+//static pthread_mutex_t globalMutex = NULL;
 
+             
 class IDecoder : public Thread
 {
 public:
@@ -24,6 +26,7 @@ public:
 	
     void						stop();
 	void						enqueue(AVPacket* packet);
+	void						dequeue(int packetsNum);
 	int							packets();
 	
 	

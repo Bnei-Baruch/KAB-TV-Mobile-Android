@@ -115,6 +115,7 @@ MediaPlayer::MediaPlayer()
     mPrepareStatus = NO_ERROR;
     mLoop = false;
     pthread_mutex_init(&mLock, NULL);
+	//pthread_mutex_init(&globalMutex,NULL);
     mLeftVolume = mRightVolume = 1.0;
     mVideoWidth = mVideoHeight = 0;
     sPlayer = this;
@@ -475,8 +476,10 @@ status_t MediaPlayer::suspend() {
 
 status_t MediaPlayer::resume() {
 	//pthread_mutex_lock(&mLock);
+	
 	mCurrentState = MEDIA_PLAYER_STARTED;
-	//pthread_mutex_unlock(&mLock);
+	pthread_mutex_unlock(&mLock);
+	
     return NO_ERROR;
 }
  
@@ -503,9 +506,10 @@ bool MediaPlayer::shouldCancel(PacketQueue* queue)
  */
 void MediaPlayer::decode(AVFrame* frame, double pts)
 {
-	if(FPS_DEBUGGING) {
+	//if(FPS_DEBUGGING) {
 		timeval pTime;
 		static int frames = 0;
+		static int fps = 0;
 		static double t1 = -1;
 		static double t2 = -1;
 
@@ -515,10 +519,11 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 			__android_log_print(ANDROID_LOG_INFO, TAG, "Video fps:%i", frames);
 			//sPlayer->notify(MEDIA_INFO_FRAMERATE_VIDEO, frames, -1);
 			t1 = t2;
+			fps = frames;
 			frames = 0;
 		}
 		frames++;
-	}
+	//}
 
 	/*
 	AVFrame* f = avcodec_alloc_frame();
@@ -581,7 +586,7 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 	if(diff <= -sync_threshold) {
 	  delay = 0;
 	} else if(diff >= sync_threshold) {
-	  delay = 2 * delay;
+	  delay += diff;
 	}
      }
      frame_timer += delay;
@@ -591,19 +596,51 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 	  __android_log_print(ANDROID_LOG_INFO, SYNC, "xxxxxxxxxxxxxxxxthe av clock is :%0.3fxxxxxxxxxxxxxxxxxxxxxx", (av_gettime() / 1000000.0));
       actual_delay = frame_timer - (av_gettime() / 1000000.0);
 	   __android_log_print(ANDROID_LOG_INFO, SYNC, "actual_delay:%0.3f", actual_delay);
-      if(actual_delay < 0.010) {
+     if(actual_delay < -0.010) {
 	/* Really it should skip the picture instead */
-	__android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
 	
-	actual_delay = 0.010;
-	//Output::VideoDriver_updateSurface();
+	
+	int numOfFramesToSkip = -actual_delay * ((fps==0)?(frames/(t2-t1)):fps);
+	
+	 __android_log_print(ANDROID_LOG_INFO, SYNC, "numOfFramesToSkip:%i", 1);
+	 __android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
+	mLast_video_pts += sPlayer->mDecoderVideo->dequeue(1);
+	frame_timer += -actual_delay;
 	return;
+	
+	
+	}
+/*	sws_scale(sPlayer->mConvertCtx,
+		      frame->data,
+		      frame->linesize,
+			  0,
+			  sPlayer->mVideoHeight,
+			  sPlayer->mFrame->data,
+			  sPlayer->mFrame->linesize);
+    Output::VideoDriver_updateSurface();
       }
-	  else
+	  else if(actual_delay > 0.010)
 	  {
       /* show the picture! */
-	  if(actual_delay > 0.010)
-		usleep(actual_delay*1000);
+	   if(actual_delay > 0.010) {
+		//usleep(actual_delay * 1000 + 0.5);
+		//repeat frame insread of sleep
+		 __android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!REPEATING");
+		 sws_scale(sPlayer->mConvertCtx,
+		      frame->data,
+		      frame->linesize,
+			  0,
+			  sPlayer->mVideoHeight,
+			  sPlayer->mFrame->data,
+			  sPlayer->mFrame->linesize);
+		for (int i=1;i<=2/*actual_delay*((fps==0)?(frames/(t2-t1)):fps)*/;i++)
+			{
+			
+			Output::VideoDriver_updateSurface();
+	}
+	
+		frame_timer += actual_delay;
+		}
 		// Convert the image from its native format to RGB
 	sws_scale(sPlayer->mConvertCtx,
 		      frame->data,
@@ -613,8 +650,19 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 			  sPlayer->mFrame->data,
 			  sPlayer->mFrame->linesize);
     Output::VideoDriver_updateSurface();
+/*	}
+	 else 
+	  {
+	  sws_scale(sPlayer->mConvertCtx,
+		      frame->data,
+		      frame->linesize,
+			  0,
+			  sPlayer->mVideoHeight,
+			  sPlayer->mFrame->data,
+			  sPlayer->mFrame->linesize);
+    Output::VideoDriver_updateSurface();
 	}
-	
+	*/
 }
 
 /**
@@ -666,6 +714,11 @@ void MediaPlayer::decodeMovie(void* ptr)
 	while (mCurrentState != MEDIA_PLAYER_DECODED && mCurrentState != MEDIA_PLAYER_STOPPED &&
 		   mCurrentState != MEDIA_PLAYER_STATE_ERROR)
 	{
+		if(mCurrentState == MEDIA_PLAYER_PAUSED)
+			{
+				//create condition variable for video/audio thread to wait on
+				pthread_mutex_lock(&mLock);
+			}
 		if (mDecoderVideo->packets() > FFMPEG_PLAYER_MAX_QUEUE_SIZE &&
 				mDecoderAudio->packets() > FFMPEG_PLAYER_MAX_QUEUE_SIZE) {
 			__android_log_print(ANDROID_LOG_INFO, TAG, "Sleeping, reached max queue size");
@@ -761,7 +814,7 @@ void* MediaPlayer::startRendering(void* ptr)
 
 status_t MediaPlayer::start()
 {
-	if (mCurrentState != MEDIA_PLAYER_PREPARED) {
+	if (mCurrentState < MEDIA_PLAYER_PREPARED) {
 		return INVALID_OPERATION;
 	}
 	pthread_create(&mPlayerThread, NULL, startPlayer, NULL);
@@ -782,7 +835,7 @@ status_t MediaPlayer::pause()
 	//pthread_mutex_lock(&mLock);
 	mCurrentState = MEDIA_PLAYER_PAUSED;
 	//pthread_mutex_unlock(&mLock);
-	suspend();
+
 	return NO_ERROR;
 }
 

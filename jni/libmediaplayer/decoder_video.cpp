@@ -26,6 +26,24 @@ bool DecoderVideo::prepare()
 	return true;
 }
 
+double DecoderVideo::dequeue(int packetsNum)
+{
+__android_log_print(ANDROID_LOG_INFO, TAG, "dequeue packets");
+	AVPacket pkt;
+	double pts;
+	for(int i=1;i<=packetsNum;i++)
+	{
+		if(mQueue->size()>0){
+			mQueue->get(&pkt,true);
+			pts = pkt.pts;
+			av_free_packet(&pkt);
+			}
+		else
+			return 0;
+	}
+	return pts;
+}
+
 double DecoderVideo::synchronize(AVFrame *src_frame, double pts) {
 
 	double frame_delay;
@@ -99,6 +117,8 @@ bool DecoderVideo::decode(void* ptr)
 	
     while(mRunning)
     {
+		//pthread_mutex_lock(&globalMutex);
+		//wait on condition variable to play other wise suspend
         if(mQueue->get(&pPacket, true) < 0)
         {
             mRunning = false;

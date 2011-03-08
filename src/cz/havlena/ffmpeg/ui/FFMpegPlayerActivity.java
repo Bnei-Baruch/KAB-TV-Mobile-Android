@@ -30,7 +30,7 @@ public class FFMpegPlayerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Intent i = getIntent();
-		String filePath = i.getStringExtra(getResources().getString(R.string.input_file));
+		String filePath = i.getStringExtra(getResources().getString(R.string.input_stream));
 		if(filePath == null) {
 			Log.d(TAG, "Not specified video file");
 			finish();
@@ -60,7 +60,17 @@ public class FFMpegPlayerActivity extends Activity {
 				finish();
 			}
 		}
+		
+		
+		
 	}
+	
+	public void onBackPressed() 
+	{
+		mMovieView.onBackPressed();
+		finish();
+	}
+	
 	
 	/*
 	@Override
@@ -144,7 +154,7 @@ public class FFMpegPlayerActivity extends Activity {
 
 		public void onStop() {
 			Log.d(TAG, "stopped");
-			FFMpegPlayerActivity.this.finish();
+			FFMpegPlay)erActivity.this.finish();
 		}
 		
 	}

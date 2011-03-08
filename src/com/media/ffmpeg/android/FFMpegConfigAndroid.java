@@ -16,7 +16,7 @@ public class FFMpegConfigAndroid extends FFMpegConfig {
 		resolution = getScreenResolution(context);
 		ratio = RATIO_3_2;
 		audioRate = 16000;
-		frameRate = 13;
+		frameRate = 24;
 	}
 	
 	private int[] getScreenResolution(Context context) {

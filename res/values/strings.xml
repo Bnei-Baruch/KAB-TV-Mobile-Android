@@ -5,6 +5,7 @@
     <string name="select_input_file">FFMpeg - please select input file</string>
     <string name="processing">Converting . . .</string>
     <string name="type_file">input file</string>
+    <string name="type_stream">input stream</string>
     <string name="input_file_info">File info:</string>
     <string name="convert">Convert</string>
     <string name="delete_src_movie">Delete src movie</string>
@@ -30,6 +31,7 @@
     
     <!-- used between activities to pass input video path -->
     <string name="input_file">Input_file</string>
+     <string name="input_stream">Input_stream</string>
     
     <string name="player_menu_about">About</string>
     
