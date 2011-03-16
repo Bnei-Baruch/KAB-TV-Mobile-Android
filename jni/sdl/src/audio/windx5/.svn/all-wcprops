@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/windx5
+END
+SDL_dx5audio.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/windx5/SDL_dx5audio.c
+END
+directx.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/windx5/directx.h
+END
+SDL_dx5audio.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/windx5/SDL_dx5audio.h
+END

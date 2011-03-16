@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/55/trunk/project/jni/sdl/src/video/android
+END
+SDL_androidvideo.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/34/trunk/project/jni/sdl/src/video/android/SDL_androidvideo.h
+END
+SDL_androidvideo.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/55/trunk/project/jni/sdl/src/video/android/SDL_androidvideo.c
+END

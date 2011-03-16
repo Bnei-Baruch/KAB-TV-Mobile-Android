@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/dummy
+END
+SDL_dummyaudio.c
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/dummy/SDL_dummyaudio.c
+END
+SDL_dummyaudio.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/dummy/SDL_dummyaudio.h
+END

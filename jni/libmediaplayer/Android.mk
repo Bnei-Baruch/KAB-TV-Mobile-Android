@@ -9,7 +9,9 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/../libffmpeg \
 	$(LOCAL_PATH)/../include \
 	$(LOCAL_PATH)/../include/android \
-	$(LOCAL_PATH)/../libmms/jni/libmms/src
+	$(LOCAL_PATH)/../libmms/jni/libmms/src \
+	$(LOCAL_PATH)/../sdl/include/ \
+	
 
 LOCAL_SRC_FILES := \
 	packetqueue.cpp \
@@ -30,9 +32,9 @@ endif
 
 LOCAL_LDLIBS := liblog
 
-LOCAL_SHARED_LIBRARIES :=  libjnivideo libjniaudio libmms
+LOCAL_SHARED_LIBRARIES :=  libjnivideo libjniaudio libmms 
 
-LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale  
+LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale libsdl
 
 LOCAL_MODULE := libmediaplayer
 

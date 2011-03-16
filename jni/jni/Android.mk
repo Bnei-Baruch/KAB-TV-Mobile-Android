@@ -15,12 +15,14 @@ LOCAL_CFLAGS += -DBUILD_WITH_CONVERTOR
 endif
 
 LOCAL_C_INCLUDES += \
+	$(LOCAL_PATH)/../sdl/include/ \
 	$(LOCAL_PATH)/../libffmpeg \
 	$(LOCAL_PATH)/../libmediaplayer \
 	$(LOCAL_PATH)/../include \
 	$(LOCAL_PATH)/../include/android \
 	$(LOCAL_PATH)/../include/android/utils \
-	$(LOCAL_PATH)/../libmms/jni/libmms/src
+	$(LOCAL_PATH)/../libmms/jni/libmms/src \ 
+	
 
 LOCAL_SRC_FILES := \
 		onLoad.cpp \
@@ -57,7 +59,7 @@ LOCAL_LDFLAGS := -Wl,-rpath=/data/data/cz.havlena.ffmpeg.ui/lib
 
 LOCAL_SHARED_LIBRARIES := liblog libdl libjniaudio libjnivideo libmms
 
-LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale libmediaplayer   
+LOCAL_STATIC_LIBRARIES := libavcodec libavformat libavutil libpostproc libswscale libmediaplayer libsdl  
 
 LOCAL_MODULE := libffmpeg_jni
 

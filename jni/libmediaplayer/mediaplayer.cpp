@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+
 extern "C" {
 	
 #include "libavcodec/avcodec.h"
@@ -25,6 +26,8 @@ extern "C" {
 
 #include "mediaplayer.h"
 #include "output.h"
+
+
 
 #define FPS_DEBUGGING true
 
@@ -121,6 +124,8 @@ MediaPlayer::MediaPlayer()
     sPlayer = this;
 	mLast_video_pts = 0;
 	frame_timer =0;
+	pictq_size=0;pictq_rindex=0; pictq_windex =0;
+	mQuit = 0;
 
     //sync params
  /*   double          frame_timer;
@@ -272,6 +277,11 @@ status_t MediaPlayer::prepareVideo()
 				   stream->codec->width,
 				   stream->codec->height);
 
+	fprintf(stderr, "SDL: 1");
+	pictq_mutex = SDL_CreateMutex();
+	fprintf(stderr, "SDL: 2");
+	pictq_cond = SDL_CreateCond();
+	
 	return NO_ERROR;
 }
 
@@ -432,7 +442,14 @@ status_t MediaPlayer::suspend() {
 	if(pthread_join(mPlayerThread, NULL) != 0) {
 		__android_log_print(ANDROID_LOG_ERROR, TAG, "Couldn't cancel player thread");
 	}
+	sPlayer->event.type = FF_QUIT_EVENT;
+    sPlayer->event.user.data1 = NULL;
+    SDL_PushEvent(&sPlayer->event);
+	mQuit = 1;
 	
+	if(pthread_join(mEventsThread, NULL) != 0) {
+		__android_log_print(ANDROID_LOG_ERROR, TAG, "Couldn't cancel events thread");
+	}
 	
 	 
 	
@@ -553,30 +570,109 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 
 	__android_log_print(ANDROID_LOG_INFO, TAG, "2");
 	*/
-	__android_log_print(ANDROID_LOG_INFO, TAG, "pts:%0.3f", pts);
-	
-	
+	 sPlayer->queue_picture( frame, pts);
+}
 
-			  
-			  
+int MediaPlayer::queue_picture(AVFrame *pFrame, double pts) {
+
+  VideoFrame *vp;
+  int dst_pix_fmt;
+  AVPicture pict;
+  static struct SwsContext *img_convert_ctx;
+
+__android_log_print(ANDROID_LOG_INFO, TAG, "queue picture");
+  /* wait until we have space for a new pic */
+  SDL_LockMutex(pictq_mutex);
+  __android_log_print(ANDROID_LOG_INFO, TAG, "pictq_mutex was entered in queue");
+  __android_log_print(ANDROID_LOG_INFO, TAG, "befoire while loop, pictq_size is:%i",pictq_size);
+  while(pictq_size >= VIDEO_PICTURE_QUEUE_SIZE &&
+	!sPlayer->mQuit ) {
+    SDL_CondWait(pictq_cond, pictq_mutex);
+  }
+  SDL_UnlockMutex(pictq_mutex);
+
+ 
+__android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_windex is:%i",pictq_windex);
+__android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_size is:%i",pictq_size);
+
+  // windex is set to 0 initially
+  vp = &pictq[pictq_windex];
+__android_log_print(ANDROID_LOG_INFO, TAG, "step 1");
+ 
+   sws_scale(sPlayer->mConvertCtx,
+		      pFrame->data,
+		      pFrame->linesize,
+			  0,
+			  sPlayer->mVideoHeight,
+			  sPlayer->mFrame->data,
+			  sPlayer->mFrame->linesize);
+   
+   __android_log_print(ANDROID_LOG_INFO, TAG, "step 3");
+   vp->pts = pts;
+   __android_log_print(ANDROID_LOG_INFO, TAG, "step 4");
+}
+    /* now we inform our display thread that we have a pic ready */
+    if(++pictq_windex == VIDEO_PICTURE_QUEUE_SIZE) {
+      pictq_windex = 0;
+    }
+    SDL_LockMutex(pictq_mutex);
+    pictq_size++;
+    SDL_UnlockMutex(pictq_mutex);
+  
+  return 0;
+}
+Uint32 MediaPlayer::sdl_refresh_timer_cb(Uint32 interval, void *opaque) {
+  
+  sPlayer->event.type = FF_REFRESH_EVENT;
+  sPlayer->event.user.data1 = opaque;
+   __android_log_print(ANDROID_LOG_INFO, TAG, "schedule_refresh was pushed");
+  SDL_PushEvent(&sPlayer->event);
+ 
+  return 0; /* 0 means stop timer */
+}
+
+/* schedule a video refresh in 'delay' ms */
+void MediaPlayer::schedule_refresh( int delay) {
+__android_log_print(ANDROID_LOG_INFO, TAG, "schedule_refresh got, delay is:%i",delay);
+  SDL_AddTimer(delay, MediaPlayer::sdl_refresh_timer_cb,NULL);
+}
+
+void MediaPlayer::video_refresh_timer()
+{	 
 	
+	__android_log_print(ANDROID_LOG_INFO, TAG, "video_refresh_timer");
+	VideoFrame *vp;
+
+	
+		if(mQuit)
+			return;
+			
+	 if(pictq_size == 0) {
+      schedule_refresh( 200);
+	  return;
+    } else {
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_rindex is:%i",pictq_rindex);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_size is:%i",pictq_size);
+      vp = &pictq[pictq_rindex];		  
+	}		  
+	__android_log_print(ANDROID_LOG_INFO, TAG, "pts:%0.3f", vp->pts);
 	//here we have to synch video to audio before we present it - we delay or skip frames according to the gap it has with audio clock
 	
 	static double actual_delay, delay, sync_threshold, ref_clock, diff;
 	
-	 delay = pts - mLast_video_pts; /* the pts from last time */
+	 delay = vp->pts - mLast_video_pts; /* the pts from last time */
       if(delay <= 0 || delay >= 1.0) {
 	/* if incorrect delay, use previous one */
 	delay = mLast_video_delay;
       }
       /* save for next time */
       mLast_video_delay = delay;
-      mLast_video_pts = pts;
+      mLast_video_pts = vp->pts;
 
       /* update delay to sync to audio */
       ref_clock = DecoderAudio::get_audio_clock();
-	  __android_log_print(ANDROID_LOG_INFO, SYNC, "(audio clock) ref_clock:%0.3f", pts);
-    diff = pts - ref_clock;
+	  __android_log_print(ANDROID_LOG_INFO, SYNC, "(audio clock) ref_clock:%0.3f",vp->pts);
+    diff = vp->pts - ref_clock;
 		 __android_log_print(ANDROID_LOG_INFO, SYNC, "(between pts and ref_clock) diff:%0.3f", diff);
       /* Skip or repeat the frame. Take delay into account
 	 FFPlay still doesn't "know if this is the best guess." */
@@ -600,69 +696,58 @@ void MediaPlayer::decode(AVFrame* frame, double pts)
 	/* Really it should skip the picture instead */
 	
 	
-	int numOfFramesToSkip = -actual_delay * ((fps==0)?(frames/(t2-t1)):fps);
+	//int numOfFramesToSkip = -actual_delay * ((fps==0)?(frames/(t2-t1)):fps);
 	
 	 __android_log_print(ANDROID_LOG_INFO, SYNC, "numOfFramesToSkip:%i", 1);
 	 __android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!SKIPPING");
-	mLast_video_pts += sPlayer->mDecoderVideo->dequeue(1);
-	frame_timer += -actual_delay;
-	return;
+	  schedule_refresh(30);
+			  __android_log_print(ANDROID_LOG_INFO, TAG, "schedule_refresh was sent actual_delay is too small");
+	//mLast_video_pts += sPlayer->mDecoderVideo->dequeue(1);
+	//frame_timer += -actual_delay;
 	
 	
-	}
-/*	sws_scale(sPlayer->mConvertCtx,
-		      frame->data,
-		      frame->linesize,
-			  0,
-			  sPlayer->mVideoHeight,
-			  sPlayer->mFrame->data,
-			  sPlayer->mFrame->linesize);
-    Output::VideoDriver_updateSurface();
-      }
-	  else if(actual_delay > 0.010)
-	  {
-      /* show the picture! */
-	   if(actual_delay > 0.010) {
-		//usleep(actual_delay * 1000 + 0.5);
+	
+	} else if(actual_delay > 0.010) {
+		
 		//repeat frame insread of sleep
 		 __android_log_print(ANDROID_LOG_INFO, SYNC, "!!!!!!!!!!!!!!!!REPEATING");
-		 sws_scale(sPlayer->mConvertCtx,
-		      frame->data,
-		      frame->linesize,
-			  0,
-			  sPlayer->mVideoHeight,
-			  sPlayer->mFrame->data,
-			  sPlayer->mFrame->linesize);
-		for (int i=1;i<=2/*actual_delay*((fps==0)?(frames/(t2-t1)):fps)*/;i++)
-			{
-			
-			Output::VideoDriver_updateSurface();
-	}
-	
-		frame_timer += actual_delay;
+		
+			  
+			  schedule_refresh( (int)(actual_delay * 1000 + 0.5));
+			  __android_log_print(ANDROID_LOG_INFO, TAG, "schedule_refresh was sent actual_delay is too big");
+			  
+		
+		
+		} else //incase we are synced then schedule refresh in 100 ms
+		{
+			schedule_refresh( 100);
 		}
-		// Convert the image from its native format to RGB
-	sws_scale(sPlayer->mConvertCtx,
-		      frame->data,
-		      frame->linesize,
-			  0,
-			  sPlayer->mVideoHeight,
-			  sPlayer->mFrame->data,
-			  sPlayer->mFrame->linesize);
-    Output::VideoDriver_updateSurface();
-/*	}
-	 else 
-	  {
-	  sws_scale(sPlayer->mConvertCtx,
-		      frame->data,
-		      frame->linesize,
-			  0,
-			  sPlayer->mVideoHeight,
-			  sPlayer->mFrame->data,
-			  sPlayer->mFrame->linesize);
-    Output::VideoDriver_updateSurface();
-	}
-	*/
+		
+		
+	{
+	
+	__android_log_print(ANDROID_LOG_INFO, TAG, "before update");
+	Output::VideoDriver_updateSurface();
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "after update");
+	 __android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_rindex is:%i",pictq_rindex);
+__android_log_print(ANDROID_LOG_INFO, TAG, "queue_picture, pictq_size is:%i",pictq_size);
+ 
+}
+	if(++pictq_rindex == VIDEO_PICTURE_QUEUE_SIZE) {
+	pictq_rindex = 0;
+      }
+	   __android_log_print(ANDROID_LOG_INFO, TAG, "before lock");
+      SDL_LockMutex(pictq_mutex);
+      pictq_size--;
+	  __android_log_print(ANDROID_LOG_INFO, TAG, "before condition signal");
+      SDL_CondSignal(pictq_cond);
+      SDL_UnlockMutex(pictq_mutex);
+	   __android_log_print(ANDROID_LOG_INFO, TAG, "after lock");
+	  
+	  
+	 
+	 
+	  
 }
 
 /**
@@ -806,6 +891,43 @@ void* MediaPlayer::startPlayer(void* ptr)
     sPlayer->decodeMovie(ptr);
 }
 
+void* MediaPlayer::ScheduleEvents(void* ptr)
+{
+    __android_log_print(ANDROID_LOG_INFO, TAG, "schedule events thread started");
+	if(SDL_Init(SDL_INIT_TIMER)) {
+    fprintf(stderr, "Could not initialize SDL - %s\n", SDL_GetError());
+    exit(1);
+  }
+	schedule_refresh(40);
+   for(;;) {
+
+    SDL_WaitEvent(&sPlayer->event);
+    switch(sPlayer->event.type) {
+    case FF_QUIT_EVENT:
+    case SDL_QUIT:
+	__android_log_print(ANDROID_LOG_INFO, TAG, "FF_QUIT_EVENT !!!!!!!!!!!!!!!!!!!!!!!!!!! exiting");
+	sPlayer->mQuit=1;
+	SDL_Quit();
+    return NULL; 
+      break;
+    case FF_ALLOC_EVENT:
+      
+      break;
+    case FF_REFRESH_EVENT:
+	__android_log_print(ANDROID_LOG_INFO, TAG, "FF_REFRESH_EVENT");
+	if(sPlayer->mQuit)
+	{
+		SDL_Quit();
+		return NULL;
+	}
+      sPlayer->video_refresh_timer();
+      break;
+    default:
+      break;
+    }
+}
+}
+
 void* MediaPlayer::startRendering(void* ptr)
 {
 	__android_log_print(ANDROID_LOG_INFO, TAG, "starting rendering thread");
@@ -819,6 +941,7 @@ status_t MediaPlayer::start()
 	}
 	pthread_create(&mPlayerThread, NULL, startPlayer, NULL);
 	//pthread_create(&mRenderThread, NULL, startRendering, NULL);
+	pthread_create(&mEventsThread, NULL, ScheduleEvents, NULL);
 	return NO_ERROR;
 }
 

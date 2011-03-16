@@ -1,0 +1,356 @@
+havlenapetr-FFMpeg-cc53d91/obj/local/armeabi/objs/ffmpeg_jni/com_media_ffmpeg_FFMpegPlayer.o: \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/com_media_ffmpeg_FFMpegPlayer.cpp \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/log.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/jniUtils.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdlib.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/cdefs.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/string.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/malloc.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/alloca.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/strings.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdint.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/_types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/_types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/posix_types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/stddef.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/compiler.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/posix_types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/kernel.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/sysmacros.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/memory.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/jni.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/methods.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavformat/avformat.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/time.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/time.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/time.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/siginfo.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/siginfo.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavcodec/avcodec.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/errno.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/errno.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/errno.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/errno.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/errno-base.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avutil.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/common.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/ctype.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/inttypes.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/limits.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/limits.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/limits.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/internal_types.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/limits.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/math.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/attributes.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/mem.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/error.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avutil.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/mathematics.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/rational.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/intfloat_readwrite.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/log.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/pixfmt.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avconfig.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavformat/avio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/common.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/mediaplayer.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/pthread.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/signal.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/signal.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/signal.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sched.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/utils/Vector.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/new \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/log.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/unistd.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/select.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/sysconf.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/capability.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/pathconf.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/cutils/uio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/cutils/logd.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/VectorImpl.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/assert.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/Errors.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/TypeHelpers.h \
+ /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/Errors.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder_audio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/thread.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/packetqueue.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder_video.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_main.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_stdinc.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_config.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_platform.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_config_android.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/begin_code.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/close_code.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_audio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_error.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_endian.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_mutex.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_thread.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_rwops.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_cdrom.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_cpuinfo.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_events.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_active.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_keyboard.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_keysym.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_mouse.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_video.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_joystick.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_quit.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_loadso.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_timer.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_version.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_thread.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mmsx.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mmsio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mms_config.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mms.h \
+ havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/bswap.h
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/log.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/jniUtils.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdlib.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/cdefs.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/string.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/malloc.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/alloca.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/strings.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdint.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/_types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/_types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/posix_types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/stddef.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/compiler.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/posix_types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/kernel.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/sysmacros.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/memory.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/jni.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/methods.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavformat/avformat.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/time.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/time.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/time.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/siginfo.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/siginfo.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/stdio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavcodec/avcodec.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/errno.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/errno.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/errno.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/errno.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/errno-base.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avutil.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/common.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/ctype.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/inttypes.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/limits.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/limits.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/limits.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/internal_types.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/machine/limits.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/math.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/attributes.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/mem.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/error.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avutil.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/mathematics.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/rational.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/intfloat_readwrite.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/log.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/pixfmt.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/avconfig.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavformat/avio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libffmpeg/libavutil/common.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/mediaplayer.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/pthread.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/signal.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm/signal.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/asm-generic/signal.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sched.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/utils/Vector.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/new:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/log.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/unistd.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/select.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/sys/sysconf.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/linux/capability.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/pathconf.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/cutils/uio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/cutils/logd.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/VectorImpl.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/assert.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/Errors.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../include/android/utils/TypeHelpers.h:
+
+/cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include/android/Errors.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder_audio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/thread.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/packetqueue.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmediaplayer/decoder_video.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_main.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_stdinc.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_config.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_platform.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_config_android.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/begin_code.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/close_code.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_audio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_error.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_endian.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_mutex.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_thread.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_rwops.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_cdrom.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_cpuinfo.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_events.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_active.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_keyboard.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_keysym.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_mouse.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_video.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_joystick.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_quit.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_loadso.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_timer.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_version.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../sdl/include/SDL_thread.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mmsx.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mmsio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mms_config.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/mms.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/jni/../libmms/jni/libmms/src/bswap.h:

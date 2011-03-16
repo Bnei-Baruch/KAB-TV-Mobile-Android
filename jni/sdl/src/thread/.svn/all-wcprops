@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/thread
+END
+SDL_thread_c.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/thread/SDL_thread_c.h
+END
+SDL_thread.c
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/thread/SDL_thread.c
+END
+SDL_systhread.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/thread/SDL_systhread.h
+END

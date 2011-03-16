@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/disk
+END
+SDL_diskaudio.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/disk/SDL_diskaudio.c
+END
+SDL_diskaudio.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/audio/disk/SDL_diskaudio.h
+END

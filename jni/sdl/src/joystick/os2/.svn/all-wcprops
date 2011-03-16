@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/joystick/os2
+END
+SDL_sysjoystick.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/joystick/os2/SDL_sysjoystick.c
+END
+joyos2.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/joystick/os2/joyos2.h
+END

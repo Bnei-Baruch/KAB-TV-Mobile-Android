@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/video/caca
+END
+SDL_cacaevents.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/video/caca/SDL_cacaevents.c
+END
+SDL_cacavideo.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/video/caca/SDL_cacavideo.c
+END
+SDL_cacaevents_c.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/video/caca/SDL_cacaevents_c.h
+END
+SDL_cacavideo.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/video/caca/SDL_cacavideo.h
+END

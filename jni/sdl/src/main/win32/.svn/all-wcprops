@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/main/win32
+END
+version.rc
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/main/win32/version.rc
+END
+SDL_win32_main.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/main/win32/SDL_win32_main.c
+END

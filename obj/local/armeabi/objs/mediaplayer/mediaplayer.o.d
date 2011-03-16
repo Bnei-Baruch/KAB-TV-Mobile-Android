@@ -93,6 +93,34 @@ havlenapetr-FFMpeg-cc53d91/obj/local/armeabi/objs/mediaplayer/mediaplayer.o: \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/thread.h \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/packetqueue.h \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder_video.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_main.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_stdinc.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_config.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_platform.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_config_android.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/begin_code.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/close_code.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_audio.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_error.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_endian.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_mutex.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_thread.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_rwops.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_cdrom.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_cpuinfo.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_events.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_active.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_keyboard.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_keysym.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_mouse.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_video.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_joystick.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_quit.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_loadso.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_timer.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_version.h \
+ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_thread.h \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libmms/jni/libmms/src/mmsx.h \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libmms/jni/libmms/src/mmsio.h \
  havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libmms/jni/libmms/src/mms_config.h \
@@ -287,6 +315,62 @@ havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/thread.h:
 havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/packetqueue.h:
 
 havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/decoder_video.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_main.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_stdinc.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_config.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_platform.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_config_android.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/begin_code.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/close_code.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_audio.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_error.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_endian.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_mutex.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_thread.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_rwops.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_cdrom.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_cpuinfo.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_events.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_active.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_keyboard.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_keysym.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_mouse.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_video.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_joystick.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_quit.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_loadso.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_timer.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_version.h:
+
+havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../sdl/include/SDL_thread.h:
 
 havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer/../libmms/jni/libmms/src/mmsx.h:
 

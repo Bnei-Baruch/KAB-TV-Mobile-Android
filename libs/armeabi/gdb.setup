@@ -1,10 +1,11 @@
 set solib-search-path ./havlenapetr-FFMpeg-cc53d91/obj/local/armeabi
 directory /cygdrive/e/temp/android-ndk/android-ndk/build/platforms/android-8/arch-arm/usr/include
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
-directory havlenapetr-FFMpeg-cc53d91/jni/libmediaplayer
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl
+directory havlenapetr-FFMpeg-cc53d91/jni/sdl

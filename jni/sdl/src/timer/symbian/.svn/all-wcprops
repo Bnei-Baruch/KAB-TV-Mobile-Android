@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/timer/symbian
+END
+SDL_systimer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/timer/symbian/SDL_systimer.cpp
+END

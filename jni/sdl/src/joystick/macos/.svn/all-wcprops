@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/joystick/macos
+END
+SDL_sysjoystick.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/4/trunk/project/jni/sdl/src/joystick/macos/SDL_sysjoystick.c
+END

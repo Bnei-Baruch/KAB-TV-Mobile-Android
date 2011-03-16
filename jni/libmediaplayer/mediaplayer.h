@@ -11,6 +11,16 @@
 #include "decoder_audio.h"
 #include "decoder_video.h"
 
+
+extern "C" {
+	
+#include "SDL.h"
+#include "SDL_thread.h"
+
+	
+} // end of extern C
+
+
 #include "mmsx.h"
 
 #include "mms.h"
@@ -19,6 +29,12 @@
 
 #define AV_SYNC_THRESHOLD 0.01
 #define AV_NOSYNC_THRESHOLD 10.0
+#define VIDEO_PICTURE_QUEUE_SIZE 1
+
+#define FF_ALLOC_EVENT   (SDL_USEREVENT)
+#define FF_REFRESH_EVENT (SDL_USEREVENT + 1)
+#define FF_QUIT_EVENT (SDL_USEREVENT + 2)
+
 
 using namespace android;
 
@@ -115,7 +131,12 @@ enum media_player_states {
     MEDIA_PLAYER_PLAYBACK_COMPLETE  = 1 << 8
 };
 
-
+typedef struct VideoFrame {
+  AVFrame* frame;
+  int VideoHeight;
+  double pts;
+  int allocated;
+} VideoFrame;
 
 //mms class for connections
 class MMSConnection
@@ -177,7 +198,8 @@ public:
 //            status_t        getMetadata(bool update_only, bool apply_filter, Parcel *metadata);
 	status_t        suspend();
 	status_t        resume();
-
+	
+	static Uint32 sdl_refresh_timer_cb(Uint32 interval, void *opaque);
 private:
 	status_t					prepareAudio();
 	status_t					prepareVideo();
@@ -185,17 +207,26 @@ private:
 	static void					ffmpegNotify(void* ptr, int level, const char* fmt, va_list vl);
 	static void*				startPlayer(void* ptr);
 	static void*				startRendering(void* ptr);
+	static void*				ScheduleEvents(void* ptr);
+	
 
 	static void 				decode(AVFrame* frame, double pts);
 	static void 				decode(int16_t* buffer, int buffer_size);
 
+	
+	static void schedule_refresh(int delay);
+	
+	
 	void						decodeMovie(void* ptr);
 	void 						render(void* ptr);
+	int 						queue_picture(AVFrame *pFrame, double pts);
+	void 						video_refresh_timer();
 	
 	double 						mTime;
 	pthread_mutex_t             mLock;
 	pthread_t					mPlayerThread;
 	pthread_t					mRenderThread;
+	pthread_t					mEventsThread;
 	Vector<AVFrame*>			mVideoQueue;
     //Mutex                       mNotifyLock;
     //Condition                   mSignal;
@@ -225,6 +256,12 @@ private:
     int                         mVideoWidth;
     int                         mVideoHeight;
 	MMSConnection*				mMMSConnection;
+	VideoFrame    pictq[VIDEO_PICTURE_QUEUE_SIZE];
+	 int             pictq_size, pictq_rindex, pictq_windex;
+	SDL_Event       event;
+	SDL_mutex       *pictq_mutex;
+	SDL_cond        *pictq_cond;
+	int 			mQuit;
 };
 
 
