@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import cz.havlena.ffmpeg.ui.FFMpegPlayerActivity;
 import cz.havlena.ffmpeg.ui.MainKabTv;
 
 public class CommunicationManager {
@@ -21,16 +22,18 @@ public class CommunicationManager {
 		 
 		if (_connec != null && (_connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED) ||(_connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED)){   
 			 isConnected = true;        
-			 Log.i(CommunicationManager.class.getName(), "Device is connected to the network. Online mode is available."); 
+			 Log.i(CommunicationManager.class.getName(), "Device is connected to the network. Online mode is available.");
+			//notify player - if is playing then start playing
+				FFMpegPlayerActivity.checkCommunicationState(true);
 			 }
-		 else if (_connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  _connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED ) { 
+		 else {//if (_connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  _connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED ) { 
 			 isConnected = false;      
 			 Log.w(CommunicationManager.class.getName(), "Device is NOT connected to the network. Offline mode.");   
 			 //notify the player the there is no connection / preform suspend
-			 MainKabTv.checkCommunicationState(false);
+			 FFMpegPlayerActivity.checkCommunicationState(false);
+			 
 			 }
-		//notify player - if is playing then start playing
-		MainKabTv.checkCommunicationState(true);
+		
 		 set_isConnected(isConnected);
 		 }
 

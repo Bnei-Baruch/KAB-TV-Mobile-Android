@@ -20,6 +20,15 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
 	private FFMpegPlayer			mPlayer;
 	private SurfaceHolder			mSurfaceHolder;
 	private MediaController			mMediaController;
+	private SurfaceView				mSurfaceView;
+	
+	
+	public FFMpegMovieViewAndroid(Context context,SurfaceView surfaceView) {
+        super(context);
+        mSurfaceView = surfaceView;
+        initVideoView(context);
+    }
+	
 	
 	public FFMpegMovieViewAndroid(Context context) {
         super(context);
@@ -39,19 +48,24 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
     private void initVideoView(Context context) {
     	mContext = context;
     	mPlayer = new FFMpegPlayer();
-    	getHolder().addCallback(mSHCallback);
+    	mSurfaceView.getHolder().addCallback(mSHCallback);
+    	//getHolder().addCallback(mSHCallback);
     }
     
     public void onBackPressed ()
     {
     	release();
     }
+    public void SetSurfaceVideo (SurfaceView surfaceView)
+    {
+    	mSurfaceView = surfaceView;
+    }
     
     private void attachMediaController() {
-    	mMediaController = new MediaController(mContext);
+    	mMediaController = new MediaController(this.getContext());
         View anchorView = this.getParent() instanceof View ?
                    // (View)this.getParent() : this;
-        		 this : this;
+        		 mSurfaceView : mSurfaceView;
         mMediaController.setMediaPlayer(mMediaPlayerControl);
         mMediaController.setAnchorView(anchorView);
         mMediaController.setEnabled(true);
@@ -87,6 +101,19 @@ public class FFMpegMovieViewAndroid extends SurfaceView {
 		
 		Log.d(TAG, "released");
     }
+    
+    public void pause() {
+		mPlayer.suspend();
+	}
+    
+    public void start() {
+		mPlayer.start();
+	}
+    
+    public boolean isPlaying() {
+		return mPlayer.isPlaying();
+	}
+    
     
     public boolean onTouchEvent(android.view.MotionEvent event) {
     	if(!mMediaController.isShowing()) {

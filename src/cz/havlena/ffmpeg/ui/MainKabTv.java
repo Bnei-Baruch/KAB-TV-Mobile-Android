@@ -8,7 +8,10 @@ import java.util.Comparator;
 import com.media.ffmpeg.FFMpeg;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -17,7 +20,9 @@ import android.view.View;
 
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -30,18 +35,20 @@ import android.widget.TextView;
 
 import kab.tv.connection.*;
 
-public class MainKabTv extends ListActivity {
+public class MainKabTv extends Activity {
 
 	private static final String TAG = "MainKabTv";
 	
 	int mCurrentStreamSelected;
 	int bIsPlaying;
 	
+	private boolean				mIsPlaying =false;
 	private String 			mTitle = "KAB TV 66";
 	private TextView 		mTextViewLocation;
 	private int	[]			mStream;
 	ConnectivityReceiver    mComNotifier;
 	public Intent i;
+	public static  MainKabTv mSelf;
 
 	
 	
@@ -51,21 +58,52 @@ public class MainKabTv extends ListActivity {
 		super.onCreate(savedInstanceState);
 		//TabHost tabHost = getTabHost();	
 		//LayoutInflater.from(this).inflate(R.layout.mainkabtv, tabHost.getTabContentView(), true);
-		setContentView(R.layout.ffmpeg_file_explorer);
+		setContentView(R.layout.mainkabtv);
 		mTextViewLocation = (TextView) findViewById(R.id.textview_path);
 		mTextViewLocation.append("Kab 66");
-		startPlayer(/*sream url*/);
+		//startPlayer(/*sream url*/);
 		CommunicationManager.mCurrentContext = this;
-
+		mComNotifier = new ConnectivityReceiver();
+		//registerReceiver(mComNotifier,
+       //         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		//i = new Intent(this, ConnectivityManagerTestActivity.class);
+    	
+    	//startActivity(i);
+		mSelf  = this;
+		startPlayer(/*sream url*/);
+    	
+		
 	}
 	
 	
 	
 
-	public static boolean checkCommunicationState(boolean status) {
+	public static void checkCommunicationState(boolean status) {
 		
+		if(status && !mSelf.mIsPlaying)
+			mSelf.startPlayer();
+		else if(!status){
+
+			AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
+			alertDialog.setTitle("Communication disconnected");
+			alertDialog.setMessage("Do you want to wait or quit?");
+			 alertDialog.setButton("Wait", new DialogInterface.OnClickListener() {
+				     public void onClick(DialogInterface dialog, int which) {
+				    	 
+				     return;
+				
+				   } }); 
+			 alertDialog.setButton2("Quit", new DialogInterface.OnClickListener() {
+			     public void onClick(DialogInterface dialog, int which) {
+			
+			    	 mSelf.finish();
+			
+			   } }); 
+			
+			 alertDialog.show();
+		}
+			
 		
-		return true;
 	}
 	
 	//Context.getSystemService(Context.CONNECTIVITY_SERVICE). 
@@ -82,11 +120,12 @@ public class MainKabTv extends ListActivity {
 		
 //	}
 
-	private void startPlayer(/*sream url*/) {
+	private static void startPlayer(/*sream url*/) {
 		String streamUrl = "Test";
-		i = new Intent(this, FFMpegPlayerActivity.class);
-    	i.putExtra(getResources().getString(R.string.input_stream), streamUrl);
-    	startActivity(i);
+		mSelf.i = new Intent(mSelf, FFMpegPlayerActivity.class);
+		mSelf.i.putExtra(mSelf.getResources().getString(R.string.input_stream), streamUrl);
+		mSelf.startActivity(mSelf.i);
+		mSelf.mIsPlaying =true;
     }
 	
 }

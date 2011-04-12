@@ -206,7 +206,9 @@ status_t MediaPlayer::prepareVideo()
 	// Find the first video stream
 	mVideoStreamIndex = -1;
 	for (int i = 0; i < mMovieFile->nb_streams; i++) {
+	__android_log_print(ANDROID_LOG_INFO, TAG, "prepareVideo step 1");
 		if (mMovieFile->streams[i]->codec->codec_type == CODEC_TYPE_VIDEO) {
+			__android_log_print(ANDROID_LOG_INFO, TAG, "prepareVideo step 2");
 			mVideoStreamIndex = i;
 			break;
 		}
@@ -221,6 +223,7 @@ status_t MediaPlayer::prepareVideo()
 	// Get a pointer to the codec context for the video stream
 	AVCodecContext* codec_ctx = stream->codec;
 	AVCodec* codec = avcodec_find_decoder(codec_ctx->codec_id);
+	__android_log_print(ANDROID_LOG_INFO, TAG, "prepareVideo step 3");
 	if (codec == NULL) {
 		__android_log_print(ANDROID_LOG_INFO, TAG, "MediaPlayer::prepareVideo: did not find codec");
 		return INVALID_OPERATION;
@@ -369,15 +372,16 @@ status_t MediaPlayer::setDataSource(const char *url)
       	int bandwidth = 192000;
 
       	if((this1 = mmsx_connect((mms_io_t*)mms_get_default_io_impl(),data,urlmms,bandwidth) ))
-
+		{
+			 __android_log_print(ANDROID_LOG_INFO, TAG, "MMS: Connected\n");
       		 fprintf(stderr, "MMS: Connected");
-
+		}
 
 
       	if(init_put_byte(&ByteIOCtx, buf, 32768, 0, this1, read_data, NULL, seek_data) < 0)
 
       	{
-
+			  __android_log_print(ANDROID_LOG_INFO, TAG,"init_put_byte not successful\n");
       		 fprintf(stderr, "init_put_byte not successful\n");
 
       	}
@@ -385,7 +389,7 @@ status_t MediaPlayer::setDataSource(const char *url)
       	else
 
       	{
-
+			 __android_log_print(ANDROID_LOG_INFO, TAG,"init_put_byte  successful\n");
       		 fprintf(stderr, "init_put_byte  successful\n");
 
       	}
@@ -399,11 +403,13 @@ status_t MediaPlayer::setDataSource(const char *url)
       // Open video file
       if(av_open_input_stream(&mMovieFile, &ByteIOCtx, urlmms, pAVInputFormat, NULL)!=0)
       {
+	  __android_log_print(ANDROID_LOG_INFO, TAG,"av_open_input_stream not successful\n");
        fprintf(stderr, "av_open_input_stream not successful\n");
         return -1; // Couldn't open file
     	}
     	else
     	{
+		 __android_log_print(ANDROID_LOG_INFO, TAG,"av_open_input_stream  successful\n");
     		fprintf(stderr, "av_open_input_stream  successful\n");
     	}
 
@@ -610,7 +616,7 @@ __android_log_print(ANDROID_LOG_INFO, TAG, "step 1");
    __android_log_print(ANDROID_LOG_INFO, TAG, "step 3");
    vp->pts = pts;
    __android_log_print(ANDROID_LOG_INFO, TAG, "step 4");
-}
+
     /* now we inform our display thread that we have a pic ready */
     if(++pictq_windex == VIDEO_PICTURE_QUEUE_SIZE) {
       pictq_windex = 0;

@@ -7,7 +7,7 @@
         <activity 
         		  android:name=".FFMpegPlayerActivity"
                   android:label="@string/app_name"
-                  android:screenOrientation="portrait"
+                  android:screenOrientation="sensor"
                   android:theme="@android:style/Theme.Light">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,6 +17,15 @@
         <activity 
         		  android:name=".FFMpegFileExplorer"
                   android:label="@string/select_input_file"
+                  android:screenOrientation="portrait">
+		<intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+            
+        </activity>
+         <activity 
+        		  android:name=".ConnectivityManagerTestActivity"
+                  android:label="@string/app_name"
                   android:screenOrientation="portrait">
 		<intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

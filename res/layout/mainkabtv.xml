@@ -21,4 +21,5 @@
 	    android:text="@string/label_no_data"/>
 		    
 
+<ToggleButton android:text="@+id/ToggleButton01" android:id="@+id/ToggleButton01" android:layout_width="wrap_content" android:layout_height="wrap_content"></ToggleButton>
 </LinearLayout>

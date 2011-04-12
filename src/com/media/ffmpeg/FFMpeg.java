@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.SurfaceView;
 
 import com.media.ffmpeg.android.FFMpegMovieViewAndroid;
 import com.media.ffmpeg.config.FFMpegConfig;
@@ -110,6 +111,10 @@ public class FFMpeg {
     
     public FFMpegMovieViewAndroid getMovieView(Context context) {
     	return new FFMpegMovieViewAndroid(context);
+    }
+    
+    public FFMpegMovieViewAndroid getMovieView(Context context,SurfaceView surfaceview) {
+    	return new FFMpegMovieViewAndroid(context,surfaceview);
     }
     
     public void setBitrate(String bitrate) {
