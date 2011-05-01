@@ -51,8 +51,7 @@ public class FFMpegPlayerActivity extends Activity {
 		
 		mSelf  = this;
 		mComNotifier = new ConnectivityReceiver();
-		registerReceiver(mComNotifier,
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		
 		 // attempt to get data from before device configuration change  
 		Bundle returnData = (Bundle) getLastNonConfigurationInstance();        
 		if (returnData == null) { 
@@ -125,7 +124,8 @@ public class FFMpegPlayerActivity extends Activity {
 //,ViewGroup.LayoutParams.MATCH_PARENT ));
 				//((ViewGroup) findViewById(R.layout.main)).addView(mMovieView, 320,240);
 				 //---get the current display info---
-		      
+				registerReceiver(mComNotifier,
+		                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 			} catch (FFMpegException e) {
 				Log.d(TAG, "Error when inicializing ffmpeg: " + e.getMessage());
 				FFMpegMessageBox.show(this, e);
@@ -155,11 +155,20 @@ public class FFMpegPlayerActivity extends Activity {
 		
 	 } 
 		*/ 
+	 @Override
+	    protected void onStop() {
+	        //-- we will enable screen timeout, while scumm is paused
+	       
+	        	unregisterReceiver(mComNotifier);
+	        	
+	        
+	        super.onStop();
+	    }
 	 
 	public void onBackPressed() 
 	{
 		mMovieView.onBackPressed();
-		 unregisterReceiver (mComNotifier);
+		 //unregisterReceiver (mComNotifier);
 		finish();
 		Log.d(TAG, "onBackPressed in FFMpegPlayerActivity");
 	}
@@ -170,15 +179,15 @@ public static void checkCommunicationState(boolean status) {
 			mSelf.mMovieView.start();
 		else if(!status){
 
-			AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
+		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
 			alertDialog.setTitle("Communication disconnected");
 			alertDialog.setMessage("Do you want to wait or quit?");
 			 alertDialog.setButton("Wait", new DialogInterface.OnClickListener() {
-				     public void onClick(DialogInterface dialog, int which) {
+				     public void onClick(DialogInterface dialog, int which) {*/
 				    	 mSelf.mMovieView.pause();
 				     return;
 				
-				   } }); 
+	/*			   } }); 
 			 alertDialog.setButton2("Quit", new DialogInterface.OnClickListener() {
 			     public void onClick(DialogInterface dialog, int which) {
 			
@@ -186,7 +195,7 @@ public static void checkCommunicationState(boolean status) {
 			
 			   } }); 
 			
-			 alertDialog.show();
+			 alertDialog.show();*/
 		}
 			
 		

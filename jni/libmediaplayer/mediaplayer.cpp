@@ -49,9 +49,10 @@ const char *urlmms = "mms://vod.kab.tv/heb_medium";
 
       	//const char * uri = "radioheb";
 		
-		const char *host = "vod.kab.tv";
-		
-		const char * uri = "heb_medium";
+		//const char *host = "vod.kab.tv";
+		const char *host = "switch3.castup.net";
+		// http://switch3.castup.net/cunet/gm.asp?ClipMediaID=160788
+		const char * uri = "cunet/gm.asp?ClipMediaID=160788";
 
       	const char *query ="";
 

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 
+
 import com.media.ffmpeg.FFMpeg;
 
 
@@ -35,7 +36,7 @@ import android.widget.TextView;
 
 import kab.tv.connection.*;
 
-public class MainKabTv extends Activity {
+public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactory*/{
 
 	private static final String TAG = "MainKabTv";
 	
@@ -56,14 +57,29 @@ public class MainKabTv extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//TabHost tabHost = getTabHost();	
+		TabHost tabHost = getTabHost();	
 		//LayoutInflater.from(this).inflate(R.layout.mainkabtv, tabHost.getTabContentView(), true);
-		setContentView(R.layout.mainkabtv);
-		mTextViewLocation = (TextView) findViewById(R.id.textview_path);
-		mTextViewLocation.append("Kab 66");
+	//	setContentView(R.layout.mainkabtv);
+		//mTextViewLocation = (TextView) findViewById(R.id.textview_path);
+		//mTextViewLocation.append("Kab 66");
 		//startPlayer(/*sream url*/);
+		
+		
+		// LayoutInflater.from(this).inflate(R.layout.mainkabtv, tabHost.getTabContentView(), true);
+	
+		Intent i = new Intent(this, FFMpegPlayerActivity.class);
+		i.putExtra(getResources().getString(R.string.input_stream), "test");
+		 	tabHost.addTab(tabHost.newTabSpec("הגדרות")
+	                .setIndicator("הגדרות")
+	                .setContent(new Intent(this, StreamsGrid.class)));
+	        tabHost.addTab(tabHost.newTabSpec("ערוצים")
+	                .setIndicator("ערוצים")
+	                .setContent(i));
+	       
+	        
+	        
 		CommunicationManager.mCurrentContext = this;
-		mComNotifier = new ConnectivityReceiver();
+		//mComNotifier = new ConnectivityReceiver();
 		//registerReceiver(mComNotifier,
        //         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 		//i = new Intent(this, ConnectivityManagerTestActivity.class);
@@ -76,7 +92,12 @@ public class MainKabTv extends Activity {
 	}
 	
 	
-	
+	 /** {@inheritDoc} */
+    public View createTabContent(String tag) {
+        final TextView tv = new TextView(this);
+        tv.setText("Content for tab with tag " + tag);
+        return tv;
+    }
 
 	public static void checkCommunicationState(boolean status) {
 		

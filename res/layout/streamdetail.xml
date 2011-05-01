@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/streamdetail"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:layout_x="201px"
+android:layout_y="165px"
+android:gravity="center_horizontal">
+
+<RelativeLayout
+
+android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dip">
+
+<ImageView
+android:id="@+id/icon_image"
+android:layout_width="144dip"
+android:layout_height="144dip">
+<Button 
+android:id="@+id/schedule"
+android:layout_width="120dip" 
+android:layout_height="60dip" 
+android:text="schedule"
+android:layout_alignParentRight="true"
+android:layout_centerVertical="true">
+</Button>
+</ImageView>
+
+
+
+
+
+
+
+
+</RelativeLayout>
+<TextView
+android:id="@+id/icon_text"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="TextView"
+android:gravity="center_horizontal"
+android:textColorHighlight="#656565">
+</TextView>
+</LinearLayout>
