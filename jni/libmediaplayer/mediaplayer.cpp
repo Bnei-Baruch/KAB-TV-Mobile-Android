@@ -42,7 +42,7 @@ static unsigned char buf[32768];
 
 //const char *urlmms = "mms://vod.kab.tv/radioheb";
 
-const char *urlmms = "mms://vod.kab.tv/heb_medium";
+//const char *urlmms = "http://switch3.castup.net/cunet/gm.asp?ClipMediaID=160788";
 
 
       	//const char *host = "vod.kab.tv";
@@ -333,7 +333,7 @@ status_t MediaPlayer::setDataSource(const char *url)
 {
     __android_log_print(ANDROID_LOG_INFO, TAG, "setDataSource(%s)", url);
     status_t err = BAD_VALUE;
-
+	const char *urlmms = url;
     //get mms stream
 
     __android_log_print(ANDROID_LOG_INFO, TAG, "NO PTS VALUE IS :%0.3f", AV_NOPTS_VALUE);

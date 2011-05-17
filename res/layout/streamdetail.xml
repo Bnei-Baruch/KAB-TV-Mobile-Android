@@ -1,49 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/streamdetail"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:layout_x="201px"
-android:layout_y="165px"
-android:gravity="center_horizontal">
-
 <RelativeLayout
-
-android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dip">
-
+android:id="@+id/widget32"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
 <ImageView
-android:id="@+id/icon_image"
-android:layout_width="144dip"
-android:layout_height="144dip">
-<Button 
-android:id="@+id/schedule"
-android:layout_width="120dip" 
-android:layout_height="60dip" 
-android:text="schedule"
-android:layout_alignParentRight="true"
-android:layout_centerVertical="true">
-</Button>
+android:id="@+id/widget28"
+android:layout_width="180px"
+android:layout_height="162px"
+android:layout_alignParentTop="true"
+android:layout_alignParentLeft="true"
+>
 </ImageView>
-
-
-
-
-
-
-
-
-</RelativeLayout>
+<Button
+android:id="@+id/widget29"
+android:layout_width="wrap_content"
+android:layout_height="53px"
+android:text="Schedule"
+android:layout_alignParentTop="true"
+android:layout_alignParentRight="true"
+>
+</Button>
 <TextView
-android:id="@+id/icon_text"
+android:id="@+id/detail_text"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="TextView"
-android:gravity="center_horizontal"
-android:textColorHighlight="#656565">
+android:layout_centerVertical="true"
+
+>
 </TextView>
-</LinearLayout>
+
+
+
+ <TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="wrap_content"   
+     android:layout_height="wrap_content" 
+     android:background="@drawable/shape"
+     android:layout_alignParentBottom="true"
+     android:shrinkColumns= "1"
+        android:stretchColumns="1">    
+        <TableRow
+         android:id="@+id/row1" 
+        android:layout_height="wrap_content"
+         android:background="@drawable/rowbackground">  
+             
+          <TextView 
+          android:id="@+id/stream"     
+               android:text="וידאו - איכות גבוהה"
+               android:padding="20dip" />  
+        <TextView            
+             android:text=">" 
+              android:gravity="right"       
+                   android:padding="20dip" /> 
+                      </TableRow>  
+                        <TableRow
+                        android:id="@+id/row2" 
+                         android:background="@drawable/rowbackground"
+                                                android:shrinkColumns="*"> 
+                          
+                              <TextView 
+             android:text="וידאו - איכות בינונית"   
+              android:padding="20dip" />     
+                 <TextView           
+                  android:text=">"     
+                  android:gravity="right"        
+                   android:padding="20dip" /> 
+                    </TableRow>
+                     <TableRow
+                      android:background="@drawable/rowbackground"
+                      android:id="@+id/row3" >      
+          <TextView      
+               android:text="אודיו - איכות גבוהה"
+               android:padding="20dip" />  
+        <TextView            
+             android:text=">" 
+              android:gravity="right"       
+                   android:padding="20dip" /> 
+                      </TableRow>  
+                        <TableRow
+                         android:background="@drawable/rowbackground"
+                        android:id="@+id/row4" 
+                        android:shrinkColumns="*">  
+                              <TextView 
+             android:text="אודיו - איכות בינונית"   
+              android:padding="20dip" />     
+                 <TextView           
+                  android:text=">"     
+                  android:gravity="right"        
+                   android:padding="20dip" /> 
+                    </TableRow>
+</TableLayout>
+
+</RelativeLayout>

@@ -34,8 +34,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import kab.tv.connection.ChannelInfo;
+import kab.tv.connection.StreamInfo;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -72,7 +83,10 @@ public class StreamsGrid extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "Not specified video file");
+				Log.d(TAG, "select a stream");
+				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
+				i.putExtra(getResources().getString(R.string.input_stream),  mStreams.get(arg2));
+				startActivity(i);
 				
 			}   
         	})); 
@@ -87,6 +101,7 @@ public class StreamsGrid extends Activity {
 
     private List<ResolveInfo> mApps;
     private List<StreamInfo> mStreams;
+    private List<ChannelInfo> mChannels;
 
     @SuppressWarnings("rawtypes")
 	private void loadApps() {
@@ -95,19 +110,40 @@ public class StreamsGrid extends Activity {
 
         mApps = getPackageManager().queryIntentActivities(mainIntent, 0);
         
-        //loading streams from xml received from server, currently will load it hard coded
-        StreamInfo info = new StreamInfo();
-        info.mIcon = BitmapFactory.decodeResource(getResources(),R.drawable.android_hdpi);
-        info.mStreamName = "ערוץ 66 - איכות גבוהה";
-        info.mType = StreamType.TV;
-        info.mURL = "http://switch3.castup.net/cunet/gm.asp?ClipMediaID=160788";
+        //loading channels from xml received from server, currently will load it hard coded
+        StreamInfo info = new StreamInfo(null);
+      //  info.mIcon = BitmapFactory.decodeResource(getResources(),R.drawable.android_hdpi);
+        info.setmStreamName("ערוץ 66 - איכות גבוהה");
+       // info.mType = StreamType.TV;
+     //   info.mURL = "http://switch3.castup.net/cunet/gm.asp?ClipMediaID=160788";
         
-     
+        StreamInfo info1 = new StreamInfo(null);
+     //   info1.mIcon = BitmapFactory.decodeResource(getResources(),R.drawable.android_hdpi);
+        info1.setmStreamName("ערוץ 66 - איכות בינונית");
+      //  info1.mType = StreamType.TV;
+    //    info1.mURL = "mms://vod.kab.tv/heb_medium";
+        
         mStreams = new ArrayList<StreamInfo>();
         
         mStreams.add(info);
+        mStreams.add(info1);
         
+        ///////////////////////////////////////////////////////////////////////////////////
         
+        /// 1. Get configuration XML from server
+        
+        /// 2. Get channels node
+        
+        // Loop
+        /// 3. Create channel
+        
+        /// 4. Create streams
+        
+        /// 5. Create stream in streams
+        
+        /// 6. Create singelton that will hold channel info list
+        
+        //////////////////////////////////////////////////////////////////////////////////
         
       }
         
@@ -127,7 +163,7 @@ public class StreamsGrid extends Activity {
 				v = li.inflate(R.layout.icon, null);
 				TextView tv = (TextView)v.findViewById(R.id.icon_text);  
 
-			    tv.setText(mStreams.get(position).mStreamName);  
+			    tv.setText(mStreams.get(position).getmStreamName());  
 
 			    iv = (ImageView)v.findViewById(R.id.icon_image); 
                // i = new ImageView(StreamsGrid.this);
@@ -135,7 +171,7 @@ public class StreamsGrid extends Activity {
                // i.setLayoutParams(new GridView.LayoutParams(50, 50));
 			    ResolveInfo info = mApps.get(position);
 	            iv.setImageDrawable(info.activityInfo.loadIcon(getPackageManager()));
-	            iv.setImageBitmap(mStreams.get(position).mIcon);
+	  //          iv.setImageBitmap(mStreams.get(position).mIcon);
             } else {
                 v = (View) convertView;
             }
@@ -158,5 +194,8 @@ public class StreamsGrid extends Activity {
             return position;
         }
     }
+    
+    
+   
 
 }
