@@ -22,7 +22,7 @@ import org.xml.sax.XMLReader;
 
 public class Channels {
 	
-	static List<ChannelInfo> mChannels;
+	private static List<ChannelInfo> mChannels;
 	URL mConfigurationUrl;
 	Boolean mDataLoaded;
 	public int mNumberOfChannelsLoaded;
@@ -43,7 +43,7 @@ public class Channels {
 	      if(null == _instance) {
 	         _instance = new Channels();
 	         _instance.mConfigurationUrl =  new URL("http://mobile.kbb1.com/kab_channel/configuration.xml");
-	         mChannels = new ArrayList<ChannelInfo>();
+	         setmChannels(new ArrayList<ChannelInfo>());
 	      }
 	      return _instance;
 	   }
@@ -81,28 +81,28 @@ public class Channels {
 
 	public void setStreamUrl(String string) {
 		// TODO Auto-generated method stub
-		this.mChannels.get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mURL = string;
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmURL(string);
 		
 	}
 	
 	public void setStreamData(String format, String type, String quality) {
 		// TODO Auto-generated method stub
-		this.mChannels.get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mFormat = format;
-		this.mChannels.get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mType = type;
-		this.mChannels.get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mQaulity = quality;
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mFormat = format;
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmType(type);
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmQaulity(quality);
 		
 		
 	}
 	
 	public void setChannelName(String string) {
 		// TODO Auto-generated method stub
-		this.mChannels.get(mNumberOfChannelsLoaded).mName= string;
+		this.getmChannels().get(mNumberOfChannelsLoaded).setmName(string);
 		
 	}
 
 	public void LoadSchedule()throws ParserConfigurationException, SAXException, IOException {
 		// TODO Auto-generated method stub
-		this.mChannels.get(mNumberOfChannelsLoaded).LoadSchedule();
+		this.getmChannels().get(mNumberOfChannelsLoaded).LoadSchedule();
 	}
 
 	
@@ -110,14 +110,32 @@ public class Channels {
 	{
 		mNumberOfChannelsLoaded++;
 		ChannelInfo channel = new ChannelInfo();
-		this.mChannels.add(channel);
+		this.getmChannels().add(channel);
 	}
 
 	public void LoadStream() {
 		// TODO Auto-generated method stub
 		mNumberOfStreamsLoaded++;
 		StreamInfo stream = new StreamInfo(null);
-		this.mChannels.get(mNumberOfChannelsLoaded).GetStreams().mStreams.add(stream);
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().getmStreams().add(stream);
+	}
+
+	public void resetStreams() {
+		// TODO Auto-generated method stub
+		mNumberOfStreamsLoaded = -1;
+	}
+	
+	public List<ChannelInfo> GetChannels() {
+		// TODO Auto-generated method stub
+		return getmChannels();
+	}
+
+	public static void setmChannels(List<ChannelInfo> mChannels) {
+		Channels.mChannels = mChannels;
+	}
+
+	public List<ChannelInfo> getmChannels() {
+		return mChannels;
 	}
 	 
 }

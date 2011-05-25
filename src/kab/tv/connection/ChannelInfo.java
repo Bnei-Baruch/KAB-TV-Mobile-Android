@@ -2,6 +2,7 @@ package kab.tv.connection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -29,11 +30,11 @@ public class ChannelInfo implements Parcelable{
 	String mLanguage;
 	Bitmap mIcon;
 	String mSource;
-	String mName;
+	private String mName;
 	Streams mStreams;
 	URL mScheduleuRL;
 	Boolean mChannelLoaded;
-	ScheduleData mScheduleData;
+	private ScheduleData mScheduleData;
 	
 	
 	
@@ -55,7 +56,7 @@ public class ChannelInfo implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel arg0, int arg1) {
 		// TODO Auto-generated method stub 
-		arg0.writeStringArray(new String[] {this.mLanguage,  this.mName, this.mSource});
+		arg0.writeStringArray(new String[] {this.mLanguage,  this.getmName(), this.mSource});
 		
 	}
 	
@@ -79,7 +80,7 @@ public class ChannelInfo implements Parcelable{
 				
 			// this.mIcon = intval[1];
 			 this.mLanguage = val[0];
-			 this.mName = val[1];
+			 this.setmName(val[1]);
 			 this.mSource = val[2];
 			 
 			// this.mType = StreamType. (intval[0]);
@@ -88,8 +89,13 @@ public class ChannelInfo implements Parcelable{
 		 
 		 public Streams GetStreams()
 		 {
-			return mStreams;
-			 
+			 if(mStreams!=null)
+				 return mStreams;
+			 else
+			 {
+				 mStreams = new Streams();
+				 return mStreams;
+			 }
 		 }
 		 
 		 public void LoadSchedule() throws ParserConfigurationException, SAXException, IOException{
@@ -104,11 +110,31 @@ public class ChannelInfo implements Parcelable{
 	         ScheduleHandler myHandler = new ScheduleHandler();
 	         xr.setContentHandler(myHandler);
 	         
+	         
+	         mScheduleuRL = new URL("http://kab.tv/vod/api/schedule/Hebrew");
 	         /* Parse the xml-data from our URL. */
-	         xr.parse(new InputSource(mScheduleuRL.openStream()));
+	         InputSource source = new InputSource(mScheduleuRL.openStream());
+	         source.setEncoding("UTF-8");
+	         xr.parse(source);
 	         /* Parsing has finished. */
-	         mScheduleData = myHandler.getParsedData();
+	         setmScheduleData(myHandler.getParsedData());
 			 
 			 
 		 }
+
+		public void setmName(String mName) {
+			this.mName = mName;
+		}
+
+		public String getmName() {
+			return mName;
+		}
+
+		public void setmScheduleData(ScheduleData mScheduleData) {
+			this.mScheduleData = mScheduleData;
+		}
+
+		public ScheduleData getmScheduleData() {
+			return mScheduleData;
+		}
 }

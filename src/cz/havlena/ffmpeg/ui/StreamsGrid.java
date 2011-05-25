@@ -38,7 +38,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import kab.tv.connection.ChannelInfo;
+import kab.tv.connection.Channels;
 import kab.tv.connection.StreamInfo;
 
 import org.apache.http.HttpResponse;
@@ -47,6 +50,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.xml.sax.SAXException;
 
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -65,7 +69,18 @@ public class StreamsGrid extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadApps(); // do this in onresume?
+        try {
+			loadApps();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // do this in onresume?
 
         setContentView(R.layout.grid_1);
         mGrid = (GridView) findViewById(R.id.myGrid);
@@ -83,9 +98,9 @@ public class StreamsGrid extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "select a stream");
+				Log.d(TAG, "select a channel");
 				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
-				i.putExtra(getResources().getString(R.string.input_stream),  mStreams.get(arg2));
+				i.putExtra(getResources().getString(R.string.input_stream),  arg2);
 				startActivity(i);
 				
 			}   
@@ -104,7 +119,7 @@ public class StreamsGrid extends Activity {
     private List<ChannelInfo> mChannels;
 
     @SuppressWarnings("rawtypes")
-	private void loadApps() {
+	private void loadApps() throws ParserConfigurationException, SAXException, IOException {
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -127,6 +142,8 @@ public class StreamsGrid extends Activity {
         
         mStreams.add(info);
         mStreams.add(info1);
+        
+        
         
         ///////////////////////////////////////////////////////////////////////////////////
         
@@ -162,8 +179,20 @@ public class StreamsGrid extends Activity {
             	LayoutInflater li = getLayoutInflater();
 				v = li.inflate(R.layout.icon, null);
 				TextView tv = (TextView)v.findViewById(R.id.icon_text);  
-
-			    tv.setText(mStreams.get(position).getmStreamName());  
+				
+			    try {
+					//tv.setText(Channels.instance().getmChannels().get(0).GetStreams().GetStream(position).getmStreamName());
+			    	tv.setText(Channels.instance().getmChannels().get(position).getmName());
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
 
 			    iv = (ImageView)v.findViewById(R.id.icon_image); 
                // i = new ImageView(StreamsGrid.this);
@@ -183,11 +212,37 @@ public class StreamsGrid extends Activity {
 
 
         public final int getCount() {
-            return mStreams.size();
+            //return mStreams.size();
+            try {
+				return Channels.instance().getmChannels().size();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return 0;
         }
 
         public final Object getItem(int position) {
-            return mStreams.get(position);
+            //return mStreams.get(position);
+        	try {
+				return  Channels.instance().getmChannels().get(position);
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
         }
 
         public final long getItemId(int position) {

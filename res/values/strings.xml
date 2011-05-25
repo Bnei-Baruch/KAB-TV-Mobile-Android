@@ -38,5 +38,6 @@
    	<string name="player_menu_decode_audio">Decode audio</string>
    	
    	<string name="expandable_list_sample_action">Sample action</string>
+   		<string name="scheduletitle">Weekly Schedule</string>
     
 </resources>

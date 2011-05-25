@@ -48,15 +48,19 @@ public final class R {
         public static final int player_menu=0x7f060004;
         public static final int player_menu_about=0x7f060005;
         public static final int player_menu_decode_audio=0x7f060006;
-        public static final int row1=0x7f060011;
-        public static final int row2=0x7f060013;
-        public static final int row3=0x7f060014;
-        public static final int row4=0x7f060015;
-        public static final int stream=0x7f060012;
+        public static final int row1=0x7f060012;
+        public static final int row2=0x7f060014;
+        public static final int row3=0x7f060016;
+        public static final int row4=0x7f060018;
+        public static final int scheduleid=0x7f06000f;
+        public static final int streamrow1=0x7f060013;
+        public static final int streamrow2=0x7f060015;
+        public static final int streamrow3=0x7f060017;
+        public static final int streamrow4=0x7f060019;
+        public static final int table=0x7f060011;
         public static final int textview_path=0x7f060000;
         public static final int textview_rowtext=0x7f060003;
         public static final int widget28=0x7f06000e;
-        public static final int widget29=0x7f06000f;
         public static final int widget32=0x7f06000d;
         public static final int widget44=0x7f060008;
     }
@@ -98,6 +102,7 @@ public final class R {
         public static final int player_menu_about=0x7f050018;
         public static final int player_menu_decode_audio=0x7f050019;
         public static final int processing=0x7f050002;
+        public static final int scheduletitle=0x7f05001b;
         public static final int select_input_file=0x7f050001;
         public static final int type_file=0x7f050003;
         public static final int type_stream=0x7f050004;

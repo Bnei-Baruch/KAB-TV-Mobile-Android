@@ -30,6 +30,7 @@ public class ScheduleHandler extends DefaultHandler{
    
     
     private ScheduleData myParsedSchedule;
+    private StringBuilder mStringFromCharacters;
 
     // ===========================================================
     // Getter & Setter
@@ -59,11 +60,18 @@ public class ScheduleHandler extends DefaultHandler{
     @Override
     public void startElement(String namespaceURI, String localName,
                     String qName, Attributes atts) throws SAXException {
-    	Day day;
+    	ScheduleData.Day day = null;
+    	try{
+    	day = ScheduleData.Day.valueOf(localName);
+    	}
+    	catch (IllegalArgumentException e)
+    	{
+    	 
+    	}
     	if (localName.equals("hash")) {
     		this.in_hash = true;
     		//if (localName.equals("*day*")) {
-    		if ((day = Day.valueOf(localName)) != null) {
+    	}else if (day != null) {
     			this.in_day = true;
     			myParsedSchedule.mCurrentday = day;
     			//set the current day
@@ -77,15 +85,15 @@ public class ScheduleHandler extends DefaultHandler{
     			this.in_item = true;
     		}else if (localName.equals("descr")) {
     			this.in_descr = true;
-    			myParsedSchedule.mFlag = Tags.Description;
+    			myParsedSchedule.SetFlag(Tags.Description);
     			//set description flag
     		} else if (localName.equals("title")) {
     			this.in_title = true;
-    			myParsedSchedule.mFlag = Tags.Title;
+    			myParsedSchedule.SetFlag(Tags.Title);
     			//set title flag
     		}       else if (localName.equals("time")) {
     			this.in_time = true;
-    			myParsedSchedule.mFlag = Tags.Time;
+    			myParsedSchedule.SetFlag(Tags.Time);
     			//set time flag
     		} else if (localName.equals("hdr")) {
     			this.in_hdr = true;
@@ -106,16 +114,25 @@ public class ScheduleHandler extends DefaultHandler{
     		}
     	}
 
-    }
+    
     
     /** Gets be called on closing tags like: 
      * </tag> */
     @Override
     public void endElement(String namespaceURI, String localName, String qName)
     throws SAXException {
-    	if (localName.equals("hash")) {
+    	ScheduleData.Day day = null;
+    	try{
+    	day = ScheduleData.Day.valueOf(localName);
+    	}
+    	catch (IllegalArgumentException e)
+    	{
+    	 
+    	}
+    	
+    	if (localName.equals("hash") ) {
     		this.in_hash = false;
-    	}else if (localName.equals("*day(")) {
+    	}else if (day  != null) {
     		this.in_day = false;
     	}else if (localName.equals("items")) {
     		this.in_items = false;
@@ -124,25 +141,34 @@ public class ScheduleHandler extends DefaultHandler{
     		myParsedSchedule.SetEvent();
     	}else if (localName.equals("descr")) {
     		this.in_descr = false;
-
+    		myParsedSchedule.setDayData(mStringFromCharacters.toString());
+    		mStringFromCharacters = null;
     	}else if (localName.equals("title")) {
     		this.in_title = false;
+    		myParsedSchedule.setDayData(mStringFromCharacters.toString());
+    		mStringFromCharacters = null;
     	}else if (localName.equals("time")) {
     		this.in_time = false;
+    		myParsedSchedule.setDayData(mStringFromCharacters.toString());
+    		mStringFromCharacters = null;
     	} else if (localName.equals("hdr")) {
 			this.in_hdr = false;
 			
 			//set time flag
 		}else if (localName.equals("day")) {
 			this.in_day_in_month = false;
-			
+			myParsedSchedule.setDayInMonth(mStringFromCharacters.toString());
+			mStringFromCharacters = null;
 			//set time flag
 		}else if (localName.equals("month")) {
 			this.in_month = false;
-			
+			myParsedSchedule.setMonth(mStringFromCharacters.toString());
+			mStringFromCharacters = null;
 			//set time flag
 		}else if (localName.equals("year")) {
 			this.in_year = false;
+			myParsedSchedule.setYear(mStringFromCharacters.toString());
+			mStringFromCharacters = null;
 			try {
 				myParsedSchedule.buildDate();
 			} catch (java.text.ParseException e) {
@@ -157,19 +183,42 @@ public class ScheduleHandler extends DefaultHandler{
      * <tag>characters</tag> */
     @Override
 public void characters(char ch[], int start, int length) {
-            if(this.in_item){
-            	myParsedSchedule.setDayData(new String(ch, start, length));
+            if(this.in_descr || this.in_title || this.in_time){
+            	 if (mStringFromCharacters!=null) { 
+            		 for (int i=start; i<start+length; i++) { 
+            			 mStringFromCharacters.append(ch[i]);    
+            			 }    
+            		 }
+            	 else
+            	 {
+            		 mStringFromCharacters = new StringBuilder();
+            		 for (int i=start; i<start+length; i++) { 
+            			 mStringFromCharacters.append(ch[i]);    
+            			 }     
+            	 }
+            	
     } else if(this.in_hdr){
-    	if(this.in_day_in_month)
-            	myParsedSchedule.setDayInMonth(new String(ch, start, length));
-    	if(this.in_month)
-        	myParsedSchedule.setMonth(new String(ch, start, length));
-    	if(this.in_day_in_month)
-        	myParsedSchedule.setYear(new String(ch, start, length));
     	
     	
+        	 if (mStringFromCharacters!=null) { 
+        		 for (int i=start; i<start+length; i++) { 
+        			 mStringFromCharacters.append(ch[i]);    
+        			 }    
+        		 }
+        	 else
+        	 {
+        		 mStringFromCharacters = new StringBuilder();
+        		 for (int i=start; i<start+length; i++) { 
+        			 mStringFromCharacters.append(ch[i]);    
+        			 }     
+        	 
+        	 
+        	 
+    
+    	
+        	 }
     }
-    }
+}
 }
    
     

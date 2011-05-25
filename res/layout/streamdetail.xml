@@ -14,7 +14,7 @@ android:layout_alignParentLeft="true"
 >
 </ImageView>
 <Button
-android:id="@+id/widget29"
+android:id="@+id/scheduleid"
 android:layout_width="wrap_content"
 android:layout_height="53px"
 android:text="Schedule"
@@ -35,6 +35,7 @@ android:layout_centerVertical="true"
 
 
  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:id="@+id/table" 
     android:layout_width="wrap_content"   
      android:layout_height="wrap_content" 
      android:background="@drawable/shape"
@@ -47,7 +48,7 @@ android:layout_centerVertical="true"
          android:background="@drawable/rowbackground">  
              
           <TextView 
-          android:id="@+id/stream"     
+          android:id="@+id/streamrow1"     
                android:text="וידאו - איכות גבוהה"
                android:padding="20dip" />  
         <TextView            
@@ -61,6 +62,7 @@ android:layout_centerVertical="true"
                                                 android:shrinkColumns="*"> 
                           
                               <TextView 
+                               android:id="@+id/streamrow2" 
              android:text="וידאו - איכות בינונית"   
               android:padding="20dip" />     
                  <TextView           
@@ -71,7 +73,8 @@ android:layout_centerVertical="true"
                      <TableRow
                       android:background="@drawable/rowbackground"
                       android:id="@+id/row3" >      
-          <TextView      
+          <TextView    
+           android:id="@+id/streamrow3"   
                android:text="אודיו - איכות גבוהה"
                android:padding="20dip" />  
         <TextView            
@@ -84,6 +87,7 @@ android:layout_centerVertical="true"
                         android:id="@+id/row4" 
                         android:shrinkColumns="*">  
                               <TextView 
+                               android:id="@+id/streamrow4" 
              android:text="אודיו - איכות בינונית"   
               android:padding="20dip" />     
                  <TextView           

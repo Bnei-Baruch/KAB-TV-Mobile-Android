@@ -13,12 +13,12 @@ import android.os.Parcelable;
 
 
 public class StreamInfo implements Parcelable {
-		String mURL;
+		private String mURL;
 		Bitmap mIcon;
 		private String mStreamName;
 		String mFormat;
-		String mQaulity;
-		String mType;
+		private String mQaulity;
+		private String mType;
 		public StreamInfo(Parcel in) {
 			// TODO Auto-generated constructor stub
 			if(in!=null)
@@ -35,7 +35,7 @@ public class StreamInfo implements Parcelable {
 		@Override
 		public void writeToParcel(Parcel arg0, int arg1) {
 			// TODO Auto-generated method stub 
-			arg0.writeStringArray(new String[] {this.mURL,  this.getmStreamName()});
+			arg0.writeStringArray(new String[] {this.getmURL(),  this.getmStreamName()});
 			//arg0.writeIntArray(new int[] {this.mType.ordinal(),0});
 		}
 		
@@ -60,7 +60,7 @@ public class StreamInfo implements Parcelable {
 					in.readIntArray(intval);
 				// this.mIcon = intval[1];
 				 this.setmStreamName(val[1]);
-				 this.mURL = val[0];
+				 this.setmURL(val[0]);
 				// this.mType = StreamType. (intval[0]);
 				 
 			 }
@@ -69,5 +69,23 @@ public class StreamInfo implements Parcelable {
 			}
 			public String getmStreamName() {
 				return mStreamName;
+			}
+			public void setmQaulity(String mQaulity) {
+				this.mQaulity = mQaulity;
+			}
+			public String getmQaulity() {
+				return mQaulity;
+			}
+			public void setmType(String mType) {
+				this.mType = mType;
+			}
+			public String getmType() {
+				return mType;
+			}
+			public void setmURL(String mURL) {
+				this.mURL = mURL;
+			}
+			public String getmURL() {
+				return mURL;
 			} 
 }

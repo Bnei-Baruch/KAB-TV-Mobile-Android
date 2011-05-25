@@ -121,7 +121,15 @@ public class ConfigurationHandler extends DefaultHandler{
         		this.in_channels = false;
         	}else if (localName.equals("channel")) {
         		this.in_channel = false;
-        		
+        		 try {
+					Channels.instance().resetStreams();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}else if (localName.equals("streams")) {
         		this.in_streams = false;
         		

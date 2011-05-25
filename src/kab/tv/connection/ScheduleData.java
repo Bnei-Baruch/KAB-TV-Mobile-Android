@@ -4,20 +4,12 @@ import java.net.URL;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-enum Day
-{
- Sunday,
- Monday,
- Thuesday,
- Wendasday,
- Thursday,
- Friday,
- Saturday
-}
+
 
 enum Tags
 {
@@ -26,16 +18,28 @@ enum Tags
  Time
 }
 public class ScheduleData {
+	
+	public enum Day
+	{
+	 Sunday,
+	 Monday,
+	 Tuesday,
+	 Wednesday,
+	 Thursday,
+	 Friday,
+	 Saturday
+	}
+	
 	URL mScheduleURL;//http://kab.tv/vod/api/schedule/Hebrew
 	Day mCurrentday;
 	EventData mCurrentEventdata;
 	Tags mFlag;
-	Map<Day,DayData> mData;
+	private Map<Day,DayData> mData;
 	String mCurrentDate;
 	
 	public ScheduleData(){
 		mCurrentEventdata =  new EventData();
-		mData = new HashMap<Day,DayData>();
+		setmData(new HashMap<Day,DayData>());
 	}
 	
 	public void setDayData(String data){
@@ -43,13 +47,13 @@ public class ScheduleData {
 		switch (mFlag)
 		{
 		case Description:
-			mCurrentEventdata.mDescription = data;
+			mCurrentEventdata.setmDescription(data);
 			break;
 		case Title:
-			mCurrentEventdata.mTitle = data;
+			mCurrentEventdata.setmTitle(data);
 			break;
 		case Time:
-			mCurrentEventdata.mTime = data;
+			mCurrentEventdata.setmTime(data);
 			break;
 			
 			
@@ -63,41 +67,63 @@ public class ScheduleData {
 
 	public void SetEvent() {
 		// TODO Auto-generated method stub
-		EventData data = new EventData();
-		data = mCurrentEventdata;
-		if(mData.get(mCurrentday) !=null)
+		EventData data = new EventData(mCurrentEventdata);
+		//mCurrentEventdata;
+		if(getmData().get(mCurrentday) !=null)
 		{
-			mData.get(mCurrentday).mDaySchedule.add(data);
+			getmData().get(mCurrentday).getmDaySchedule().add(data);
 			
 		}
 		else
 		{
 			DayData daydata = new DayData();
-			daydata.mDaySchedule.add(data);
-			mData.put(mCurrentday, daydata);
+			daydata.setmDaySchedule(new ArrayList<EventData>());
+			daydata.getmDaySchedule().add(data);
+			getmData().put(mCurrentday, daydata);
 		}
 	}
 
 
 	public void setMonth(String string) {
 		// TODO Auto-generated method stub
+		string = string.trim();
+		if(mCurrentDate!=null)
 		mCurrentDate = (mCurrentDate + string + "/");
+		else
+			mCurrentDate = (string + "/");
 	}
 
 	public void setYear(String string) {
 		// TODO Auto-generated method stub
+		string = string.trim();
+		if(mCurrentDate!=null)
 		mCurrentDate = (mCurrentDate + string );
+		else
+			mCurrentDate = (string + "/");
 	}
 
 	public void setDayInMonth(String string) {
 		// TODO Auto-generated method stub
+		string = string.trim();
+		if(mCurrentDate!=null)
 		mCurrentDate = (mCurrentDate + string + "/");
+		else
+			mCurrentDate = (string + "/");
 	}
 
 	public void buildDate() throws ParseException {
 		// TODO Auto-generated method stub
 		SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy"); 
 		Date dateObj = curFormater.parse(mCurrentDate); 
-		mData.get(mCurrentday).mDate = dateObj;
+		getmData().get(mCurrentday).setmDate(dateObj);
+		mCurrentDate = null;
+	}
+
+	public void setmData(Map<Day,DayData> mData) {
+		this.mData = mData;
+	}
+
+	public Map<Day,DayData> getmData() {
+		return mData;
 	}
 }
