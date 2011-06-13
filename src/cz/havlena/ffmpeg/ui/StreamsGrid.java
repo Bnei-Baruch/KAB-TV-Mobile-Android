@@ -64,7 +64,8 @@ import cz.havlena.ffmpeg.ui.R;
 public class StreamsGrid extends Activity {
 	private static final String 	TAG = "StreamGrid"; 
     GridView mGrid;
-
+    private static final String MEDIA = "media";
+	private static final int STREAM_VIDEO = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,12 +98,29 @@ public class StreamsGrid extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				
+				boolean bWMV;
+				bWMV = true;
+				if(bWMV)
+				{
 				// TODO Auto-generated method stub
 				Log.d(TAG, "select a channel");
 				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
 				i.putExtra(getResources().getString(R.string.input_stream),  arg2);
 				startActivity(i);
 				
+				}
+				else
+				{
+				//if non wmv
+				 Intent intent =
+	                    new Intent(StreamsGrid.this,
+	                    		MediaPlayer_Android.class);
+	            intent.putExtra(MEDIA, STREAM_VIDEO);
+	            intent.putExtra(getResources().getString(R.string.input_stream), "rtsp://flash3.eu.kab.tv:1935/liveheb/mobile.sdp");
+	            
+	            startActivity(intent);
+				}
 			}   
         	})); 
         

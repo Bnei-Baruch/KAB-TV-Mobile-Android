@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.view.SurfaceView;
 
+
 public class FFMpegPlayerActivity extends Activity {
 	private static final String 	TAG = "FFMpegPlayerActivity";
 	//private static final String 	LICENSE = "This software uses libraries from the FFmpeg project under the LGPLv2.1";
@@ -40,7 +41,10 @@ public class FFMpegPlayerActivity extends Activity {
 	private FFMpegMovieViewAndroid 	mMovieView;
 	private SurfaceView 	mMovieViewSurface;
 	public static  FFMpegPlayerActivity mSelf;
+	private boolean bWMVStream;
 	ConnectivityReceiver mComNotifier;
+	
+	
 	
 	//public static  FFMpegPlayerActivity mSelf;
 	//private WakeLock				mWakeLock;
@@ -50,7 +54,7 @@ public class FFMpegPlayerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		mSelf  = this;
-		mComNotifier = new ConnectivityReceiver();
+		//mComNotifier = new ConnectivityReceiver();
 		
 		 // attempt to get data from before device configuration change  
 		Bundle returnData = (Bundle) getLastNonConfigurationInstance();        
@@ -63,7 +67,8 @@ public class FFMpegPlayerActivity extends Activity {
 		} else {
 			//PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		    //mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-
+			
+			
 			try {
 				FFMpeg ffmpeg = new FFMpeg();
 				setContentView(R.layout.main);
@@ -132,15 +137,21 @@ public class FFMpegPlayerActivity extends Activity {
 				finish();
 			}
 		}
-		
+			
+				//start the activity
+				
+				//player.setDataSource(filePath);
+				
+				
+				
+			
 		}
-		else
-		{
 		
+}
 		
-		}
+
 		
-	}
+	
 	
 	/* @Override    public Object onRetainNonConfigurationInstance() {  
 		 // Device configuration changed        
@@ -158,7 +169,7 @@ public class FFMpegPlayerActivity extends Activity {
 	 @Override
 	    protected void onStop() {
 	        //-- we will enable screen timeout, while scumm is paused
-	       
+	       if(mComNotifier != null)
 	        	unregisterReceiver(mComNotifier);
 	        	
 	        
@@ -167,7 +178,7 @@ public class FFMpegPlayerActivity extends Activity {
 	 
 	public void onBackPressed() 
 	{
-		mMovieView.onBackPressed();
+		//mMovieView.onBackPressed();
 		 //unregisterReceiver (mComNotifier);
 		finish();
 		Log.d(TAG, "onBackPressed in FFMpegPlayerActivity");

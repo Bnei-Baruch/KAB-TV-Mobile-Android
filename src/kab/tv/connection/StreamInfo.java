@@ -17,6 +17,7 @@ public class StreamInfo implements Parcelable {
 		Bitmap mIcon;
 		private String mStreamName;
 		String mFormat;
+		String mOS;
 		private String mQaulity;
 		private String mType;
 		public StreamInfo(Parcel in) {
@@ -87,5 +88,17 @@ public class StreamInfo implements Parcelable {
 			}
 			public String getmURL() {
 				return mURL;
+			}
+			public void setmOS(String os) {
+				// TODO Auto-generated method stub
+				this.mOS = os;
+			}
+			public String getmOS() {
+				// TODO Auto-generated method stub
+				return this.mOS;
+			}
+			public String getmFormat() {
+				// TODO Auto-generated method stub
+				return mFormat;
 			} 
 }

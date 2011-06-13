@@ -28,6 +28,10 @@ import android.widget.TextView;
 
 public class StreamInfoDetails extends Activity {
 
+	
+	private static final String MEDIA = "media";
+	private static final int STREAM_VIDEO = 5;
+	private static final int LOCAL_AUDIO = 1;	
 	private static final String 	TAG = "StreamDetail"; 
 	private TextView mTextViewDetails;
 	TextView[] mStreamName;
@@ -60,13 +64,14 @@ public class StreamInfoDetails extends Activity {
 		mStreamRows = new TableRow[4];
 		mStreamRow1 = (TableRow)findViewById(R.id.row1);
 		mStreamRow2 = (TableRow)findViewById(R.id.row2);
-		mStreamRow3 = (TableRow)findViewById(R.id.row4);
+		mStreamRow3 = (TableRow)findViewById(R.id.row3);
 		mStreamRow4 = (TableRow)findViewById(R.id.row4);
 		mStreamRows[0] = mStreamRow1;
 		mStreamRows[1] = mStreamRow2;
 		mStreamRows[2] = mStreamRow3;
 		mStreamRows[3] = mStreamRow4;
 		mStreamTable = (TableLayout) findViewById(R.id.table);
+		
 		mSchedule = (Button)findViewById(R.id.scheduleid);
 		Intent i = getIntent();
 		try {
@@ -80,19 +85,34 @@ public class StreamInfoDetails extends Activity {
 		mTextViewDetails.setText(descripiton);
 		
 		int NumberOfStreams = Channels.instance().GetChannels().get(mChannelNum).GetStreams().getmStreams().size();
-		
-		for (int count =0;count<NumberOfStreams;count++)
+		int NumberOfStreamsOS = 0;
+		for (int count =0;count<NumberOfStreams-1;count++)
 		{
-		StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count);
-		
-		
-		mStreamName[count].setText(info1.getmQaulity() +" " +"quality"+" " +info1.getmType()+" "+"stream" );
-		
+			if(Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count).getmOS().equals("android") )
+			{
+				NumberOfStreamsOS++;
+			}
 		}
 		
-		for (int count =3;count>NumberOfStreams-1;count--)
+		for (int count =0;count<=NumberOfStreamsOS-1;count++)
 		{
-			mStreamTable.setColumnCollapsed(count,true);
+			if(Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count).getmOS().equals("android") )
+			{
+				StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count);
+		
+		
+				mStreamName[count].setText(info1.getmQaulity() +" " +"quality"+" " +info1.getmType()+" "+"stream" );
+			}
+		}
+		
+		for (int count =3;count>NumberOfStreamsOS-1;count--)
+		{
+			//mStreamRows[count].setWillNotDraw(true);//.setColumnCollapsed(count,true);
+			mStreamRows[count].setVisibility(View.INVISIBLE);//.setColumnCollapsed(count,true);
+			//mStreamTable.setColumnCollapsed(count,true);
+			//mStreamTable.requestLayout();
+			//mStreamRows[count].requestLayout();
+			mStreamTable.requestLayout();
 		
 		}
 		mStreamRow1.setOnClickListener(new OnClickListener(){
@@ -105,7 +125,8 @@ public class StreamInfoDetails extends Activity {
 				try {
 					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(0);
 					
-					
+					if(info1.getmFormat().equals("wmv"))
+					{
 					Intent i = new Intent(getBaseContext(), FFMpegPlayerActivity.class);
 					String url;
 					if(info1.getmURL().contains("http"))
@@ -114,6 +135,21 @@ public class StreamInfoDetails extends Activity {
 						url = info1.getmURL();
 					i.putExtra(getResources().getString(R.string.input_stream), url);
 					startActivity(i);
+					}
+					else
+					{
+						String url;
+						 Intent intent =
+			                    new Intent(getBaseContext(),
+			                    		MediaPlayer_Android.class);
+			            intent.putExtra(MEDIA, STREAM_VIDEO);
+			            
+			            url = info1.getmURL();
+			            
+			            intent.putExtra(getResources().getString(R.string.input_stream), url);
+			            
+			            startActivity(intent);
+					}
 					
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -134,9 +170,10 @@ public class StreamInfoDetails extends Activity {
 				// TODO Auto-generated method stub
 				Log.d(TAG, "select a stream");
 				try {
-					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(0);
+					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(1);
 					
-					
+					if(info1.getmFormat().equals("wmv"))
+					{
 					Intent i = new Intent(getBaseContext(), FFMpegPlayerActivity.class);
 					String url;
 					if(info1.getmURL().contains("http"))
@@ -145,6 +182,21 @@ public class StreamInfoDetails extends Activity {
 						url = info1.getmURL();
 					i.putExtra(getResources().getString(R.string.input_stream), url);
 					startActivity(i);
+					}
+					else
+					{
+						String url;
+						 Intent intent =
+			                    new Intent(getBaseContext(),
+			                    		MediaPlayerAudio_Android.class);
+			            intent.putExtra(MEDIA, LOCAL_AUDIO);
+			            
+			            url = info1.getmURL();
+			            
+			            intent.putExtra(getResources().getString(R.string.input_stream), url);
+			            
+			            startActivity(intent);
+					}
 					
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -165,9 +217,10 @@ public class StreamInfoDetails extends Activity {
 				// TODO Auto-generated method stub
 				Log.d(TAG, "select a stream");
 				try {
-					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(0);
+					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(2);
 					
-					
+					if(info1.getmFormat().equals("wmv"))
+					{
 					Intent i = new Intent(getBaseContext(), FFMpegPlayerActivity.class);
 					String url;
 					if(info1.getmURL().contains("http"))
@@ -176,6 +229,21 @@ public class StreamInfoDetails extends Activity {
 						url = info1.getmURL();
 					i.putExtra(getResources().getString(R.string.input_stream), url);
 					startActivity(i);
+					}
+					else
+					{
+						String url;
+						 Intent intent =
+			                    new Intent(getBaseContext(),
+			                    		MediaPlayer_Android.class);
+			            intent.putExtra(MEDIA, STREAM_VIDEO);
+			            
+			            url = info1.getmURL();
+			            
+			            intent.putExtra(getResources().getString(R.string.input_stream), url);
+			            
+			            startActivity(intent);
+					}
 					
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -196,9 +264,10 @@ public class StreamInfoDetails extends Activity {
 				// TODO Auto-generated method stub
 				Log.d(TAG, "select a stream");
 				try {
-					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(0);
+					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(3);
 					
-					
+					if(info1.getmFormat().equals("wmv"))
+					{
 					Intent i = new Intent(getBaseContext(), FFMpegPlayerActivity.class);
 					String url;
 					if(info1.getmURL().contains("http"))
@@ -207,6 +276,21 @@ public class StreamInfoDetails extends Activity {
 						url = info1.getmURL();
 					i.putExtra(getResources().getString(R.string.input_stream), url);
 					startActivity(i);
+					}
+					else
+					{
+						String url;
+						 Intent intent =
+			                    new Intent(getBaseContext(),
+			                    		MediaPlayer_Android.class);
+			            intent.putExtra(MEDIA, STREAM_VIDEO);
+			            
+			            url = info1.getmURL();
+			            
+			            intent.putExtra(getResources().getString(R.string.input_stream), url);
+			            
+			            startActivity(intent);
+					}
 					
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block

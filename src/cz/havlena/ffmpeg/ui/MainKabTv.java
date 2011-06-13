@@ -107,12 +107,12 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 		
 		Intent i = new Intent(this, FFMpegPlayerActivity.class);
 		i.putExtra(getResources().getString(R.string.input_stream), "mms://vod.kab.tv/heb_medium");
-		 tabHost.addTab(tabHost.newTabSpec("ערוצים")
-	                .setIndicator("ערוצים")
+		 tabHost.addTab(tabHost.newTabSpec("Channels")
+	                .setIndicator("Channels")
 	                .setContent(new Intent(this, StreamsGrid.class)));
-		 	tabHost.addTab(tabHost.newTabSpec("הגדרות")
-	                .setIndicator("הגדרות")
-	                 .setContent(i));
+		 	//tabHost.addTab(tabHost.newTabSpec("Settings")
+	       //         .setIndicator("Settings")
+	       //          .setContent(i));
 	       
 	               
 	       
@@ -129,6 +129,7 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 		//startPlayer(/*sream url*/);
     	try {
 			Channels channels = Channels.instance();
+			if(!channels.isLoaded())
 			channels.LoadData();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block

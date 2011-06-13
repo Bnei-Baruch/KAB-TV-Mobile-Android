@@ -5,8 +5,11 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 
 
@@ -34,12 +37,12 @@ public class ScheduleData {
 	Day mCurrentday;
 	EventData mCurrentEventdata;
 	Tags mFlag;
-	private Map<Day,DayData> mData;
+	private SortedMap<Day,DayData> mData;
 	String mCurrentDate;
 	
 	public ScheduleData(){
 		mCurrentEventdata =  new EventData();
-		setmData(new HashMap<Day,DayData>());
+		setmData(new TreeMap<Day,DayData>());
 	}
 	
 	public void setDayData(String data){
@@ -119,11 +122,30 @@ public class ScheduleData {
 		mCurrentDate = null;
 	}
 
-	public void setmData(Map<Day,DayData> mData) {
+	public void setmData(SortedMap<Day,DayData> mData) {
 		this.mData = mData;
+		
 	}
 
 	public Map<Day,DayData> getmData() {
 		return mData;
 	}
+	
+	
+	 private static final Comparator<Day> sComparator = new Comparator() {
+	       	public int compare(Day arg0, Day arg1) {
+				// TODO Auto-generated method stub
+	       		if(arg0.ordinal()>arg1.ordinal())
+	       			return 1;
+	       			else
+	       			return 0;
+			}
+
+			@Override
+			public int compare(Object object1, Object object2) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+	 };
 }
+

@@ -1,6 +1,7 @@
 package kab.tv.connection;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,12 +86,12 @@ public class Channels {
 		
 	}
 	
-	public void setStreamData(String format, String type, String quality) {
+	public void setStreamData(String format, String type, String quality, String os) {
 		// TODO Auto-generated method stub
 		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).mFormat = format;
 		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmType(type);
 		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmQaulity(quality);
-		
+		this.getmChannels().get(mNumberOfChannelsLoaded).GetStreams().GetStream(mNumberOfStreamsLoaded).setmOS(os);
 		
 	}
 	
@@ -136,6 +137,25 @@ public class Channels {
 
 	public List<ChannelInfo> getmChannels() {
 		return mChannels;
+	}
+
+	public void SetChannelLoaded(boolean b) {
+		// TODO Auto-generated method stub
+		this.getmChannels().get(mNumberOfChannelsLoaded).mChannelLoaded = b;
+	}
+
+	public boolean isLoaded() {
+		// TODO Auto-generated method stub
+		if(this.getmChannels().size()>0)
+			return true;
+		else
+			return false;
+	}
+
+	public void setScheduleUrl(String string) throws MalformedURLException {
+		// TODO Auto-generated method stub
+		URL schedule = new URL(string);
+		this.getmChannels().get(mNumberOfChannelsLoaded).mScheduleuRL = schedule;
 	}
 	 
 }

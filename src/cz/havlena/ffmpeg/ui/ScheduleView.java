@@ -32,12 +32,14 @@ import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
@@ -167,13 +169,37 @@ public class ScheduleView extends ExpandableListActivity {
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                 View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
+            
+            ///////////////////////////////////////
+            AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, 96);
+            
+            WebView webView = new WebView(ScheduleView.this);
+            webView.setLayoutParams(lp);
+            // Center the text vertically
+           // ((TextView) webView).setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            // Set the text starting position
+            webView.setPadding(36, 0, 0, 0);
+            
+            
+            /////////////////////////////////////////
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
             //textView.setText(getChild(groupPosition, childPosition).toString());
             DayData daily = mInfo.getmScheduleData().getmData().get(Day.values()[groupPosition]);
+            DayData daily1;
+            if(groupPosition+1<getGroupCount())
+             daily1 = mInfo.getmScheduleData().getmData().get(Day.values()[groupPosition+1]);
+            else
+             daily1 = mInfo.getmScheduleData().getmData().get(Day.values()[0]);	
             
            
             
-            textView.setText(daily.getmDaySchedule().get(childPosition).getmTitle()+ " " +daily.getmDaySchedule().get(childPosition).getmTime()+"-"+daily.getmDaySchedule().get(childPosition+1).getmTime() + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
-           
+            if(childPosition+1<getChildrenCount(groupPosition))
+            	{
+            	   textView.setText(daily.getmDaySchedule().get(childPosition).getmTitle()+ " " +daily.getmDaySchedule().get(childPosition).getmTime()+"-"+daily.getmDaySchedule().get(childPosition+1).getmTime() + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
+            	}
+            else
+            	textView.setText(daily.getmDaySchedule().get(childPosition).getmTitle()+ " " +daily.getmDaySchedule().get(childPosition).getmTime()+"-"+daily1.getmDaySchedule().get(0).getmTime() + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
             return textView;
         }
 
@@ -201,6 +227,7 @@ public class ScheduleView extends ExpandableListActivity {
                 ViewGroup parent) {
         	DayData daily = null;
         	//check if it is new day than return a view that has day and date
+        	//mInfo.getmScheduleData().
         	Day dayPosition = (Day) mInfo.getmScheduleData().getmData().keySet().toArray()[groupPosition];
         	
         	daily = mInfo.getmScheduleData().getmData().get(dayPosition);

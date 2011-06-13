@@ -8,6 +8,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 
 
 public class ScheduleHandler extends DefaultHandler{
@@ -74,6 +76,7 @@ public class ScheduleHandler extends DefaultHandler{
     	}else if (day != null) {
     			this.in_day = true;
     			myParsedSchedule.mCurrentday = day;
+    			 Log.v("Schedule Handler", "day: " + day);
     			//set the current day
     		}else if (localName.equals("items")) {
     			this.in_items = true;
@@ -146,10 +149,12 @@ public class ScheduleHandler extends DefaultHandler{
     	}else if (localName.equals("title")) {
     		this.in_title = false;
     		myParsedSchedule.setDayData(mStringFromCharacters.toString());
+    		 Log.v("Schedule Handler", "title: " + mStringFromCharacters);
     		mStringFromCharacters = null;
     	}else if (localName.equals("time")) {
     		this.in_time = false;
     		myParsedSchedule.setDayData(mStringFromCharacters.toString());
+    		 Log.e("Schedule Handler", "time: " + mStringFromCharacters);
     		mStringFromCharacters = null;
     	} else if (localName.equals("hdr")) {
 			this.in_hdr = false;

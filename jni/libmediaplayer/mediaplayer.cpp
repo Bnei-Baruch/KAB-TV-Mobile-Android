@@ -454,6 +454,8 @@ status_t MediaPlayer::suspend() {
     SDL_PushEvent(&sPlayer->event);
 	mQuit = 1;
 	
+	
+	
 	if(pthread_join(mEventsThread, NULL) != 0) {
 		__android_log_print(ANDROID_LOG_ERROR, TAG, "Couldn't cancel events thread");
 	}
@@ -924,6 +926,7 @@ void* MediaPlayer::ScheduleEvents(void* ptr)
 	__android_log_print(ANDROID_LOG_INFO, TAG, "FF_REFRESH_EVENT");
 	if(sPlayer->mQuit)
 	{
+	__android_log_print(ANDROID_LOG_INFO, TAG, "FF_REFRESH_EVENT !!!!!!!!!!!!!!!!!!!!!!!!!!! exiting");
 		SDL_Quit();
 		return NULL;
 	}

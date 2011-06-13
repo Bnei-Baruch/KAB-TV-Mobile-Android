@@ -4,6 +4,7 @@ package kab.tv.connection;
 
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -95,12 +96,14 @@ public class ConfigurationHandler extends DefaultHandler{
                         String format = atts.getValue("format");
                         String type = atts.getValue("type");
                         String quality = atts.getValue("quality");
+                        String os = atts.getValue("os");
                         
-                        Channels.instance().setStreamData(format,type,quality);
+                        Channels.instance().setStreamData(format,type,quality,os);
                         
                         
                 }else if (localName.equals("schedule")) {
                     this.in_schedule = true;
+                    
                 }
         	}
                          catch (ParserConfigurationException e) {
@@ -121,7 +124,9 @@ public class ConfigurationHandler extends DefaultHandler{
         		this.in_channels = false;
         	}else if (localName.equals("channel")) {
         		this.in_channel = false;
+        		
         		 try {
+        			 Channels.instance().SetChannelLoaded(true);
 					Channels.instance().resetStreams();
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -156,7 +161,16 @@ public class ConfigurationHandler extends DefaultHandler{
     public void characters(char ch[], int start, int length) {
                 if(this.in_stream){
                 	myParsedChannels.setStreamUrl(new String(ch, start, length));
-        }
+                }
+                else if(this.in_schedule)
+					try {
+						myParsedChannels.setScheduleUrl(new String(ch, start, length));
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                		
+       
     }
 }
 
