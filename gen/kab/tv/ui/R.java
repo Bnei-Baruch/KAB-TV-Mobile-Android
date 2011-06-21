@@ -78,35 +78,38 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int audio_channels_1=0x7f050013;
-        public static final int audio_channels_2=0x7f050014;
-        public static final int audiorate_16=0x7f050010;
-        public static final int audiorate_32=0x7f050011;
-        public static final int bitrate_1024=0x7f05000e;
-        public static final int bitrate_128=0x7f05000c;
-        public static final int bitrate_512=0x7f05000d;
-        public static final int convert=0x7f050006;
-        public static final int delete_src_movie=0x7f050007;
-        public static final int expandable_list_sample_action=0x7f05001a;
-        public static final int framerate=0x7f050015;
+        public static final int audio_channels_1=0x7f050016;
+        public static final int audio_channels_2=0x7f050017;
+        public static final int audiorate_16=0x7f050013;
+        public static final int audiorate_32=0x7f050014;
+        public static final int bitrate_1024=0x7f050011;
+        public static final int bitrate_128=0x7f05000f;
+        public static final int bitrate_512=0x7f050010;
+        public static final int channel=0x7f050002;
+        public static final int channels=0x7f050003;
+        public static final int convert=0x7f050009;
+        public static final int delete_src_movie=0x7f05000a;
+        public static final int expandable_list_sample_action=0x7f05001d;
+        public static final int framerate=0x7f050018;
         /**  used between activities to pass input video path 
          */
-        public static final int input_file=0x7f050016;
-        public static final int input_file_info=0x7f050005;
-        public static final int input_stream=0x7f050017;
-        public static final int label_audio_chanels=0x7f050012;
-        public static final int label_audio_rate=0x7f05000f;
-        public static final int label_bitrate=0x7f050008;
-        public static final int label_frames=0x7f05000a;
-        public static final int label_input=0x7f050009;
-        public static final int label_no_data=0x7f05000b;
-        public static final int player_menu_about=0x7f050018;
-        public static final int player_menu_decode_audio=0x7f050019;
-        public static final int processing=0x7f050002;
-        public static final int programtitle=0x7f05001c;
-        public static final int scheduletitle=0x7f05001b;
-        public static final int select_input_file=0x7f050001;
-        public static final int type_file=0x7f050003;
-        public static final int type_stream=0x7f050004;
+        public static final int input_file=0x7f050019;
+        public static final int input_file_info=0x7f050008;
+        public static final int input_stream=0x7f05001a;
+        public static final int label_audio_chanels=0x7f050015;
+        public static final int label_audio_rate=0x7f050012;
+        public static final int label_bitrate=0x7f05000b;
+        public static final int label_frames=0x7f05000d;
+        public static final int label_input=0x7f05000c;
+        public static final int label_no_data=0x7f05000e;
+        public static final int player_menu_about=0x7f05001b;
+        public static final int player_menu_decode_audio=0x7f05001c;
+        public static final int playing=0x7f050001;
+        public static final int processing=0x7f050005;
+        public static final int programtitle=0x7f05001f;
+        public static final int scheduletitle=0x7f05001e;
+        public static final int select_input_file=0x7f050004;
+        public static final int type_file=0x7f050006;
+        public static final int type_stream=0x7f050007;
     }
 }

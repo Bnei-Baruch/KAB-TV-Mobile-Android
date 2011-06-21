@@ -8,7 +8,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 <ImageView
 android:id="@+id/widget28"
 android:layout_width="180px"
-android:layout_height="162px"
+android:layout_height="160px"
 android:layout_alignParentTop="true"
 android:layout_alignParentLeft="true"
 >
@@ -24,6 +24,7 @@ android:layout_alignParentRight="true"
 </Button>
 <TextView
 android:id="@+id/detail_text"
+android:textAppearance="?android:attr/textAppearanceLarge"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="TextView"

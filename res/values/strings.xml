@@ -2,6 +2,9 @@
 <resources>
     
     <string name="app_name">66</string>
+     <string name="playing">Playing...</string>
+     <string name="channel">Channel info</string>
+     <string name="channels">Channels</string>
     <string name="select_input_file">FFMpeg - please select input file</string>
     <string name="processing">Converting . . .</string>
     <string name="type_file">input file</string>

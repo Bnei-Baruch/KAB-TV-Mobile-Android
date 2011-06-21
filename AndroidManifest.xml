@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="kab.tv.ui"
       android:versionCode="1"
-      android:versionName="0.1">
+      android:versionName="0.2">
     <application android:icon="@drawable/icon_mdpi" android:label="@string/app_name" android:debuggable="true">
         <activity 
         		  android:name=".FFMpegPlayerActivity"
@@ -34,7 +34,7 @@
         
          <activity 
         		  android:name=".MediaPlayer_Android"
-                  android:label="@string/app_name"
+                  android:label="@string/playing"
                    android:screenOrientation="sensor">
 		<intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,7 +42,7 @@
         </activity>
         <activity 
         		  android:name=".MediaPlayerAudio_Android"
-                  android:label="@string/app_name"
+                  android:label="@string/playing"
                   android:screenOrientation="portrait">
 		<intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,7 +50,7 @@
         </activity>
          <activity 
         		  android:name=".StreamsGrid"
-                  android:label="@string/app_name"
+                  android:label="@string/channels"
                   android:screenOrientation="portrait">
 		<intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -59,7 +59,7 @@
         </activity>
          <activity 
         		  android:name="StreamInfoDetails"
-                  android:label="@string/app_name"
+                  android:label="@string/channel"
                   android:screenOrientation="portrait">
 		<intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
