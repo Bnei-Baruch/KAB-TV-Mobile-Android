@@ -149,12 +149,12 @@ public class ScheduleHandler extends DefaultHandler{
     	}else if (localName.equals("title")) {
     		this.in_title = false;
     		myParsedSchedule.setDayData(mStringFromCharacters.toString());
-    		 Log.v("Schedule Handler", "title: " + mStringFromCharacters);
+    		// Log.v("Schedule Handler", "title: " + mStringFromCharacters);
     		mStringFromCharacters = null;
     	}else if (localName.equals("time")) {
     		this.in_time = false;
     		myParsedSchedule.setDayData(mStringFromCharacters.toString());
-    		 Log.e("Schedule Handler", "time: " + mStringFromCharacters);
+    		// Log.e("Schedule Handler", "time: " + mStringFromCharacters);
     		mStringFromCharacters = null;
     	} else if (localName.equals("hdr")) {
 			this.in_hdr = false;

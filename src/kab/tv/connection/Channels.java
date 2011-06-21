@@ -103,6 +103,7 @@ public class Channels {
 
 	public void LoadSchedule()throws ParserConfigurationException, SAXException, IOException {
 		// TODO Auto-generated method stub
+		//if(mNumberOfChannelsLoaded<2)
 		this.getmChannels().get(mNumberOfChannelsLoaded).LoadSchedule();
 	}
 

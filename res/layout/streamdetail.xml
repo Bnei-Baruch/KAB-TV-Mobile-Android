@@ -43,8 +43,9 @@ android:layout_centerVertical="true"
      	
         android:stretchColumns="1">    
         <TableRow
+         
          android:id="@+id/row1" 
-        android:layout_height="wrap_content"
+        android:layout_height="44px"
          android:background="@drawable/rowbackground">  
              
           <TextView 

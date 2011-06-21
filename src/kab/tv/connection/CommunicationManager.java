@@ -1,11 +1,11 @@
 package kab.tv.connection;
 
+import kab.tv.ui.FFMpegPlayerActivity;
+import kab.tv.ui.MainKabTv;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import cz.havlena.ffmpeg.ui.FFMpegPlayerActivity;
-import cz.havlena.ffmpeg.ui.MainKabTv;
 
 public class CommunicationManager {
 
