@@ -43,5 +43,6 @@
    	<string name="expandable_list_sample_action">Sample action</string>
    		<string name="scheduletitle">Weekly Schedule</string>
    		<string name="programtitle">Program Title</string>
+   		<string name="description">Channel description</string>
     
 </resources>

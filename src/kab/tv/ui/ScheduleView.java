@@ -130,14 +130,14 @@ public class ScheduleView extends ExpandableListActivity {
      */
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         // Sample data set.  children[i] contains the children (String[]) for groups[i].
-        private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names" };
-        private String[][] children = {
+       // private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names" };
+      /*  private String[][] children = {
                 { "Arnold", "Barry", "Chuck", "David" },
                 { "Ace", "Bandit", "Cha-Cha", "Deuce" },
                 { "Fluffy", "Snuggles" },
                 { "Goldy", "Bubbles" }
         };
-        
+        */
         public Object getChild(int groupPosition, int childPosition) {
             //return children[groupPosition][childPosition];
         	 DayData daily = mInfo.getmScheduleData().getmData().get(Day.values()[groupPosition]);
@@ -164,7 +164,7 @@ public class ScheduleView extends ExpandableListActivity {
             // Center the text vertically
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             // Set the text starting position
-            textView.setPadding(36, 0, 0, 0);
+            textView.setPadding(54, 0, 0, 0);
             return textView;
         }
         
@@ -181,7 +181,7 @@ public class ScheduleView extends ExpandableListActivity {
             // Center the text vertically
            // ((TextView) webView).setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             // Set the text starting position
-            webView.setPadding(36, 0, 0, 0);
+            webView.setPadding(54, 0, 0, 0);
             
             
             /////////////////////////////////////////

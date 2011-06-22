@@ -1,102 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-<ImageView
-android:id="@+id/widget28"
-android:layout_width="180px"
-android:layout_height="160px"
-android:layout_alignParentTop="true"
-android:layout_alignParentLeft="true"
->
-</ImageView>
-<Button
-android:id="@+id/scheduleid"
-android:layout_width="wrap_content"
-android:layout_height="53px"
-android:text="Schedule"
-android:layout_alignParentTop="true"
-android:layout_alignParentRight="true"
->
-</Button>
-<TextView
-android:id="@+id/detail_text"
-android:textAppearance="?android:attr/textAppearanceLarge"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="TextView"
-android:layout_centerVertical="true"
+<RelativeLayout android:id="@+id/widget32"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
->
-</TextView>
+	<ImageView android:id="@+id/channelimage"
+		android:layout_height="160px" android:layout_width="180px"
+		android:layout_alignParentLeft="true" android:layout_alignParentTop="true"></ImageView>
+
+	<Button android:id="@+id/scheduleid" android:layout_width="wrap_content"
+		android:layout_height="53px" android:text="Schedule"
+		android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+	</Button>
+	<TextView android:id="@+id/detail_text"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="TextView"
+		android:layout_centerVertical="true" android:layout_height="wrap_content">
+	</TextView>
 
 
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/table" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:background="@drawable/shape"
+		android:layout_alignParentBottom="true" android:stretchColumns="1">
+		<TableRow android:id="@+id/row1" android:layout_height="44px"
+			android:background="@drawable/rowbackground">
 
- <TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-  android:id="@+id/table" 
-    android:layout_width="wrap_content"   
-     android:layout_height="wrap_content" 
-     android:background="@drawable/shape"
-     android:layout_alignParentBottom="true"
-     	
-        android:stretchColumns="1">    
-        <TableRow
-         
-         android:id="@+id/row1" 
-        android:layout_height="44px"
-         android:background="@drawable/rowbackground">  
-             
-          <TextView 
-          android:id="@+id/streamrow1"     
-               android:text="וידאו - איכות גבוהה"
-               android:padding="20dip" />  
-        <TextView            
-             android:text=">" 
-              android:gravity="right"       
-                   android:padding="20dip" /> 
-                      </TableRow>  
-                        <TableRow
-                        android:id="@+id/row2" 
-                         android:background="@drawable/rowbackground"
-                                                android:shrinkColumns="*"> 
-                          
-                              <TextView 
-                               android:id="@+id/streamrow2" 
-             android:text="וידאו - איכות בינונית"   
-              android:padding="20dip" />     
-                 <TextView           
-                  android:text=">"     
-                  android:gravity="right"        
-                   android:padding="20dip" /> 
-                    </TableRow>
-                     <TableRow
-                      android:background="@drawable/rowbackground"
-                      android:id="@+id/row3" >      
-          <TextView    
-           android:id="@+id/streamrow3"   
-               android:text="אודיו - איכות גבוהה"
-               android:padding="20dip" />  
-        <TextView            
-             android:text=">" 
-              android:gravity="right"       
-                   android:padding="20dip" /> 
-                      </TableRow>  
-                        <TableRow
-                         android:background="@drawable/rowbackground"
-                        android:id="@+id/row4" 
-                        android:shrinkColumns="*">  
-                              <TextView 
-                               android:id="@+id/streamrow4" 
-             android:text="אודיו - איכות בינונית"   
-              android:padding="20dip" />     
-                 <TextView           
-                  android:text=">"     
-                  android:gravity="right"        
-                   android:padding="20dip" /> 
-                    </TableRow>
-</TableLayout>
+			<TextView android:id="@+id/streamrow1" android:text="וידאו - איכות גבוהה"
+				android:padding="20dip" />
+			<TextView android:text=">" android:gravity="right"
+				android:padding="20dip" />
+		</TableRow>
+		<TableRow android:id="@+id/row2" android:background="@drawable/rowbackground"
+			android:shrinkColumns="*">
+
+			<TextView android:id="@+id/streamrow2" android:text="וידאו - איכות בינונית"
+				android:padding="20dip" />
+			<TextView android:text=">" android:gravity="right"
+				android:padding="20dip" />
+		</TableRow>
+		
+	</TableLayout>
 
 </RelativeLayout>

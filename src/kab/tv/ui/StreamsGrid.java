@@ -106,7 +106,7 @@ public class StreamsGrid extends Activity {
 				// TODO Auto-generated method stub
 				Log.d(TAG, "select a channel");
 				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
-				i.putExtra(getResources().getString(R.string.input_stream),  arg2);
+				i.putExtra(getResources().getString(R.string.input_stream),  arg2+1);
 				startActivity(i);
 				
 				}
@@ -193,6 +193,7 @@ public class StreamsGrid extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView iv;
             View v;
+            
             if (convertView == null) {
             	LayoutInflater li = getLayoutInflater();
 				v = li.inflate(R.layout.icon, null);
@@ -200,7 +201,9 @@ public class StreamsGrid extends Activity {
 				
 			    try {
 					//tv.setText(Channels.instance().getmChannels().get(0).GetStreams().GetStream(position).getmStreamName());
-			    	tv.setText(Channels.instance().getmChannels().get(position).getmName());
+			    	tv.setText(Channels.instance().getmChannels().get(position+1).getmName());
+			    	
+			    	
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -224,15 +227,16 @@ public class StreamsGrid extends Activity {
             }
 
             
-
-            return v;
+            
+			return v;
+			
         }
 
 
         public final int getCount() {
             //return mStreams.size();
             try {
-				return Channels.instance().getmChannels().size();
+				return Channels.instance().getmChannels().size()-1;
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -249,7 +253,7 @@ public class StreamsGrid extends Activity {
         public final Object getItem(int position) {
             //return mStreams.get(position);
         	try {
-				return  Channels.instance().getmChannels().get(position);
+				return  Channels.instance().getmChannels().get(position+1);
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -121,9 +121,9 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 	        
 	        
 		CommunicationManager.mCurrentContext = this;
-		//mComNotifier = new ConnectivityReceiver();
-		//registerReceiver(mComNotifier,
-       //         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		mComNotifier = new ConnectivityReceiver();
+		registerReceiver(mComNotifier,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 		//i = new Intent(this, ConnectivityManagerTestActivity.class);
     	
     	//startActivity(i);

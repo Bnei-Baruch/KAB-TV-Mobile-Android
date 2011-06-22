@@ -26,6 +26,8 @@ import kab.tv.connection.ScheduleData.Day;
 import kab.tv.connection.StreamInfo;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -33,6 +35,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -57,6 +60,8 @@ public class StreamInfoDetails extends Activity {
 	TableRow[] mStreamRows;
 	private TableLayout mStreamTable;
 	private Button mSchedule;
+	private ImageView mChannelImage;
+	private String mTitleofCurrentProgram;
 	String mInfo;
 	int mChannelNum;
 	@Override
@@ -66,8 +71,8 @@ public class StreamInfoDetails extends Activity {
 		mTextViewDetails = (TextView) findViewById(R.id.detail_text);
 		mStreamName1 = (TextView) findViewById(R.id.streamrow1);
 		mStreamName2 = (TextView) findViewById(R.id.streamrow2);
-		mStreamName3 = (TextView) findViewById(R.id.streamrow3);
-		mStreamName4 = (TextView) findViewById(R.id.streamrow4);
+	//	mStreamName3 = (TextView) findViewById(R.id.streamrow3);
+	//	mStreamName4 = (TextView) findViewById(R.id.streamrow4);
 		mStreamName = new TextView[4];
 		mStreamName[0] = mStreamName1;
 		mStreamName[1] = mStreamName2;
@@ -75,8 +80,8 @@ public class StreamInfoDetails extends Activity {
 		mStreamRows = new TableRow[4];
 		mStreamRow1 = (TableRow)findViewById(R.id.row1);
 		mStreamRow2 = (TableRow)findViewById(R.id.row2);
-		mStreamRow3 = (TableRow)findViewById(R.id.row3);
-		mStreamRow4 = (TableRow)findViewById(R.id.row4);
+	//	mStreamRow3 = (TableRow)findViewById(R.id.row3);
+	//	mStreamRow4 = (TableRow)findViewById(R.id.row4);
 		mStreamRows[0] = mStreamRow1;
 		mStreamRows[1] = mStreamRow2;
 		mStreamRows[2] = mStreamRow3;
@@ -90,11 +95,17 @@ public class StreamInfoDetails extends Activity {
 		mChannelNum =i.getIntExtra(getResources().getString(R.string.input_stream), 0);
 		
 			mInfo = Channels.instance().GetChannels().get(mChannelNum).GetStreams().getmDescription();//GetStream(streamNum);
-			String descripiton = Channels.instance().GetChannels().get(mChannelNum).GetStreams().getmDescription();
+			String descripiton = Channels.instance().GetChannels().get(mChannelNum).getmName();
 		
 		
 		mTextViewDetails.setText(descripiton);
 		
+		mChannelImage = (ImageView)findViewById(R.id.channelimage);
+		
+		Bitmap  bmpCurrent = BitmapFactory.decodeResource(getResources(),R.drawable.android_hdpi);
+		 
+		mChannelImage.setImageBitmap(bmpCurrent);
+		 
 		int NumberOfStreams = Channels.instance().GetChannels().get(mChannelNum).GetStreams().getmStreams().size();
 		int NumberOfStreamsOS = 0;
 		for (int count =0;count<NumberOfStreams-1;count++)
@@ -116,7 +127,31 @@ public class StreamInfoDetails extends Activity {
 			}
 		}
 		
-		for (int count =3;count>NumberOfStreamsOS-1;count--)
+		Calendar rightNow = Calendar.getInstance();
+		int day = rightNow.get(Calendar.DAY_OF_WEEK);
+		int currenthour = rightNow.get(Calendar.HOUR_OF_DAY) ;
+		int currentmin = rightNow.get(Calendar.MINUTE) ;
+		List<EventData> daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day]).getmDaySchedule();
+		Iterator<EventData> it = daySchedule.iterator();
+		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
+		
+
+		String hourofday = it.next().getmTime();
+		String rightnow = rightNow.getTime().toString();
+		
+		java.util.Date dateObj =  curFormater.parse(hourofday);
+		java.util.Date dateObjCurrent =  curFormater.parse(String.format("%d:%d",currenthour,currentmin));
+		//int hoursdate = dateObj.getHours();
+		while(dateObj.before(dateObjCurrent)) 
+		{
+			
+			dateObj =  curFormater.parse(it.next().getmTime());
+			
+		}
+		
+		mTitleofCurrentProgram = it.next().getmTitle();
+		
+		/*for (int count =3;count>NumberOfStreamsOS-1;count--)
 		{
 			//mStreamRows[count].setWillNotDraw(true);//.setColumnCollapsed(count,true);
 			mStreamRows[count].setVisibility(View.INVISIBLE);//.setColumnCollapsed(count,true);
@@ -126,6 +161,7 @@ public class StreamInfoDetails extends Activity {
 			mStreamTable.requestLayout();
 		
 		}
+		*/
 		mStreamRow1.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -135,27 +171,8 @@ public class StreamInfoDetails extends Activity {
 				
 				try {
 					StreamInfo info1 = Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(0);
-					Calendar rightNow = Calendar.getInstance();
-					int day = rightNow.get(Calendar.DAY_OF_WEEK);
-					int currenthour = rightNow.get(Calendar.HOUR_OF_DAY) ;
-					int currentmin = rightNow.get(Calendar.MINUTE) ;
-					List<EventData> daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day]).getmDaySchedule();
-					Iterator<EventData> it = daySchedule.iterator();
-					SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
 					
-
-					String hourofday = it.next().getmTime();
-					String rightnow = rightNow.getTime().toString();
 					
-					java.util.Date dateObj =  curFormater.parse(hourofday);
-					java.util.Date dateObjCurrent =  curFormater.parse(String.format("%d:%d",currenthour,currentmin));
-					//int hoursdate = dateObj.getHours();
-					while(dateObj.before(dateObjCurrent)) 
-					{
-						
-						dateObj =  curFormater.parse(it.next().getmTime());
-						
-					}
 					
 					//String programtitle = 
 					if(info1.getmFormat().equals("wmv"))
@@ -180,7 +197,7 @@ public class StreamInfoDetails extends Activity {
 			            url = info1.getmURL();
 			            
 			            intent.putExtra(getResources().getString(R.string.input_stream), url);
-			            intent.putExtra(getResources().getString(R.string.programtitle),it.next().getmTitle());
+			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
 			            startActivity(intent);
 					}
 					
@@ -191,9 +208,6 @@ public class StreamInfoDetails extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -230,7 +244,8 @@ public class StreamInfoDetails extends Activity {
 			            url = info1.getmURL();
 			            
 			            intent.putExtra(getResources().getString(R.string.input_stream), url);
-			            
+			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
+			            intent.putExtra(getResources().getString(R.string.description),mTextViewDetails.getText());
 			            startActivity(intent);
 					}
 					
@@ -245,7 +260,7 @@ public class StreamInfoDetails extends Activity {
 					e.printStackTrace();
 				}
 			}});
-		
+		/*
 		mStreamRow3.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -339,7 +354,7 @@ public class StreamInfoDetails extends Activity {
 					e.printStackTrace();
 				}
 			}});
-		
+		*/
 	/*	
 		mStreamName.setOnClickListener(new OnClickListener() {
 
@@ -377,6 +392,9 @@ public class StreamInfoDetails extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

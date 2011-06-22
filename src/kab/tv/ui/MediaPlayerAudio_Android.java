@@ -87,7 +87,10 @@ public class MediaPlayerAudio_Android extends Activity {
                     mMediaPlayer.start();
 
             }
-            tx.setText("Playing audio channel...");
+            Intent i = getIntent();
+           
+           
+            tx.setText("Playing audio channel..." + "\n" + i.getStringExtra(getResources().getString(R.string.description))+"\n" + i.getStringExtra(getResources().getString(R.string.programtitle)));
 
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);

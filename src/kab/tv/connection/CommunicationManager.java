@@ -2,6 +2,7 @@ package kab.tv.connection;
 
 import kab.tv.ui.FFMpegPlayerActivity;
 import kab.tv.ui.MainKabTv;
+import kab.tv.ui.MediaPlayer_Android;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,14 +25,15 @@ public class CommunicationManager {
 			 isConnected = true;        
 			 Log.i(CommunicationManager.class.getName(), "Device is connected to the network. Online mode is available.");
 			//notify player - if is playing then start playing
-				FFMpegPlayerActivity.checkCommunicationState(true);
+				//FFMpegPlayerActivity.checkCommunicationState(true);
+			 MediaPlayer_Android.checkCommunicationState(true);
 			 }
 		 else {//if (_connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  _connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED ) { 
 			 isConnected = false;      
 			 Log.w(CommunicationManager.class.getName(), "Device is NOT connected to the network. Offline mode.");   
 			 //notify the player the there is no connection / preform suspend
-			 FFMpegPlayerActivity.checkCommunicationState(false);
-			 
+			// FFMpegPlayerActivity.checkCommunicationState(false);
+			 MediaPlayer_Android.checkCommunicationState(false);
 			 }
 		
 		 set_isConnected(isConnected);

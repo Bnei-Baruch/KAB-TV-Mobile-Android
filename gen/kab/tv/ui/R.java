@@ -38,6 +38,7 @@ public final class R {
     }
     public static final class id {
         public static final int ToggleButton01=0x7f06000d;
+        public static final int channelimage=0x7f06000f;
         public static final int detail_text=0x7f060011;
         public static final int icon_image=0x7f060009;
         public static final int icon_text=0x7f06000a;
@@ -50,18 +51,13 @@ public final class R {
         public static final int player_menu_decode_audio=0x7f060006;
         public static final int row1=0x7f060013;
         public static final int row2=0x7f060015;
-        public static final int row3=0x7f060017;
-        public static final int row4=0x7f060019;
         public static final int scheduleid=0x7f060010;
         public static final int streamrow1=0x7f060014;
         public static final int streamrow2=0x7f060016;
-        public static final int streamrow3=0x7f060018;
-        public static final int streamrow4=0x7f06001a;
         public static final int table=0x7f060012;
         public static final int textview_path=0x7f060000;
         public static final int textview_rowtext=0x7f060003;
         public static final int title=0x7f06000b;
-        public static final int widget28=0x7f06000f;
         public static final int widget32=0x7f06000e;
         public static final int widget44=0x7f060008;
     }
@@ -89,6 +85,7 @@ public final class R {
         public static final int channels=0x7f050003;
         public static final int convert=0x7f050009;
         public static final int delete_src_movie=0x7f05000a;
+        public static final int description=0x7f050020;
         public static final int expandable_list_sample_action=0x7f05001d;
         public static final int framerate=0x7f050018;
         /**  used between activities to pass input video path 

@@ -31,6 +31,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,7 @@ public class MediaPlayer_Android extends Activity implements
     private static final int STREAM_VIDEO = 5;
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
+    public static  MediaPlayer_Android mSelf;
 
     /**
      * 
@@ -75,7 +78,7 @@ public class MediaPlayer_Android extends Activity implements
         mTitle = (TextView) findViewById(R.id.title);
         Intent i = getIntent();
         mTitle.setText(i.getStringExtra(getResources().getString(R.string.programtitle)));
-        
+        mSelf = this;
     }
 
     private void playVideo(Integer Media) {
@@ -225,6 +228,32 @@ public class MediaPlayer_Android extends Activity implements
     private void startVideoPlayback() {
         Log.v(TAG, "startVideoPlayback");
         holder.setFixedSize(mVideoWidth, mVideoHeight);
+        
+        
+       
+       
+
+        //Get the dimensions of the video
+        int videoWidth = mMediaPlayer.getVideoHeight();
+        int videoHeight = mMediaPlayer.getVideoWidth();
+
+        //Get the width of the screen
+        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+
+        //Get the SurfaceView layout parameters
+        android.view.ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
+
+        //Set the width of the SurfaceView to the width of the screen
+        lp.width = screenWidth;
+
+        //Set the height of the SurfaceView to match the aspect ratio of the video 
+        //be sure to cast these as floats otherwise the calculation will likely be 0
+        lp.height = (int) (((float)videoHeight / (float)videoWidth) * (float)screenWidth);
+
+        //Commit the layout parameters
+        mPreview.setLayoutParams(lp);
+        
+        
         mMediaPlayer.start();
     }
     public void setDataSource(String source)
@@ -232,4 +261,36 @@ public class MediaPlayer_Android extends Activity implements
     	path = source;
     
     }
+    
+public static void checkCommunicationState(boolean status) {
+		
+	if(mSelf == null)
+		return;
+	
+		if(status && !mSelf.mMediaPlayer.isPlaying())
+			mSelf.mMediaPlayer.start();
+		else if(!status){
+
+		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
+			alertDialog.setTitle("Communication disconnected");
+			alertDialog.setMessage("Do you want to wait or quit?");
+			 alertDialog.setButton("Wait", new DialogInterface.OnClickListener() {
+				     public void onClick(DialogInterface dialog, int which) {*/
+				    	 mSelf.mMediaPlayer.pause();
+				     return;
+				
+	/*			   } }); 
+			 alertDialog.setButton2("Quit", new DialogInterface.OnClickListener() {
+			     public void onClick(DialogInterface dialog, int which) {
+			
+			    	 mSelf.onBackPressed();
+			
+			   } }); 
+			
+			 alertDialog.show();*/
+		}
+			
+		
+	}
+
 }
