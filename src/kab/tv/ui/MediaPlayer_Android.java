@@ -197,13 +197,13 @@ public class MediaPlayer_Android extends Activity implements
 
     }
 
-    @Override
-    protected void onPause() {
+//    @Override
+ /*   protected void onPause() {
         super.onPause();
         releaseMediaPlayer();
         doCleanUp();
     }
-
+*/
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -135,8 +136,8 @@ public class StreamInfoDetails extends Activity {
 		Iterator<EventData> it = daySchedule.iterator();
 		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
 		
-
-		String hourofday = it.next().getmTime();
+		EventData data = it.next();
+		String hourofday = data.getmTime();
 		String rightnow = rightNow.getTime().toString();
 		
 		java.util.Date dateObj =  curFormater.parse(hourofday);
@@ -145,11 +146,14 @@ public class StreamInfoDetails extends Activity {
 		while(dateObj.before(dateObjCurrent)) 
 		{
 			
-			dateObj =  curFormater.parse(it.next().getmTime());
+			mTitleofCurrentProgram =  Html.fromHtml(data.getmTitle()).toString();
+			data = it.next();
+			dateObj =  curFormater.parse(data.getmTime());
+			
 			
 		}
 		
-		mTitleofCurrentProgram = it.next().getmTitle();
+		
 		
 		/*for (int count =3;count>NumberOfStreamsOS-1;count--)
 		{

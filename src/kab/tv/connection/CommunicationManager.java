@@ -42,7 +42,7 @@ public class CommunicationManager {
 	public static void set_isConnected(boolean _isConnected) {
 		CommunicationManager._isConnected = _isConnected;
 	}
-
+ 
 	public static boolean is_isConnected() {
 		return _isConnected;
 	} 

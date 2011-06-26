@@ -144,6 +144,8 @@ public class ScheduleHandler extends DefaultHandler{
     		myParsedSchedule.SetEvent();
     	}else if (localName.equals("descr")) {
     		this.in_descr = false;
+    		if(mStringFromCharacters == null)
+    			mStringFromCharacters.append("");
     		myParsedSchedule.setDayData(mStringFromCharacters.toString());
     		mStringFromCharacters = null;
     	}else if (localName.equals("title")) {

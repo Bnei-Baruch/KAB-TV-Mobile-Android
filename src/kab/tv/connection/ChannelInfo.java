@@ -111,7 +111,7 @@ public class ChannelInfo implements Parcelable{
 	         xr.setContentHandler(myHandler);
 	         
 	         
-	         mScheduleuRL = new URL("http://kab.tv/vod/api/schedule/Hebrew");
+	        // mScheduleuRL = new URL("http://kab.tv/vod/api/schedule/Hebrew");
 	         /* Parse the xml-data from our URL. */
 	         InputSource source = new InputSource(mScheduleuRL.openStream());
 	         source.setEncoding("UTF-8");

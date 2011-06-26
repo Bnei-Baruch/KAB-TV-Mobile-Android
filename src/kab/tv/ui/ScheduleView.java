@@ -198,10 +198,10 @@ public class ScheduleView extends ExpandableListActivity {
             
             if(childPosition+1<getChildrenCount(groupPosition))
             	{
-            	   textView.setText(daily.getmDaySchedule().get(childPosition).getmTitle()+ " " +daily.getmDaySchedule().get(childPosition).getmTime()+"-"+daily.getmDaySchedule().get(childPosition+1).getmTime() + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
+            	   textView.setText( Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmTitle())+ " " + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmTime())+"-"+ Html.fromHtml(daily.getmDaySchedule().get(childPosition+1).getmTime()) + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
             	}
             else
-            	textView.setText(daily.getmDaySchedule().get(childPosition).getmTitle()+ " " +daily.getmDaySchedule().get(childPosition).getmTime()+"-"+daily1.getmDaySchedule().get(0).getmTime() + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
+            	textView.setText( Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmTitle())+ " " + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmTime())+"-"+ Html.fromHtml(daily1.getmDaySchedule().get(0).getmTime()) + "\n" + Html.fromHtml(daily.getmDaySchedule().get(childPosition).getmDescription()));
             return textView;
         }
 
