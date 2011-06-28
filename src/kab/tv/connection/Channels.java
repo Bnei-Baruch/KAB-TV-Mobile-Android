@@ -21,6 +21,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import android.app.ProgressDialog;
+
 public class Channels {
 	
 	private static List<ChannelInfo> mChannels;
@@ -52,7 +54,8 @@ public class Channels {
 	 public void LoadData() throws ParserConfigurationException, SAXException, IOException
 	 {
 		 
-		 
+		
+         
 		 
 		 /* Get a SAXParser from the SAXPArserFactory. */
          SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -158,5 +161,47 @@ public class Channels {
 		URL schedule = new URL(string);
 		this.getmChannels().get(mNumberOfChannelsLoaded).mScheduleuRL = schedule;
 	}
+
+	 public static void checkCommunicationStateConfiguration(boolean status) throws ParserConfigurationException, SAXException, IOException {
+			
+	    	if(Channels.instance() == null)
+	    		return;
+	    	
+	    		if(status && !Channels.instance().isLoaded())
+	    			Channels.instance().reload();
+	    		else if(!status){
+
+	    		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
+	    			alertDialog.setTitle("Communication disconnected");
+	    			alertDialog.setMessage("Do you want to wait or quit?");
+	    			 alertDialog.setButton("Wait", new DialogInterface.OnClickListener() {
+	    				     public void onClick(DialogInterface dialog, int which) {*/
+	    			Channels.instance().setEmptyView();
+	    				     return;
+	    				
+	    	/*			   } }); 
+	    			 alertDialog.setButton2("Quit", new DialogInterface.OnClickListener() {
+	    			     public void onClick(DialogInterface dialog, int which) {
+	    			
+	    			    	 mSelf.onBackPressed();
+	    			
+	    			   } }); 
+	    			
+	    			 alertDialog.show();*/
+	    		}
+	    			
+	    		
+	    	}
+
+	private void setEmptyView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void reload() throws ParserConfigurationException, SAXException, IOException {
+		// TODO Auto-generated method stub
+		LoadData();
+	}
+
 	 
 }

@@ -17,6 +17,8 @@
 package kab.tv.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
@@ -71,6 +73,7 @@ public class StreamsGrid extends Activity {
         super.onCreate(savedInstanceState);
 
         try {
+        	
 			loadApps();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -126,7 +129,7 @@ public class StreamsGrid extends Activity {
         
         
        
-        
+      
     
     }
 
@@ -135,6 +138,9 @@ public class StreamsGrid extends Activity {
     private List<ResolveInfo> mApps;
     private List<StreamInfo> mStreams;
     private List<ChannelInfo> mChannels;
+    
+   
+
 
     @SuppressWarnings("rawtypes")
 	private void loadApps() throws ParserConfigurationException, SAXException, IOException {
@@ -183,7 +189,7 @@ public class StreamsGrid extends Activity {
       }
         
         
-        
+   
     
 
     public class AppsAdapter extends BaseAdapter {

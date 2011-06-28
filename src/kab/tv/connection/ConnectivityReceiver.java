@@ -1,4 +1,10 @@
 package kab.tv.connection;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +21,18 @@ import android.util.Log;
 		 if(info != null) { 
 			 Log.v(getClass().getName(), "Reported connectivity status is " + info.getState() + ".");   
 			 }    
-		 CommunicationManager.updateConnectivityState(); // Notify connection manager }  }
+		 try {
+			CommunicationManager.updateConnectivityState();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Notify connection manager }  }
 	 }
  
  

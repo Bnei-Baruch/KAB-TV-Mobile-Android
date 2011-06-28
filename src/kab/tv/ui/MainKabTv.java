@@ -24,9 +24,14 @@ import com.media.ffmpeg.FFMpeg;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -55,7 +60,7 @@ import android.widget.TextView;
 
 import kab.tv.connection.*;
 
-public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactory*/{
+public class MainKabTv extends TabActivity implements Runnable /*implements TabHost.TabContentFactory*/{
 
 	private static final String TAG = "MainKabTv";
 	
@@ -69,9 +74,11 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 	ConnectivityReceiver    mComNotifier;
 	public Intent i;
 	public static  MainKabTv mSelf;
-
-	
-	
+	 private static final int DIALOG1_KEY = 0;
+	 private static final int DIALOG2_KEY = 1;
+	 ProgressDialog mDialog1;
+	 Thread thread;
+	 private int demoDelay = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +112,9 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 	        tabHost.addView(relative);
 	        tabHost.setup();
 
-		
+	       
+			
+			
 		
 		Intent i = new Intent(this, FFMpegPlayerActivity.class);
 		i.putExtra(getResources().getString(R.string.input_stream), "mms://vod.kab.tv/heb_medium");
@@ -129,10 +138,69 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
     	//startActivity(i);
 		mSelf  = this;
 		//startPlayer(/*sream url*/);
-    	try {
-			Channels channels = Channels.instance();
-			if(!channels.isLoaded())
-			channels.LoadData();
+		demoDelay = 1000;
+		 Channels channels;
+			try {
+				channels = Channels.instance();
+				if(!channels.isLoaded())
+				{
+					 // set up mProgressdialog
+				    if (mDialog1 == null) {
+				        ProgressDialog dialog = new ProgressDialog(this);
+				        //dialog.setTitle("Loading");
+				        dialog.setMessage("Loading");
+				        dialog.setIndeterminate(true);
+				        dialog.setCancelable(false);
+				        mDialog1 = dialog;
+				    }
+				 
+				        Handler handler = new Handler();
+				        showProgressDialog(); //show progress dialog here
+				 
+				        handler.postDelayed(new Runnable() {
+				            public void run() {
+				                dismissProgressDialog(); //clearing progress dialog
+				                //ensureUi(); //map the stuff from class to xml
+				                //populateUi(); //grab the data from whatever
+				            }
+				        }, demoDelay); //demodelay will set the delay time
+
+	               // thread = new Thread(this);
+	               // thread.start();		        			
+	                
+				} 
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+	
+	private ProgressDialog showProgressDialog() {
+		mDialog1.show();
+	    return mDialog1;
+	}
+	 
+	private void dismissProgressDialog() {
+	    try {
+	    	mDialog1.dismiss();
+	    } catch (IllegalArgumentException e) {
+	        // android will do its jon
+	 
+	    }
+	}
+	  public void run() {
+		  try {
+			  Looper.prepare();
+			  mDialog1 = ProgressDialog.show(this, "Working..", "Calculating Pi", true,
+                      false);
+			Channels.instance().LoadData();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,10 +211,59 @@ public class MainKabTv extends TabActivity /*implements TabHost.TabContentFactor
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-		
-	}
+          handler.sendEmptyMessage(0);
+  }
+
+  private Handler handler = new Handler() {
+          @Override
+          public void handleMessage(Message msg) {
+        	  mDialog1.dismiss();
+                  
+
+          }
+  };
+  
 	
+	@Override
+	public void onResume()
+	{
+		
+			
+		try {
+			Channels.instance().LoadData();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		super.onResume();
+	}
+	 @Override
+	    protected Dialog onCreateDialog(int id) {
+	        switch (id) {
+	            
+	            case DIALOG1_KEY: {
+	            	mDialog1 = new ProgressDialog(this);
+	            	mDialog1.setMessage("Please wait while loading...");
+	            	mDialog1.setIndeterminate(true);
+	            	mDialog1.setCancelable(true);
+	                return mDialog1;
+	            }
+	        }
+	        return null;
+	    }  
+	
+	@Override
+	public void onDestroy()
+	{
+		unregisterReceiver(mComNotifier);
+		super.onDestroy();
+	}
 	
 	 /** {@inheritDoc} */
     public View createTabContent(String tag) {

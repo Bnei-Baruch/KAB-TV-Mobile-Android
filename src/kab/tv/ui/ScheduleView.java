@@ -20,6 +20,10 @@ package kab.tv.ui;
 
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -239,7 +243,11 @@ public class ScheduleView extends ExpandableListActivity {
             //every event has the name and the hour it begins and ends
          
             //textView.setText(getGroup(groupPosition).toString());
-            textView.setText(Day.values()[groupPosition].toString() + " " + daily.getmDate());
+            
+            SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+            String tempDate = curFormater.format(daily.getmDate());
+    		
+            textView.setText(Day.values()[groupPosition].toString() + " " + tempDate);
             return textView;
         }
 

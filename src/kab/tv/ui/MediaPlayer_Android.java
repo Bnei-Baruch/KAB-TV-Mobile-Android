@@ -234,11 +234,12 @@ public class MediaPlayer_Android extends Activity implements
        
 
         //Get the dimensions of the video
-        int videoWidth = mMediaPlayer.getVideoHeight();
-        int videoHeight = mMediaPlayer.getVideoWidth();
+        int videoWidth = mVideoWidth;
+        int videoHeight = mVideoHeight;
 
         //Get the width of the screen
         int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
 
         //Get the SurfaceView layout parameters
         android.view.ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
@@ -248,7 +249,7 @@ public class MediaPlayer_Android extends Activity implements
 
         //Set the height of the SurfaceView to match the aspect ratio of the video 
         //be sure to cast these as floats otherwise the calculation will likely be 0
-        lp.height = (int) (((float)videoHeight / (float)videoWidth) * (float)screenWidth);
+        lp.height =(int) (((float)videoHeight / (float)videoWidth) * (float)screenWidth);
 
         //Commit the layout parameters
         mPreview.setLayoutParams(lp);

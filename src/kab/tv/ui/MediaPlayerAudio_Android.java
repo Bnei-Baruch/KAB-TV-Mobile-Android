@@ -38,6 +38,7 @@ public class MediaPlayerAudio_Android extends Activity {
     private static final int LOCAL_VIDEO = 4;
     private static final int STREAM_VIDEO = 5;
     private String path;
+    public static  MediaPlayerAudio_Android mSelf;
 
     private TextView tx;
 
@@ -108,4 +109,37 @@ public class MediaPlayerAudio_Android extends Activity {
         }
 
     }
+    
+    public static void checkCommunicationStateAudio(boolean status) {
+		
+    	if(mSelf == null)
+    		return;
+    	
+    		if(status && !mSelf.mMediaPlayer.isPlaying())
+    			mSelf.mMediaPlayer.start();
+    		else if(!status){
+
+    		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();
+    			alertDialog.setTitle("Communication disconnected");
+    			alertDialog.setMessage("Do you want to wait or quit?");
+    			 alertDialog.setButton("Wait", new DialogInterface.OnClickListener() {
+    				     public void onClick(DialogInterface dialog, int which) {*/
+    				    	 mSelf.mMediaPlayer.pause();
+    				     return;
+    				
+    	/*			   } }); 
+    			 alertDialog.setButton2("Quit", new DialogInterface.OnClickListener() {
+    			     public void onClick(DialogInterface dialog, int which) {
+    			
+    			    	 mSelf.onBackPressed();
+    			
+    			   } }); 
+    			
+    			 alertDialog.show();*/
+    		}
+    			
+    		
+    	}
+
+    
 }

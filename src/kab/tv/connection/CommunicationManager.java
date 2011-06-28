@@ -1,7 +1,14 @@
 package kab.tv.connection;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import kab.tv.ui.FFMpegPlayerActivity;
 import kab.tv.ui.MainKabTv;
+import kab.tv.ui.MediaPlayerAudio_Android;
 import kab.tv.ui.MediaPlayer_Android;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -15,7 +22,7 @@ public class CommunicationManager {
 		
 	
 	
-	public static void updateConnectivityState() {
+	public static void updateConnectivityState() throws ParserConfigurationException, SAXException, IOException {
 		// TODO Auto-generated method stub
 		 boolean isConnected = false;  
 		 ConnectivityManager _connec = (ConnectivityManager) mCurrentContext.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -27,6 +34,8 @@ public class CommunicationManager {
 			//notify player - if is playing then start playing
 				//FFMpegPlayerActivity.checkCommunicationState(true);
 			 MediaPlayer_Android.checkCommunicationState(true);
+			 MediaPlayerAudio_Android.checkCommunicationStateAudio(true);
+			 Channels.checkCommunicationStateConfiguration(true);
 			 }
 		 else {//if (_connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  _connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED ) { 
 			 isConnected = false;      
@@ -34,6 +43,8 @@ public class CommunicationManager {
 			 //notify the player the there is no connection / preform suspend
 			// FFMpegPlayerActivity.checkCommunicationState(false);
 			 MediaPlayer_Android.checkCommunicationState(false);
+			 MediaPlayerAudio_Android.checkCommunicationStateAudio(false);
+			 Channels.checkCommunicationStateConfiguration(false);
 			 }
 		
 		 set_isConnected(isConnected);

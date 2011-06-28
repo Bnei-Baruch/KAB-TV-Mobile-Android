@@ -137,4 +137,7 @@ public class ChannelInfo implements Parcelable{
 		public ScheduleData getmScheduleData() {
 			return mScheduleData;
 		}
+		
+		
+		 
 }
