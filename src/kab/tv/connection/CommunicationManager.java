@@ -35,7 +35,7 @@ public class CommunicationManager {
 				//FFMpegPlayerActivity.checkCommunicationState(true);
 			 MediaPlayer_Android.checkCommunicationState(true);
 			 MediaPlayerAudio_Android.checkCommunicationStateAudio(true);
-			 Channels.checkCommunicationStateConfiguration(true);
+			 Channels.checkCommunicationStateConfiguration(true,mCurrentContext);
 			 }
 		 else {//if (_connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  _connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED ) { 
 			 isConnected = false;      
@@ -44,7 +44,7 @@ public class CommunicationManager {
 			// FFMpegPlayerActivity.checkCommunicationState(false);
 			 MediaPlayer_Android.checkCommunicationState(false);
 			 MediaPlayerAudio_Android.checkCommunicationStateAudio(false);
-			 Channels.checkCommunicationStateConfiguration(false);
+			 Channels.checkCommunicationStateConfiguration(false,mCurrentContext);
 			 }
 		
 		 set_isConnected(isConnected);

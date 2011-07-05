@@ -39,6 +39,8 @@ public class ScheduleData {
 	Tags mFlag;
 	private SortedMap<Day,DayData> mData;
 	String mCurrentDate;
+	boolean mLoaded;
+	
 	
 	public ScheduleData(){
 		mCurrentEventdata =  new EventData();
@@ -129,6 +131,7 @@ public class ScheduleData {
 
 	public Map<Day,DayData> getmData() {
 		return mData;
+	
 	}
 	
 	

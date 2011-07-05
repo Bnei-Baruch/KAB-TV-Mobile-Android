@@ -10,6 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import kab.tv.ui.StreamsGrid;
+
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -22,6 +24,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+
+import android.content.Context;
 
 public class Channels {
 	
@@ -56,7 +61,8 @@ public class Channels {
 		 
 		
          
-		 
+		 if(isLoaded())
+			 return;
 		 /* Get a SAXParser from the SAXPArserFactory. */
          SAXParserFactory spf = SAXParserFactory.newInstance();
          SAXParser sp = spf.newSAXParser();
@@ -162,13 +168,18 @@ public class Channels {
 		this.getmChannels().get(mNumberOfChannelsLoaded).mScheduleuRL = schedule;
 	}
 
-	 public static void checkCommunicationStateConfiguration(boolean status) throws ParserConfigurationException, SAXException, IOException {
+	 public static void checkCommunicationStateConfiguration(boolean status, Context mCurrentContext) throws ParserConfigurationException, SAXException, IOException {
 			
 	    	if(Channels.instance() == null)
 	    		return;
 	    	
 	    		if(status && !Channels.instance().isLoaded())
+	    		{
 	    			Channels.instance().reload();
+	    			Intent i = new Intent("com.myapp.app.DATA_REFRESH");
+	    			mCurrentContext.sendBroadcast(i);
+	    			
+	    		}
 	    		else if(!status){
 
 	    		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();

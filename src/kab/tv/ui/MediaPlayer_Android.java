@@ -20,6 +20,7 @@ package kab.tv.ui;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -28,6 +29,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -59,6 +61,9 @@ public class MediaPlayer_Android extends Activity implements
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
     public static  MediaPlayer_Android mSelf;
+    
+    private PowerManager.WakeLock wl;
+    
 
     /**
      * 
@@ -79,6 +84,9 @@ public class MediaPlayer_Android extends Activity implements
         Intent i = getIntent();
         mTitle.setText(i.getStringExtra(getResources().getString(R.string.programtitle)));
         mSelf = this;
+        
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
     private void playVideo(Integer Media) {
@@ -142,7 +150,7 @@ public class MediaPlayer_Android extends Activity implements
             mMediaPlayer.setOnPreparedListener(this);
             mMediaPlayer.setOnVideoSizeChangedListener(this);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
+            
 
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
@@ -150,7 +158,7 @@ public class MediaPlayer_Android extends Activity implements
     }
 
     public void onBufferingUpdate(MediaPlayer arg0, int percent) {
-        Log.d(TAG, "onBufferingUpdate percent:" + percent);
+        Log.e(TAG, "onBufferingUpdate percent:" + percent);
 
     }
 
@@ -197,13 +205,20 @@ public class MediaPlayer_Android extends Activity implements
 
     }
 
-//    @Override
- /*   protected void onPause() {
+    @Override
+    protected void onResume() {
+            super.onResume();
+            wl.acquire();
+    }
+    
+    @Override
+    protected void onPause() {
         super.onPause();
         releaseMediaPlayer();
         doCleanUp();
+        wl.release();
     }
-*/
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -265,7 +280,7 @@ public class MediaPlayer_Android extends Activity implements
     
 public static void checkCommunicationState(boolean status) {
 		
-	if(mSelf == null)
+	if(mSelf == null || mSelf.mMediaPlayer == null)
 		return;
 	
 		if(status && !mSelf.mMediaPlayer.isPlaying())

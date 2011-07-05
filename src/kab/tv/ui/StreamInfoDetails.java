@@ -132,7 +132,14 @@ public class StreamInfoDetails extends Activity {
 		int day = rightNow.get(Calendar.DAY_OF_WEEK);
 		int currenthour = rightNow.get(Calendar.HOUR_OF_DAY) ;
 		int currentmin = rightNow.get(Calendar.MINUTE) ;
-		List<EventData> daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day]).getmDaySchedule();
+		List<EventData> daySchedule;
+		if(Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().containsKey(Day.values()[day-1]))
+				daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day-1]).getmDaySchedule();
+		else
+		{
+			mTitleofCurrentProgram = "";
+			return;
+		}
 		Iterator<EventData> it = daySchedule.iterator();
 		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
 		
@@ -147,7 +154,12 @@ public class StreamInfoDetails extends Activity {
 		{
 			
 			mTitleofCurrentProgram =  Html.fromHtml(data.getmTitle()).toString();
+			if(it.hasNext())
 			data = it.next();
+			else
+			{
+				break;
+			}
 			dateObj =  curFormater.parse(data.getmTime());
 			
 			

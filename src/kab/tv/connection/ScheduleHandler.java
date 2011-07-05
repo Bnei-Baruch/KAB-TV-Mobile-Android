@@ -135,6 +135,7 @@ public class ScheduleHandler extends DefaultHandler{
     	
     	if (localName.equals("hash") ) {
     		this.in_hash = false;
+    		myParsedSchedule.mLoaded = true;
     	}else if (day  != null) {
     		this.in_day = false;
     	}else if (localName.equals("items")) {

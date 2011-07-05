@@ -19,7 +19,10 @@ package kab.tv.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -72,65 +75,7 @@ public class StreamsGrid extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-        	
-			loadApps();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // do this in onresume?
-
-        setContentView(R.layout.grid_1);
-        mGrid = (GridView) findViewById(R.id.myGrid);
-        mGrid.setAdapter(new AppsAdapter());
         
-        mGrid.setOnItemClickListener((new OnItemClickListener() {   
-        	
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				
-				boolean bWMV;
-				bWMV = true;
-				if(bWMV)
-				{
-				// TODO Auto-generated method stub
-				Log.d(TAG, "select a channel");
-				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
-				i.putExtra(getResources().getString(R.string.input_stream),  arg2+1);
-				startActivity(i);
-				
-				}
-				else
-				{
-				//if non wmv
-				 Intent intent =
-	                    new Intent(StreamsGrid.this,
-	                    		MediaPlayer_Android.class);
-	            intent.putExtra(MEDIA, STREAM_VIDEO);
-	            intent.putExtra(getResources().getString(R.string.input_stream), "rtsp://flash3.eu.kab.tv:1935/liveheb/mobile.sdp");
-	            
-	            startActivity(intent);
-				}
-			}   
-        	})); 
-        
-        
-       
-      
-    
     }
 
     
@@ -278,7 +223,82 @@ public class StreamsGrid extends Activity {
         }
     }
     
+    public class updaterBroadcastReceiver extends BroadcastReceiver {       
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            StreamsGrid.this.onResume(); // refresh
+        }
+}
     
+    @Override
+    public void onResume(){         
+             IntentFilter filter = new IntentFilter("com.myapp.app.DATA_REFRESH");
+             updaterBroadcastReceiver r = new updaterBroadcastReceiver();
+             registerReceiver(r,filter);
+
+             
+             
+             try {
+             	
+     			loadApps();
+     		} catch (ParserConfigurationException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (SAXException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (IOException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} // do this in onresume?
+
+             setContentView(R.layout.grid_1);
+             mGrid = (GridView) findViewById(R.id.myGrid);
+             mGrid.setAdapter(new AppsAdapter());
+             
+             mGrid.setOnItemClickListener((new OnItemClickListener() {   
+             	
+
+     			public void onNothingSelected(AdapterView<?> arg0) {
+     				// TODO Auto-generated method stub
+     				
+     			}
+
+     			@Override
+     			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+     					long arg3) {
+     				
+     				boolean bWMV;
+     				bWMV = true;
+     				if(bWMV)
+     				{
+     				// TODO Auto-generated method stub
+     				Log.d(TAG, "select a channel");
+     				Intent i = new Intent(StreamsGrid.this,StreamInfoDetails.class);
+     				i.putExtra(getResources().getString(R.string.input_stream),  arg2+1);
+     				startActivity(i);
+     				
+     				}
+     				else
+     				{
+     				//if non wmv
+     				 Intent intent =
+     	                    new Intent(StreamsGrid.this,
+     	                    		MediaPlayer_Android.class);
+     	            intent.putExtra(MEDIA, STREAM_VIDEO);
+     	            intent.putExtra(getResources().getString(R.string.input_stream), "rtsp://flash3.eu.kab.tv:1935/liveheb/mobile.sdp");
+     	            
+     	            startActivity(intent);
+     				}
+     			}   
+             	})); 
+             
+             
+            
+           
+         
+             super.onResume();
+    }   
    
 
 }
