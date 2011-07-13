@@ -50,7 +50,7 @@ public class Channels {
 	 static public Channels instance() throws ParserConfigurationException, SAXException, IOException {
 	      if(null == _instance) {
 	         _instance = new Channels();
-	         _instance.mConfigurationUrl =  new URL("http://mobile.kbb1.com/kab_channel/configuration.xml");
+	         _instance.mConfigurationUrl =  new URL("http://mobile.kbb1.com/kab_channel/android.xml");
 	         setmChannels(new ArrayList<ChannelInfo>());
 	      }
 	      return _instance;
@@ -212,6 +212,11 @@ public class Channels {
 	private void reload() throws ParserConfigurationException, SAXException, IOException {
 		// TODO Auto-generated method stub
 		LoadData();
+	}
+
+	public void setIconName(String icon) {
+		// TODO Auto-generated method stub
+		this.getmChannels().get(mNumberOfChannelsLoaded).setmIcon(icon);
 	}
 
 	 

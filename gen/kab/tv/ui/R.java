@@ -17,24 +17,29 @@ public final class R {
         public static final int solid_yellow=0x7f040003;
     }
     public static final class drawable {
-        public static final int android_hdpi=0x7f020000;
-        public static final int android_ldpi=0x7f020001;
-        public static final int blue=0x7f02000c;
-        public static final int green=0x7f02000d;
-        public static final int ic_menu_archive=0x7f020002;
-        public static final int ic_menu_back=0x7f020003;
-        public static final int ic_menu_block=0x7f020004;
-        public static final int ic_menu_gallery=0x7f020005;
-        public static final int ic_menu_mark=0x7f020006;
-        public static final int ic_menu_notifications=0x7f020007;
-        public static final int icon_mdpi=0x7f020008;
-        public static final int red=0x7f02000b;
-        public static final int rowbackground=0x7f020009;
-        public static final int screen_background_black=0x7f02000f;
-        public static final int shape=0x7f02000a;
-        public static final int translucent_background=0x7f020010;
-        public static final int transparent_background=0x7f020011;
-        public static final int yellow=0x7f02000e;
+        public static final int android_ldpi=0x7f020000;
+        public static final int blue=0x7f020011;
+        public static final int channel_en=0x7f020001;
+        public static final int channel_en_small=0x7f020002;
+        public static final int channel_heb=0x7f020003;
+        public static final int channel_heb_small=0x7f020004;
+        public static final int channel_rus=0x7f020005;
+        public static final int channel_rus_small=0x7f020006;
+        public static final int green=0x7f020012;
+        public static final int ic_menu_archive=0x7f020007;
+        public static final int ic_menu_back=0x7f020008;
+        public static final int ic_menu_block=0x7f020009;
+        public static final int ic_menu_gallery=0x7f02000a;
+        public static final int ic_menu_mark=0x7f02000b;
+        public static final int ic_menu_notifications=0x7f02000c;
+        public static final int icon_mdpi=0x7f02000d;
+        public static final int red=0x7f020010;
+        public static final int rowbackground=0x7f02000e;
+        public static final int screen_background_black=0x7f020014;
+        public static final int shape=0x7f02000f;
+        public static final int translucent_background=0x7f020015;
+        public static final int transparent_background=0x7f020016;
+        public static final int yellow=0x7f020013;
     }
     public static final class id {
         public static final int ToggleButton01=0x7f06000d;

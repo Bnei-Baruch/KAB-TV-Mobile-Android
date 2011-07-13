@@ -74,8 +74,10 @@ public class ConfigurationHandler extends DefaultHandler{
 							Channels.instance().LoadChannel();
 						
 						 String name = atts.getValue("name");
+						 String icon = atts.getValue("icon");
 						 
 							Channels.instance().setChannelName(name);
+							Channels.instance().setIconName(icon);
 						
 						
                 }else if (localName.equals("streams")) {

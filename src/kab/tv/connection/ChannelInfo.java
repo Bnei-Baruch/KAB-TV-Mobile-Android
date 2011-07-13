@@ -28,7 +28,7 @@ enum ChannelType
 
 public class ChannelInfo implements Parcelable{
 	String mLanguage;
-	Bitmap mIcon;
+	private String mIcon;
 	String mSource;
 	private String mName;
 	Streams mStreams;
@@ -136,6 +136,14 @@ public class ChannelInfo implements Parcelable{
 
 		public ScheduleData getmScheduleData() {
 			return mScheduleData;
+		}
+
+		public void setmIcon(String mIcon) {
+			this.mIcon = mIcon;
+		}
+
+		public String getmIcon() {
+			return mIcon;
 		}
 		
 		

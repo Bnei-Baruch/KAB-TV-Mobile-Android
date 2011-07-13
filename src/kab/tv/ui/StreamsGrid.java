@@ -57,6 +57,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.xml.sax.SAXException;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
@@ -149,11 +150,16 @@ public class StreamsGrid extends Activity {
             	LayoutInflater li = getLayoutInflater();
 				v = li.inflate(R.layout.icon, null);
 				TextView tv = (TextView)v.findViewById(R.id.icon_text);  
-				
+				 iv = (ImageView)v.findViewById(R.id.icon_image); 
 			    try {
 					//tv.setText(Channels.instance().getmChannels().get(0).GetStreams().GetStream(position).getmStreamName());
 			    	tv.setText(Channels.instance().getmChannels().get(position+1).getmName());
-			    	
+			    	 String icon = Channels.instance().GetChannels().get(position+1).getmIcon();
+			    	 icon = icon + "_small"; 
+			    		int id = getResources().getIdentifier(icon, "drawable", getPackageName());
+			            Bitmap  bmpCurrent = BitmapFactory.decodeResource(getResources(),id);
+			   		 
+			            iv.setImageBitmap(bmpCurrent);
 			    	
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -166,13 +172,14 @@ public class StreamsGrid extends Activity {
 					e.printStackTrace();
 				}  
 
-			    iv = (ImageView)v.findViewById(R.id.icon_image); 
+			   
                // i = new ImageView(StreamsGrid.this);
                // i.setScaleType(ImageView.ScaleType.FIT_CENTER);
                // i.setLayoutParams(new GridView.LayoutParams(50, 50));
-			    ResolveInfo info = mApps.get(position);
-	            iv.setImageDrawable(info.activityInfo.loadIcon(getPackageManager()));
+			//    ResolveInfo info = mApps.get(position);
+	         //   iv.setImageDrawable(info.activityInfo.loadIcon(getPackageManager()));
 	  //          iv.setImageBitmap(mStreams.get(position).mIcon);
+	           
             } else {
                 v = (View) convertView;
             }

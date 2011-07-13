@@ -102,22 +102,24 @@ public class StreamInfoDetails extends Activity {
 		mTextViewDetails.setText(descripiton);
 		
 		mChannelImage = (ImageView)findViewById(R.id.channelimage);
+		String icon = Channels.instance().GetChannels().get(mChannelNum).getmIcon();
+		int id = getResources().getIdentifier(icon, "drawable", getPackageName());
 		
-		Bitmap  bmpCurrent = BitmapFactory.decodeResource(getResources(),R.drawable.android_hdpi);
+		Bitmap  bmpCurrent = BitmapFactory.decodeResource(getResources(),id);
 		 
 		mChannelImage.setImageBitmap(bmpCurrent);
 		 
 		int NumberOfStreams = Channels.instance().GetChannels().get(mChannelNum).GetStreams().getmStreams().size();
 		int NumberOfStreamsOS = 0;
-		for (int count =0;count<NumberOfStreams-1;count++)
+		/*for (int count =0;count<NumberOfStreams-1;count++)
 		{
 			if(Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count).getmOS().equals("android") )
 			{
 				NumberOfStreamsOS++;
 			}
 		}
-		
-		for (int count =0;count<=NumberOfStreamsOS-1;count++)
+		*/
+		for (int count =0;count<=NumberOfStreams-1;count++)
 		{
 			if(Channels.instance().GetChannels().get(mChannelNum).GetStreams().GetStream(count).getmOS().equals("android") )
 			{
