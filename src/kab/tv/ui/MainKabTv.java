@@ -1,9 +1,12 @@
 package kab.tv.ui;
 
+
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -79,7 +82,7 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
 	 ProgressDialog mDialog1;
 	 Thread thread;
 	 private int demoDelay = 0;
-
+	 GoogleAnalyticsTracker tracker;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,8 +92,15 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
 		//mTextViewLocation = (TextView) findViewById(R.id.textview_path);
 		//mTextViewLocation.append("Kab 66");
 		//startPlayer(/*sream url*/);
-		
-		
+		 tracker = GoogleAnalyticsTracker.getInstance();
+		 
+		 tracker.start("UA-3288058-60", this);
+		 
+		 tracker.trackPageView("/Application started");
+		 
+		 tracker.dispatch();
+		 
+		 
 		//LayoutInflater.from(this).inflate(R.layout.tabmain, tabHost.getTabContentView(), true);
 		   Resources res = getResources(); // Resource object to get Drawables
 	        //TabHost tabHost = getTabHost();  // The activity TabHost
@@ -263,6 +273,9 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
 	{
 		unregisterReceiver(mComNotifier);
 		super.onDestroy();
+		// Stop the tracker when it is no longer needed.
+		tracker.stop();
+		 
 	}
 	
 	 /** {@inheritDoc} */

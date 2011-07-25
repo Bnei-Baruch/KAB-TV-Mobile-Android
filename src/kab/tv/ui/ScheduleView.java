@@ -29,6 +29,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 
 
 import kab.tv.connection.ChannelInfo;
@@ -68,7 +70,8 @@ public class ScheduleView extends ExpandableListActivity {
     int mChannelNumber;
     
     ChannelInfo mInfo;
-
+    GoogleAnalyticsTracker tracker;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +97,14 @@ public class ScheduleView extends ExpandableListActivity {
         setListAdapter(mAdapter);
         registerForContextMenu(getExpandableListView());
         
-       
+        tracker = GoogleAnalyticsTracker.getInstance();
+		 
+		
+		 
+		 
+		 tracker.trackPageView("/Loading schedule");
+		 
+		 tracker.dispatch();
         
     }      
 
@@ -259,5 +269,12 @@ public class ScheduleView extends ExpandableListActivity {
             return true;
         }
 
+    }
+    
+    @Override
+    protected void onDestroy() {
+      super.onDestroy();
+      // Stop the tracker when it is no longer needed.
+      tracker.stop();
     }
 }

@@ -18,6 +18,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.xml.sax.SAXException;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 
 
 import kab.tv.connection.Channels;
@@ -40,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StreamInfoDetails extends Activity {
 
@@ -65,6 +68,8 @@ public class StreamInfoDetails extends Activity {
 	private String mTitleofCurrentProgram;
 	String mInfo;
 	int mChannelNum;
+	
+	 GoogleAnalyticsTracker tracker;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +95,12 @@ public class StreamInfoDetails extends Activity {
 		mStreamTable = (TableLayout) findViewById(R.id.table);
 		
 		mSchedule = (Button)findViewById(R.id.scheduleid);
+		
+		tracker = GoogleAnalyticsTracker.getInstance();
+		tracker.trackPageView("/Channel view");
+		tracker.dispatch();
+		 
+		 
 		Intent i = getIntent();
 		try {
 		//mInfo = (StreamInfo) i.getParcelableExtra(getResources().getString(R.string.input_stream));
@@ -206,6 +217,11 @@ public class StreamInfoDetails extends Activity {
 					}
 					else
 					{
+						Calendar rightNow = Calendar.getInstance();
+						int hour = (rightNow.get(Calendar.ZONE_OFFSET) + rightNow.get(Calendar.DST_OFFSET)) / 60000 /60;
+						rightNow.add(Calendar.HOUR_OF_DAY, -hour);
+						if(mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))
+						{	
 						String url;
 						 Intent intent =
 			                    new Intent(getBaseContext(),
@@ -217,7 +233,15 @@ public class StreamInfoDetails extends Activity {
 			            intent.putExtra(getResources().getString(R.string.input_stream), url);
 			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
 			            startActivity(intent);
+						}
+			            else
+						{
+							 showToast("The stream is available during live lessons (03:00-06:00 GMT+3)");
+						
+						}
 					}
+					
+						
 					
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -253,6 +277,11 @@ public class StreamInfoDetails extends Activity {
 					}
 					else
 					{
+						Calendar rightNow = Calendar.getInstance();
+						int hour = (rightNow.get(Calendar.ZONE_OFFSET) + rightNow.get(Calendar.DST_OFFSET)) / 60000 /60;
+						rightNow.add(Calendar.HOUR_OF_DAY, -hour);
+						if(mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))
+						{	
 						String url;
 						 Intent intent =
 			                    new Intent(getBaseContext(),
@@ -265,6 +294,12 @@ public class StreamInfoDetails extends Activity {
 			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
 			            intent.putExtra(getResources().getString(R.string.description),mTextViewDetails.getText());
 			            startActivity(intent);
+						}
+						else
+						{
+							 showToast("The stream is available during live lessons (03:00-06:00 GMT+3)");
+						
+						}
 					}
 					
 				} catch (ParserConfigurationException e) {
@@ -443,5 +478,13 @@ public class StreamInfoDetails extends Activity {
     	
     	return str;
     }
-	
+	 @Override
+	  protected void onDestroy() {
+	    super.onDestroy();
+	    // Stop the tracker when it is no longer needed.
+	    tracker.stop();
+	  }
+	 void showToast(CharSequence msg) {
+	        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+	    }
 }

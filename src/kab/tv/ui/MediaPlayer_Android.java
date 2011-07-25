@@ -19,6 +19,8 @@ package kab.tv.ui;
 
 
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -63,7 +65,7 @@ public class MediaPlayer_Android extends Activity implements
     public static  MediaPlayer_Android mSelf;
     
     private PowerManager.WakeLock wl;
-    
+    GoogleAnalyticsTracker tracker;
 
     /**
      * 
@@ -87,6 +89,16 @@ public class MediaPlayer_Android extends Activity implements
         
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+        
+        tracker = GoogleAnalyticsTracker.getInstance();
+		 
+		
+		 
+				 
+		 tracker.trackPageView("/Playing video stream");
+		 
+		 tracker.dispatch();
+		 
     }
 
     private void playVideo(Integer Media) {
@@ -224,6 +236,11 @@ public class MediaPlayer_Android extends Activity implements
         super.onDestroy();
         releaseMediaPlayer();
         doCleanUp();
+        
+       
+          // Stop the tracker when it is no longer needed.
+          tracker.stop();
+      
     }
 
     private void releaseMediaPlayer() {

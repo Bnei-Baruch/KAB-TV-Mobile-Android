@@ -17,6 +17,8 @@
 package kab.tv.ui;
 
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -41,7 +43,7 @@ public class MediaPlayerAudio_Android extends Activity {
     public static  MediaPlayerAudio_Android mSelf;
 
     private TextView tx;
-
+    GoogleAnalyticsTracker tracker;
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -49,6 +51,15 @@ public class MediaPlayerAudio_Android extends Activity {
         setContentView(tx);
         Bundle extras = getIntent().getExtras();
         playAudio(extras.getInt(MEDIA));
+        
+        tracker = GoogleAnalyticsTracker.getInstance();
+		 
+		
+		 
+		 
+		 tracker.trackPageView("/Playing audio stream");
+		 
+		 tracker.dispatch();
     }
 
     private void playAudio(Integer media) {
@@ -108,6 +119,8 @@ public class MediaPlayerAudio_Android extends Activity {
             mMediaPlayer = null;
         }
 
+        // Stop the tracker when it is no longer needed.
+        tracker.stop();
     }
     
     public static void checkCommunicationStateAudio(boolean status) {
@@ -140,6 +153,8 @@ public class MediaPlayerAudio_Android extends Activity {
     			
     		
     	}
-
+  
+    
+   
     
 }

@@ -57,6 +57,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.xml.sax.SAXException;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -72,10 +74,16 @@ public class StreamsGrid extends Activity {
     GridView mGrid;
     private static final String MEDIA = "media";
 	private static final int STREAM_VIDEO = 5;
+	
+	 GoogleAnalyticsTracker tracker;
+	 
+	 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        tracker = GoogleAnalyticsTracker.getInstance();
+		tracker.trackPageView("/Channel list");
+		tracker.dispatch();
         
     }
 
@@ -307,5 +315,10 @@ public class StreamsGrid extends Activity {
              super.onResume();
     }   
    
-
+    @Override
+    protected void onDestroy() {
+      super.onDestroy();
+      // Stop the tracker when it is no longer needed.
+      tracker.stop();
+    }
 }
