@@ -14,7 +14,7 @@
 	<TextView android:id="@+id/detail_text"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="wrap_content" android:text="TextView"
-		android:layout_centerVertical="true" android:layout_height="wrap_content">
+		android:layout_centerVertical="true" android:layout_height="wrap_content" >
 	</TextView>
 
 
@@ -26,17 +26,17 @@
 			android:background="@drawable/rowbackground">
 
 			<TextView android:id="@+id/streamrow1" android:text="וידאו - איכות גבוהה"
-				android:padding="20dip" />
+				android:padding="20dip" android:textColor="@color/solid_blue"/>
 			<TextView android:text=">" android:gravity="right"
-				android:padding="20dip" />
+				android:padding="20dip" android:textColor="@color/solid_blue"/>
 		</TableRow>
 		<TableRow android:id="@+id/row2" android:background="@drawable/rowbackground"
 			android:shrinkColumns="*">
 
 			<TextView android:id="@+id/streamrow2" android:text="וידאו - איכות בינונית"
-				android:padding="20dip" />
+				android:padding="20dip" android:textColor="@color/solid_blue"/>
 			<TextView android:text=">" android:gravity="right"
-				android:padding="20dip" />
+				android:padding="20dip" android:textColor="@color/solid_blue"/>
 		</TableRow>
 		
 	</TableLayout>

@@ -220,7 +220,7 @@ public class StreamInfoDetails extends Activity {
 						Calendar rightNow = Calendar.getInstance();
 						int hour = (rightNow.get(Calendar.ZONE_OFFSET) + rightNow.get(Calendar.DST_OFFSET)) / 60000 /60;
 						rightNow.add(Calendar.HOUR_OF_DAY, -hour);
-						if(mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))
+						if((mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))|| mChannelNum != 2)
 						{	
 						String url;
 						 Intent intent =
@@ -280,7 +280,7 @@ public class StreamInfoDetails extends Activity {
 						Calendar rightNow = Calendar.getInstance();
 						int hour = (rightNow.get(Calendar.ZONE_OFFSET) + rightNow.get(Calendar.DST_OFFSET)) / 60000 /60;
 						rightNow.add(Calendar.HOUR_OF_DAY, -hour);
-						if(mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))
+						if((mChannelNum == 2 && (rightNow.getTime().getHours()>=0 && rightNow.getTime().getHours()<=3))|| mChannelNum != 2)
 						{	
 						String url;
 						 Intent intent =
