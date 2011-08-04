@@ -19,11 +19,13 @@ package kab.tv.ui;
 
 
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import java.io.IOException;
+
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -35,10 +37,14 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 
 public class MediaPlayer_Android extends Activity implements
@@ -49,7 +55,7 @@ public class MediaPlayer_Android extends Activity implements
     private int mVideoWidth;
     private int mVideoHeight;
     private MediaPlayer mMediaPlayer;
-    private SurfaceView mPreview;
+    private VideoViewCustom mPreview;
     private TextView mTitle;
     private SurfaceHolder holder;
     private String path;
@@ -63,9 +69,11 @@ public class MediaPlayer_Android extends Activity implements
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
     public static  MediaPlayer_Android mSelf;
+	private static boolean mStatus;
     
     private PowerManager.WakeLock wl;
     GoogleAnalyticsTracker tracker;
+	private boolean mRotated;
 
     /**
      * 
@@ -75,21 +83,27 @@ public class MediaPlayer_Android extends Activity implements
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.main);
-        mPreview = (SurfaceView) findViewById(R.id.mMovieView);
-        holder = mPreview.getHolder();
-        holder.addCallback(this);
-        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        extras = getIntent().getExtras();
-        findViewById(R.id.mMovieView);
+       
+       
+       
         
-        mTitle = (TextView) findViewById(R.id.title);
-        Intent i = getIntent();
-        mTitle.setText(i.getStringExtra(getResources().getString(R.string.programtitle)));
+        InitializeUI();
+        
+        
+        
+        
+        
         mSelf = this;
         
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
         
+        
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mPreview.setDimensions(320, 480);
+   	 	mPreview.getHolder().setFixedSize(320, 480);
         tracker = GoogleAnalyticsTracker.getInstance();
 		 
 		
@@ -101,6 +115,66 @@ public class MediaPlayer_Android extends Activity implements
 		 
     }
 
+    public void InitializeUI()
+    {
+        //get views from ID's
+    	 mPreview = (VideoViewCustom) findViewById(R.id.mMovieView);
+    	 holder = mPreview.getHolder();
+    	 holder.addCallback(this);
+         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+         
+         extras = getIntent().getExtras();
+         
+         
+         mTitle = (TextView) findViewById(R.id.title);
+         Intent i = getIntent();
+         mTitle.setText(i.getStringExtra(getResources().getString(R.string.programtitle)));
+
+        //etc... hook up click listeners, whatever you need from the Views
+    }
+    
+    private void SetVideoViewSize()
+    {
+    	//Get the width of the screen
+        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+
+        //Get the SurfaceView layout parameters
+        android.view.ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
+
+        //Set the width of the SurfaceView to the width of the screen
+        lp.width = screenWidth;
+
+        //Set the height of the SurfaceView to match the aspect ratio of the video 
+        //be sure to cast these as floats otherwise the calculation will likely be 0
+        lp.height =(int) (((float)mVideoHeight / (float)mVideoWidth) * (float)screenWidth);
+
+        //Commit the layout parameters
+        mPreview.setLayoutParams(lp);
+        
+        mPreview.setDimensions( lp.width,  lp.height);
+        mPreview.getHolder().setFixedSize(lp.width,  lp.height);
+    }
+    @Override
+   public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+     
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        	 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+             SetVideoViewSize();
+ 
+        } else {
+        	 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+
+        	 SetVideoViewSize();
+
+
+        }
+    }
+    
     private void playVideo(Integer Media) {
         doCleanUp();
         try {
@@ -153,6 +227,11 @@ public class MediaPlayer_Android extends Activity implements
             }
 
             // Create a new media player and set the listeners
+           // if(mRotated){
+          //  	mMediaPlayer.pause();
+         //   	 mRotated = false;
+         //   }
+          
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setDataSource(path);
             mMediaPlayer.setDisplay(holder);
@@ -202,7 +281,8 @@ public class MediaPlayer_Android extends Activity implements
 
     public void surfaceChanged(SurfaceHolder surfaceholder, int i, int j, int k) {
         Log.d(TAG, "surfaceChanged called");
-
+       
+       
     }
 
     public void surfaceDestroyed(SurfaceHolder surfaceholder) {
@@ -220,12 +300,20 @@ public class MediaPlayer_Android extends Activity implements
     @Override
     protected void onResume() {
             super.onResume();
+            if(mMediaPlayer!=null)
+            	mMediaPlayer.start();
             wl.acquire();
     }
     
     @Override
     protected void onPause() {
         super.onPause();
+        mMediaPlayer.pause();
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
         releaseMediaPlayer();
         doCleanUp();
         wl.release();
@@ -259,35 +347,11 @@ public class MediaPlayer_Android extends Activity implements
 
     private void startVideoPlayback() {
         Log.v(TAG, "startVideoPlayback");
-        holder.setFixedSize(mVideoWidth, mVideoHeight);
-        
-        
-       
-       
-
-        //Get the dimensions of the video
-        int videoWidth = mVideoWidth;
-        int videoHeight = mVideoHeight;
-
-        //Get the width of the screen
-        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
-
-        //Get the SurfaceView layout parameters
-        android.view.ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
-
-        //Set the width of the SurfaceView to the width of the screen
-        lp.width = screenWidth;
-
-        //Set the height of the SurfaceView to match the aspect ratio of the video 
-        //be sure to cast these as floats otherwise the calculation will likely be 0
-        lp.height =(int) (((float)videoHeight / (float)videoWidth) * (float)screenWidth);
-
-        //Commit the layout parameters
-        mPreview.setLayoutParams(lp);
-        
-        
+      
+        SetVideoViewSize();
         mMediaPlayer.start();
+        
+      
     }
     public void setDataSource(String source)
     {
@@ -295,13 +359,20 @@ public class MediaPlayer_Android extends Activity implements
     
     }
     
-public static void checkCommunicationState(boolean status) {
-		
+    
+    
+public static void checkCommunicationState(boolean status) throws IllegalStateException, IOException {
+	
+	mStatus = status;
 	if(mSelf == null || mSelf.mMediaPlayer == null)
 		return;
 	
 		if(status && !mSelf.mMediaPlayer.isPlaying())
+		{
+			
+			mSelf.mMediaPlayer.prepare();
 			mSelf.mMediaPlayer.start();
+		}
 		else if(!status){
 
 		/*	AlertDialog alertDialog = new AlertDialog.Builder(mSelf).create();

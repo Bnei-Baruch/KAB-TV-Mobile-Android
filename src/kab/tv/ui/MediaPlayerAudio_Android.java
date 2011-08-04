@@ -41,6 +41,7 @@ public class MediaPlayerAudio_Android extends Activity {
     private static final int STREAM_VIDEO = 5;
     private String path;
     public static  MediaPlayerAudio_Android mSelf;
+	private static boolean mStatus;
 
     private TextView tx;
     GoogleAnalyticsTracker tracker;
@@ -97,6 +98,8 @@ public class MediaPlayerAudio_Android extends Activity {
                      */
                  //   mMediaPlayer = MediaPlayer.create(this, R.raw.test_cbr);
                     mMediaPlayer.start();
+                    if(mStatus == false)
+                   	 mMediaPlayer.pause();
 
             }
             Intent i = getIntent();
@@ -125,6 +128,7 @@ public class MediaPlayerAudio_Android extends Activity {
     
     public static void checkCommunicationStateAudio(boolean status) {
 		
+    	mStatus = status;
     	if(mSelf == null)
     		return;
     	

@@ -146,37 +146,39 @@ public class StreamInfoDetails extends Activity {
 		int currenthour = rightNow.get(Calendar.HOUR_OF_DAY) ;
 		int currentmin = rightNow.get(Calendar.MINUTE) ;
 		List<EventData> daySchedule;
-		if(Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().containsKey(Day.values()[day-1]))
-				daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day-1]).getmDaySchedule();
+		if(!Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().containsKey(Day.values()[day-1]))
+			mTitleofCurrentProgram = "";
+				
 		else
 		{
-			mTitleofCurrentProgram = "";
-			return;
-		}
-		Iterator<EventData> it = daySchedule.iterator();
-		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
-		
-		EventData data = it.next();
-		String hourofday = data.getmTime();
-		String rightnow = rightNow.getTime().toString();
-		
-		java.util.Date dateObj =  curFormater.parse(hourofday);
-		java.util.Date dateObjCurrent =  curFormater.parse(String.format("%d:%d",currenthour,currentmin));
-		//int hoursdate = dateObj.getHours();
-		while(dateObj.before(dateObjCurrent)) 
-		{
+			daySchedule  = Channels.instance().GetChannels().get(mChannelNum).getmScheduleData().getmData().get(Day.values()[day-1]).getmDaySchedule();
+			Iterator<EventData> it = daySchedule.iterator();
+			SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
 			
-			mTitleofCurrentProgram =  Html.fromHtml(data.getmTitle()).toString();
-			if(it.hasNext())
-			data = it.next();
-			else
+			EventData data = it.next();
+			String hourofday = data.getmTime();
+			String rightnow = rightNow.getTime().toString();
+			
+			java.util.Date dateObj =  curFormater.parse(hourofday);
+			java.util.Date dateObjCurrent =  curFormater.parse(String.format("%d:%d",currenthour,currentmin));
+			//int hoursdate = dateObj.getHours();
+			while(dateObj.before(dateObjCurrent)) 
 			{
-				break;
+				
+				mTitleofCurrentProgram =  Html.fromHtml(data.getmTitle()).toString();
+				if(it.hasNext())
+				data = it.next();
+				else
+				{
+					break;
+				}
+				dateObj =  curFormater.parse(data.getmTime());
+				
+				
 			}
-			dateObj =  curFormater.parse(data.getmTime());
-			
 			
 		}
+		
 		
 		
 		

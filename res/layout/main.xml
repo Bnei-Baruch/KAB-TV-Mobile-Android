@@ -9,12 +9,6 @@ android:textAppearance="?android:attr/textAppearanceLarge"
 android:text="Title"
 android:layout_centerVertical="true" android:layout_weight="1" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 	</TextView>
-<SurfaceView android:layout_weight="1" android:layout_height="240px" android:padding="40dip" android:layout_width="320px" android:id="@+id/mMovieView"></SurfaceView>
-
-	  
-
-
-
-
+<kab.tv.ui.VideoViewCustom android:layout_weight="1" android:layout_height="240px" android:padding="40dip" android:layout_width="320px" android:id="@+id/mMovieView"></kab.tv.ui.VideoViewCustom>
 
 </LinearLayout>
