@@ -235,6 +235,7 @@ public class StreamInfoDetails extends Activity {
 			            intent.putExtra(getResources().getString(R.string.input_stream), url);
 			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
 			            startActivity(intent);
+			            showToast("Starting player...");
 						}
 			            else
 						{
@@ -296,6 +297,7 @@ public class StreamInfoDetails extends Activity {
 			            intent.putExtra(getResources().getString(R.string.programtitle),mTitleofCurrentProgram);
 			            intent.putExtra(getResources().getString(R.string.description),mTextViewDetails.getText());
 			            startActivity(intent);
+			            showToast("Starting player...");
 						}
 						else
 						{

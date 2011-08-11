@@ -39,6 +39,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TabWidget;
 import android.view.LayoutInflater;
@@ -154,6 +155,7 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
 				channels = Channels.instance();
 				if(!channels.isLoaded())
 				{
+					 
 					 // set up mProgressdialog
 				    if (mDialog1 == null) {
 				        ProgressDialog dialog = new ProgressDialog(this);
@@ -210,6 +212,7 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
 			  Looper.prepare();
 			  mDialog1 = ProgressDialog.show(this, "Working..", "Calculating Pi", true,
                       false);
+			 
 			Channels.instance().LoadData();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -233,13 +236,14 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
           }
   };
   
-	
+ 
 	@Override
 	public void onResume()
 	{
 		
 			
 		try {
+			
 			Channels.instance().LoadData();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -363,6 +367,12 @@ public class MainKabTv extends TabActivity implements Runnable /*implements TabH
     	
     	return str;
     }
+	
+
+	 void showToast(CharSequence msg) {
+		 TabHost tabHost = getTabHost();
+	        Toast.makeText(tabHost.getContext(), msg, Toast.LENGTH_SHORT).show();
+	    }
 	
 }
 

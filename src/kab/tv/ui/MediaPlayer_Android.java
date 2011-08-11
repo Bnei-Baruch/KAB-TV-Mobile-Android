@@ -23,7 +23,10 @@ import java.io.IOException;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -70,6 +73,7 @@ public class MediaPlayer_Android extends Activity implements
     private boolean mIsVideoReadyToBePlayed = false;
     public static  MediaPlayer_Android mSelf;
 	private static boolean mStatus;
+	private ProgressDialog dialog;
     
     private PowerManager.WakeLock wl;
     GoogleAnalyticsTracker tracker;
@@ -83,7 +87,8 @@ public class MediaPlayer_Android extends Activity implements
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.main);
-       
+       // dialog = ProgressDialog.show(MediaPlayer_Android.this, "",
+       // 		"Please wait for few seconds...",true, true);
        
        
         
@@ -250,7 +255,20 @@ public class MediaPlayer_Android extends Activity implements
 
     public void onBufferingUpdate(MediaPlayer arg0, int percent) {
         Log.e(TAG, "onBufferingUpdate percent:" + percent);
-
+        if(dialog ==null)
+        	dialog = ProgressDialog.show(MediaPlayer_Android.this, "",
+        	       		"Please wait for few seconds...",true, true);
+       
+        
+        if(percent != 100)
+        {
+        	dialog.setMessage("Please wait while loading..." + percent + "%");
+        	
+        }
+        else
+        {
+        	dialog.dismiss();
+        }
     }
 
     public void onCompletion(MediaPlayer arg0) {

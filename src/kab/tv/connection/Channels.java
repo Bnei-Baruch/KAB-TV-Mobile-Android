@@ -27,6 +27,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.content.Context;
+import android.widget.Toast;
 
 public class Channels {
 	
@@ -63,6 +64,8 @@ public class Channels {
          
 		 if(isLoaded())
 			 return;
+		 
+		
 		 /* Get a SAXParser from the SAXPArserFactory. */
          SAXParserFactory spf = SAXParserFactory.newInstance();
          SAXParser sp = spf.newSAXParser();
@@ -218,6 +221,6 @@ public class Channels {
 		// TODO Auto-generated method stub
 		this.getmChannels().get(mNumberOfChannelsLoaded).setmIcon(icon);
 	}
-
+	
 	 
 }
