@@ -1,141 +1,0 @@
-10
-
-dir
-57
-http://adosbox.googlecode.com/svn/trunk/project/jni/sdl/src/cdrom
-http://adosbox.googlecode.com/svn
-
-
-
-2010-02-02T15:09:30.774596Z
-4
-gerald
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1a95236e-1df7-11df-b8d3-59fc97e42aa7
-
-bsdi
-dir
-
-aix
-dir
-
-dc
-dir
-
-osf
-dir
-
-SDL_cdrom.c
-file
-
-
-
-
-2011-03-09T03:12:37.356024Z
-7c487705836ad50e6371fe55bc246bce
-2010-02-02T15:09:30.774596Z
-4
-gerald
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7484
-
-beos
-dir
-
-openbsd
-dir
-
-macosx
-dir
-
-dummy
-dir
-
-SDL_syscdrom.h
-file
-
-
-
-
-2011-03-09T03:12:37.356024Z
-d0d0d39b5e4b6ab05f4611bba014f547
-2010-02-02T15:09:30.774596Z
-4
-gerald
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2492
-
-linux
-dir
-
-macos
-dir
-
-win32
-dir
-
-os2
-dir
-
-qnx
-dir
-
-mint
-dir
-
-freebsd
-dir
-
