@@ -21,24 +21,48 @@ import com.kab.channel66.Events.Page;
 import com.kab.channel66.Events.Pages;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class StreamListActivity extends ListActivity {
 
+	private ServiceConnection connection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder iservice) {
+           // mService = ILocService.Stub.asInterface(iservice);
+           // mBound = true;
+        }
+		@Override
+        public void onServiceDisconnected(ComponentName className) {
+          //  mService = null;
+           // mBound = false;
+        }
+
+	
+    };
+    Dialog playDialog;
+    Intent svc;
 	private ArrayList<Page> pages;
 	public void onCreate(Bundle icicle) {
 	    super.onCreate(icicle);
@@ -115,9 +139,14 @@ public class StreamListActivity extends ListActivity {
 	    }
 	    else
 	    {
-	    	 
-	    	description.add("Channel 66 Video");
-	    	description.add("Channel 66 Audio");
+	    	
+	    	
+	    	description.add("ערוץ 66 - וידאו");
+	    	description.add("ערוץ 66 - אודיו");
+	    	
+	    	
+	    	description.add("Канал 66 на Русском - Видео");
+	    	description.add("Канал 66 на Русском - Аудио");
 	    }
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 	        android.R.layout.simple_list_item_1, description);
@@ -140,6 +169,49 @@ public class StreamListActivity extends ListActivity {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	private void playStreamInList(int index)
+	{
+		String item = (String) getListAdapter().getItem(index);
+		Intent player = new Intent(StreamListActivity.this, VideoPlayerActivity.class);
+	    
+		
+		if(pages!=null)
+	    {
+	    for(int i=0;i<pages.size();i++)
+	    	if(pages.get(i).description.equalsIgnoreCase(item))
+	    	{
+	    		
+	    		
+	    		String url1 = pages.get(i).urls.urlslist.get(0).url_value;
+	    		//playvideo
+	    		String mms_url = null;
+	    		//replace key
+	    		String key = PreferenceManager.getDefaultSharedPreferences(this).getString("key", null);
+	    		if(key!=null)
+	    		{
+	    		int j = url1.indexOf("special-")+ "special-".length();
+	    		String replace = url1.substring(j, j+8);
+	    		url1 = url1.replace(replace, key);
+	    		}
+	    		
+	    		
+				 if(url1.contains("asx")){
+					mms_url = ExtractMMSfromAsx(url1.trim());
+   				 player.putExtra("path", mms_url);
+				 }
+				 else
+				 {
+					player.putExtra("path", url1);
+				 }
+				
+				
+				 EasyTracker.getTracker().trackEvent("Stream list", "on item clicked",url1,0L);
+ 				
+    	    		startActivity(player);
+				 
+	    	}
+	    }
 	}
 	
 	 @Override
@@ -184,7 +256,7 @@ public class StreamListActivity extends ListActivity {
     	    		startActivity(player);
 				 
 	    	}
-	    } else if(item.equals("Channel 66 Video"))
+	    } else if(item.equals("ערוץ 66 - וידאו"))
 	    	{
 	    		
   				 
@@ -192,11 +264,106 @@ public class StreamListActivity extends ListActivity {
 	    		startActivity(player);
 				 
 	    	}
-	    else if(item.equals("Channel 66 Audio"))
+	    else if(item.equals("ערוץ 66 - אודיו"))
     	{
-	    	Uri uri = Uri.parse("http://icecast.kab.tv/heb.mp3");
-	    	Intent player1 = new Intent(Intent.ACTION_VIEW,uri);
-			startActivity(player1);	  
+	    	 svc=new Intent(this, BackgroundPlayer.class);
+	    	 svc.putExtra("audioUrl", "http://icecast.kab.tv/heb.mp3");
+            startService(svc);
+            playDialog = new Dialog(this);
+            playDialog.setTitle("Playing audio");
+            playDialog.setContentView(R.layout.mediacontroller);
+            final ImageButton but = (ImageButton) playDialog.findViewById(R.id.mediacontroller_play_pause);
+            but.setImageResource(R.drawable.mediacontroller_pause01);
+            but.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(svc!=null)
+					{
+					but.setImageResource(R.drawable.mediacontroller_play01);
+					stopService(svc);
+					svc= null;
+					}
+					else
+					{
+						but.setImageResource(R.drawable.mediacontroller_pause01);
+						svc=new Intent(StreamListActivity.this, BackgroundPlayer.class);
+						svc.putExtra("audioUrl", "http://icecast.kab.tv/heb.mp3");
+						startService(svc);
+					}
+				}
+			});
+            playDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+            {
+                @Override
+				public
+                void onCancel(DialogInterface dialog)
+                {
+                     dialogBackpressed();
+                }
+            });
+            playDialog.show();      
+            
+//            
+//            bindService(svc, connection, Context.BIND_AUTO_CREATE);
+//	    	Uri uri = Uri.parse("http://icecast.kab.tv/heb.mp3");
+//	    	Intent player1 = new Intent(Intent.ACTION_VIEW,uri);
+//	    	 player1.setDataAndType(uri, "audio/*");
+//			startActivity(player1);	  
+			//http://stackoverflow.com/questions/14043618/background-music-in-my-app-doesnt-start
+			
+    	}
+	    else if(item.equals("Канал 66 на Русском - Видео"))
+    	{
+	    	player.putExtra("path",  ExtractMMSfromAsx("http://streams.kab.tv/rus.asx"));
+    		startActivity(player);  
+    	}
+	    else if(item.equals("Канал 66 на Русском - Аудио"))
+    	{
+//	    	Uri uri = Uri.parse("http://icecast.kab.tv/rus.mp3");
+//	    	Intent player1 = new Intent(Intent.ACTION_VIEW,uri);
+//	    	 player1.setDataAndType(uri, "audio/*");
+//			startActivity(player1);	 
+	    	 svc=new Intent(this, BackgroundPlayer.class);
+	    	 svc.putExtra("audioUrl", "http://icecast.kab.tv/rus.mp3");
+            startService(svc);
+            playDialog = new Dialog(this);
+            playDialog.setTitle("Playing audio");
+            playDialog.setContentView(R.layout.mediacontroller);
+            final ImageButton but = (ImageButton) playDialog.findViewById(R.id.mediacontroller_play_pause);
+            but.setImageResource(R.drawable.mediacontroller_pause01);
+            but.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(svc!=null)
+					{
+					but.setImageResource(R.drawable.mediacontroller_play01);
+					stopService(svc);
+					svc= null;
+					}
+					else
+					{
+						but.setImageResource(R.drawable.mediacontroller_pause01);
+						svc=new Intent(StreamListActivity.this, BackgroundPlayer.class);
+						svc.putExtra("audioUrl", "http://icecast.kab.tv/rus.mp3");
+						startService(svc);
+					}
+				}
+			});
+            playDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+            {
+                @Override
+				public
+                void onCancel(DialogInterface dialog)
+                {
+                     dialogBackpressed();
+                }
+            });
+            playDialog.show();      
+            
     	}
 	    		
 	    
@@ -247,7 +414,16 @@ public class StreamListActivity extends ListActivity {
 	    // The rest of your onStart() code.
 	   EasyTracker.getInstance().setContext(this.getApplicationContext());
 	   EasyTracker.getInstance().activityStart(this);
-	  
+	   playStreamInList(0);
+	 }
+	 @Override
+	 public void onDestroy() {
+	   super.onDestroy();
+	    // The rest of your onStart() code.
+	   if(svc!=null)
+		   stopService(svc);
+	   
+
 	 }
 
 
@@ -256,6 +432,7 @@ public class StreamListActivity extends ListActivity {
 	   super.onStop();
 	    // The rest of your onStop() code.
 	   EasyTracker.getInstance().activityStop(this); // Add this method.
+	   finish();
 	 }
 	 
 	 @Override
@@ -269,7 +446,28 @@ public class StreamListActivity extends ListActivity {
 	     return true;
 		 }
 		 else
-			 return false;
+		 {
+			 MenuInflater inflater = getMenuInflater();
+		     inflater.inflate(R.menu.streamoptionmenu_activated, menu);
+		     return true;
+		 }
+	 }
+	 
+	 public void dialogBackpressed()
+	 {
+		 playDialog.hide();
+		 if(svc!=null)
+			   stopService(svc);
+	 }
+	 @Override
+	 public void onBackPressed()
+	 {
+		 super.onBackPressed();
+		 
+		 if(svc!=null)
+			   stopService(svc);	
+		 
+		 	 
 	 }
 	 @Override
 	 public boolean onOptionsItemSelected(MenuItem item) {
@@ -308,6 +506,11 @@ public class StreamListActivity extends ListActivity {
 	           
 	            
 	             return true;
+	         case R.id.sviva:
+	        	 
+	        	 onBackPressed();
+	        	 return true;
+	        	 
 	         default:
 	             return super.onOptionsItemSelected(item);
 	     }

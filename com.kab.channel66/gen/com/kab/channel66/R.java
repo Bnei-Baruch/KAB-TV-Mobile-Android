@@ -66,6 +66,7 @@ public final class R {
         public static final int operation_volume_brightness=0x7f09000f;
         public static final int surface=0x7f09000c;
         public static final int surface_view=0x7f09000e;
+        public static final int sviva=0x7f090016;
         public static final int tv_error=0x7f090006;
         public static final int tv_pw=0x7f090003;
         public static final int tv_un=0x7f090001;
@@ -82,6 +83,7 @@ public final class R {
     public static final class menu {
         public static final int activity_web_login=0x7f080000;
         public static final int streamoptionmenu=0x7f080001;
+        public static final int streamoptionmenu_activated=0x7f080002;
     }
     public static final class string {
         public static final int VideoView_error_button=0x7f04000a;
@@ -89,7 +91,7 @@ public final class R {
         public static final int VideoView_error_text_unknown=0x7f040009;
         public static final int VideoView_error_title=0x7f040007;
         public static final int app_name=0x7f040001;
-        public static final int autocheck=0x7f04000e;
+        public static final int autocheck=0x7f04000f;
         public static final int channel66=0x7f04000d;
         /** Replace placeholder ID with your tracking ID
          */
@@ -98,6 +100,7 @@ public final class R {
         public static final int login=0x7f04000c;
         public static final int mediacontroller_play_pause=0x7f04000b;
         public static final int menu_settings=0x7f040004;
+        public static final int sviva=0x7f04000e;
         public static final int title_activity_web_login=0x7f040005;
         public static final int version_name=0x7f040002;
         public static final int vitamio_theme_app_name=0x7f040006;

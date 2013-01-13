@@ -202,7 +202,7 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 	private void openVideo() {
 		if (mUri == null || mSurfaceHolder == null)
 			return;
-
+		
 		Intent i = new Intent("com.android.music.musicservicecommand");
 		i.putExtra("command", "pause");
 		mContext.sendBroadcast(i);

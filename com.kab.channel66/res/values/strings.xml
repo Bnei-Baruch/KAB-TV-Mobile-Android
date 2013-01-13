@@ -15,5 +15,6 @@
     <string name="mediacontroller_play_pause">Play/Pause</string>
     <string name="login">Login</string>
     <string name="channel66">Channel 66</string>
+    <string name="sviva">Sviva Tova</string>
     <string name="autocheck">Auto check for broadcast</string>
 </resources>

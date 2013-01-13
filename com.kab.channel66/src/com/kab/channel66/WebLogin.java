@@ -62,10 +62,13 @@ import com.apphance.android.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.HttpAuthHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -82,6 +85,8 @@ public class WebLogin extends Activity implements WebCallbackInterface {
 	PowerManager.WakeLock wl = null;
 	JSONObject serverJSON = null;
 	String content = null;
+	Dialog playDialog;
+	Intent svc;
 	public class JavaScriptInterface {
 	    Context mContext;
 
@@ -266,10 +271,51 @@ public class WebLogin extends Activity implements WebCallbackInterface {
          	    				   Uri uri = Uri.parse(url);
          	    				  Intent player = new Intent(Intent.ACTION_VIEW,uri);
          	    				 
-          	    				 // player.setDataAndType(uri, "mp3");
+          	    				  player.setDataAndType(uri, "audio/*");
         	    				   //player.putExtra("path", url.toString());
-        	    				   //player.putExtra("type", "audio");
-        	        	    		startActivity(player);
+        	    				  // player.putExtra("type", "audio/*");
+        	        	    		//startActivity(player);
+        	        	    		
+        	        	    		//background audio player
+        	        	    		 svc=new Intent(WebLogin.this, BackgroundPlayer.class);
+        	        		    	 svc.putExtra("audioUrl", url);
+        	        	            startService(svc);
+        	        	            playDialog = new Dialog(WebLogin.this);
+        	        	            playDialog.setTitle("Playing audio");
+        	        	            playDialog.setContentView(R.layout.mediacontroller);
+        	        	            final ImageButton but = (ImageButton) playDialog.findViewById(R.id.mediacontroller_play_pause);
+        	        	            but.setImageResource(R.drawable.mediacontroller_pause01);
+        	        	            but.setOnClickListener(new OnClickListener() {
+        	        					
+        	        					@Override
+        	        					public void onClick(View v) {
+        	        						// TODO Auto-generated method stub
+        	        						if(svc!=null)
+        	        						{
+        	        						but.setImageResource(R.drawable.mediacontroller_play01);
+        	        						stopService(svc);
+        	        						svc= null;
+        	        						}
+        	        						else
+        	        						{
+        	        							but.setImageResource(R.drawable.mediacontroller_pause01);
+        	        							svc=new Intent(WebLogin.this, BackgroundPlayer.class);
+        	        							svc.putExtra("audioUrl", url);
+        	        							startService(svc);
+        	        						}
+        	        					}
+        	        				});
+        	        	            playDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+        	        	            {
+        	        	                @Override
+        	        					public
+        	        	                void onCancel(DialogInterface dialog)
+        	        	                {
+        	        	                     dialogBackpressed();
+        	        	                }
+        	        	            });
+        	        	            playDialog.show();      
+        	        	            
         	        	    		
         	    			   }
         	    			});
@@ -337,7 +383,12 @@ public class WebLogin extends Activity implements WebCallbackInterface {
         
     }
 
-    
+    public void dialogBackpressed()
+	 {
+		 playDialog.hide();
+		 if(svc!=null)
+			   stopService(svc);
+	 }
     private void setValid(boolean val)
     {
     	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
@@ -481,6 +532,8 @@ public boolean onOptionsItemSelected(MenuItem item) {
 public void onResume()
 {
 	super.onResume();
+	EasyTracker.getInstance().setContext(this);
+	
 	
 	 myProgressDialog = new ProgressDialog(this);
      myProgressDialog.show();
