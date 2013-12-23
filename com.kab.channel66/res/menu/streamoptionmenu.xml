@@ -3,4 +3,7 @@
     <item android:id="@+id/login"
           android:title="@string/login" >
     </item>
+    <item android:id="@+id/quality"
+          android:title="@string/quality" >
+    </item>
 </menu>

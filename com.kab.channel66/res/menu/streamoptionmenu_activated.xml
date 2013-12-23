@@ -3,5 +3,8 @@
     <item android:id="@+id/sviva"
           android:title="@string/sviva" >
     </item>
+    <item android:id="@+id/quality"
+          android:title="@string/quality" >
+    </item>
     
 </menu>

@@ -20,6 +20,7 @@ import com.google.myjson.Gson;
 import com.kab.channel66.Events.Page;
 import com.kab.channel66.Events.Pages;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -30,6 +31,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -45,7 +48,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class StreamListActivity extends ListActivity {
+public class StreamListActivity extends BaseListActivity {
 
 	private ServiceConnection connection = new ServiceConnection() {
 		@Override
@@ -181,9 +184,19 @@ public class StreamListActivity extends ListActivity {
 	    for(int i=0;i<pages.size();i++)
 	    	if(pages.get(i).description.equalsIgnoreCase(item))
 	    	{
+	    		String url1;
 	    		
+	    		//set the quality
+	    		Boolean high = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("quality", false);
+	    		if(!high)
+	    		{
+	    			 url1 = pages.get(i).urls.urlslist.get(1).url_value;
+	    		}
+	    		else
+	    		{
+	    			 url1 = pages.get(i).urls.urlslist.get(0).url_value;
+	    		}
 	    		
-	    		String url1 = pages.get(i).urls.urlslist.get(0).url_value;
 	    		//playvideo
 	    		String mms_url = null;
 	    		//replace key
@@ -194,6 +207,10 @@ public class StreamListActivity extends ListActivity {
 	    		String replace = url1.substring(j, j+8);
 	    		url1 = url1.replace(replace, key);
 	    		}
+	    		
+	    		
+	    		
+	    			
 	    		
 	    		
 				 if(url1.contains("asx")){
@@ -258,10 +275,20 @@ public class StreamListActivity extends ListActivity {
 	    	}
 	    } else if(item.equals("ערוץ 66 - וידאו"))
 	    	{
-	    		
-  				 
-	    		player.putExtra("path",  ExtractMMSfromAsx("http://streams.kab.tv/heb.asx"));
+	    		//"mms://wms1.il.kab.tv/heb"
+  				// String url = ExtractMMSfromAsx("http://streams.kab.tv/heb.asx");
+	    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(StreamListActivity.this);
+         	
+         	if(shared.getBoolean("quality", false))
+         	{
+	    		player.putExtra("path", ExtractMMSfromAsx("http://streams.kab.tv/heb.asx"));//"rtsp://wms1.il.kab.tv/heb");// ExtractMMSfromAsx("http://streams.kab.tv/heb.asx"));
 	    		startActivity(player);
+         	}
+         	else
+         	{
+         		player.putExtra("path", ExtractMMSfromAsx("http://streams.kab.tv/heb_medium.asx"));//"rtsp://wms1.il.kab.tv/heb");// ExtractMMSfromAsx("http://streams.kab.tv/heb.asx"));
+	    		startActivity(player);
+         	}
 				 
 	    	}
 	    else if(item.equals("ערוץ 66 - אודיו"))
@@ -272,6 +299,7 @@ public class StreamListActivity extends ListActivity {
             playDialog = new Dialog(this);
             playDialog.setTitle("Playing audio");
             playDialog.setContentView(R.layout.mediacontroller);
+            final ImageButton ask = (ImageButton) playDialog.findViewById(R.id.mediacontroller_ask);
             final ImageButton but = (ImageButton) playDialog.findViewById(R.id.mediacontroller_play_pause);
             but.setImageResource(R.drawable.mediacontroller_pause01);
             but.setOnClickListener(new OnClickListener() {
@@ -294,6 +322,17 @@ public class StreamListActivity extends ListActivity {
 					}
 				}
 			});
+            ask.setImageResource(R.drawable.system_help);
+            ask.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Questions question = new Questions(StreamListActivity.this);
+		        	question.show();
+				}
+			});
+            
             playDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
             {
                 @Override
@@ -316,8 +355,18 @@ public class StreamListActivity extends ListActivity {
     	}
 	    else if(item.equals("Канал 66 на Русском - Видео"))
     	{
+	    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(StreamListActivity.this);
+         	
+         	if(shared.getBoolean("quality", false))
+         	{
 	    	player.putExtra("path",  ExtractMMSfromAsx("http://streams.kab.tv/rus.asx"));
-    		startActivity(player);  
+    		startActivity(player);
+         	}
+         	else
+         	{
+         		player.putExtra("path",  ExtractMMSfromAsx("http://streams.kab.tv/rus_medium.asx"));
+        		startActivity(player);
+         	}
     	}
 	    else if(item.equals("Канал 66 на Русском - Аудио"))
     	{
@@ -432,7 +481,10 @@ public class StreamListActivity extends ListActivity {
 	   super.onStop();
 	    // The rest of your onStop() code.
 	   EasyTracker.getInstance().activityStop(this); // Add this method.
-	   finish();
+	   SharedPreferences userInfoPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		 Boolean activated = userInfoPreferences.getBoolean("activated", false);
+		 if(activated)
+			 finish();
 	 }
 	 
 	 @Override
@@ -469,7 +521,8 @@ public class StreamListActivity extends ListActivity {
 		 
 		 	 
 	 }
-	 @Override
+	 @SuppressLint("ShowToast")
+	@Override
 	 public boolean onOptionsItemSelected(MenuItem item) {
 	     // Handle item selection
 	     switch (item.getItemId()) {
@@ -485,12 +538,15 @@ public class StreamListActivity extends ListActivity {
 	        	     alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
 	        	     public void onClick(DialogInterface dialog, int whichButton) {  
 	        	         String value = input.getText().toString();
+	        	         EasyTracker.getTracker().trackEvent("Stream list", "pin code value",value,0L);
+		      				
 	        	         if(value.equals("arvut"))
 	        	         {
 	        	        	 Intent intent = new Intent(getApplicationContext(), WebLogin.class);
 	        		            startActivity(intent);
 	        	         }
 	        	         Log.d( "Login", "Pin Value : " + value);
+	        	        
 	        	         return;                  
 	        	        }  
 	        	      });  
@@ -510,9 +566,44 @@ public class StreamListActivity extends ListActivity {
 	        	 
 	        	 onBackPressed();
 	        	 return true;
+	         case R.id.quality:
+	         	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(StreamListActivity.this);
+	         	SharedPreferences.Editor edit = shared.edit();
+	         	if(shared.getBoolean("quality", false))
+	         	{
+	         		Toast.makeText(StreamListActivity.this, "Changed quality to medium", Toast.LENGTH_LONG).show();
+	         		edit.putBoolean("quality", false);
+	     			edit.commit();
+	         	}
+	         	else
+	         	{
+	         		Toast.makeText(StreamListActivity.this, "Changed quality to high", Toast.LENGTH_LONG).show();
+	         		edit.putBoolean("quality", true);
+	     			edit.commit();
+	         	}
+	         	
+	             return true;
 	        	 
 	         default:
 	             return super.onOptionsItemSelected(item);
 	     }
 	 }
+	 
+	 public boolean onPrepareOptionsMenu (Menu menu)
+	 {
+	 	MenuItem Item = menu.findItem(R.id.quality);
+	 	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(StreamListActivity.this);
+	 	
+	 	if(shared.getBoolean("quality", false))
+	 		Item.setTitle(getResources().getString(R.string.quality)+": High");
+	 	else
+	 		Item.setTitle(getResources().getString(R.string.quality)+": Medium");	
+	 	return true;
+	 }
+	 
+	 public boolean isOnline(Context context) { 
+		    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);    
+		    NetworkInfo netInfo = cm.getActiveNetworkInfo();    
+		    return netInfo != null && netInfo.isConnected();
+		}
 }

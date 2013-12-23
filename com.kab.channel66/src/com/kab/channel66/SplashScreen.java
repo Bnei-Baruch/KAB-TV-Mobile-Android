@@ -3,6 +3,7 @@ package com.kab.channel66;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.kab.channel66.R;
+import com.parse.Parse;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 public class SplashScreen extends Activity {
 	
-	protected int _splashTime = 3000; 
+	protected int _splashTime = 2000; 
 	
 	private Thread splashTread;
 	
@@ -24,8 +25,9 @@ public class SplashScreen extends Activity {
 	    super.onCreate(savedInstanceState);
 	   // BugSenseHandler.initAndStartSession(SplashScreen.this, "031c1eab");
 	    setContentView(R.layout.splash);
+	    Parse.initialize(this, "dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD", "b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U");//real
+	   // Parse.initialize(this, "KZGRjYuBEwh6vubjJBRzscvVixyLC8fWg9YqAwVS", "H3JqHHIKrd8xN44weGfAsWmUeCJQdqh8bPR8H4M6");//test
 	    
-	  
 	    final SplashScreen sPlashScreen = this; 
 	    
 	    // thread for displaying the SplashScreen

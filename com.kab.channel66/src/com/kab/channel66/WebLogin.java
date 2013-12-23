@@ -23,6 +23,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.LangUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,10 +32,13 @@ import com.apphance.android.Apphance;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.myjson.Gson;
 import com.kab.channel66.R;
+import com.parse.Parse;
+import com.parse.PushService;
 
 import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
 import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
 import io.vov.vitamio.widget.VideoView;
+import android.R.string;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -74,18 +78,19 @@ import android.widget.Toast;
 
 
 
-public class WebLogin extends Activity implements WebCallbackInterface {
+public class WebLogin extends BaseActivity implements WebCallbackInterface {
 
 	private WebView mLoginwebView;
 	private WebViewClient mClient;
 	private Events events;
-	
+	private int status = 0;
 	private ProgressDialog myProgressDialog = null;
 	private StreamAvailabilityChecker myChecker = null;
 	PowerManager.WakeLock wl = null;
 	JSONObject serverJSON = null;
 	String content = null;
 	Dialog playDialog;
+	AlertDialog.Builder alert;
 	Intent svc;
 	public class JavaScriptInterface {
 	    Context mContext;
@@ -115,13 +120,96 @@ public class WebLogin extends Activity implements WebCallbackInterface {
 //	    Apphance.setReportOnShakeEnabled(true);
 //        System.setProperty("http.keepAlive", "false");
 //
-
         
+        PushService.subscribe(this, "", WebLogin.class);
+        PushService.setDefaultPushCallback(this, WebLogin.class);
         
         mLoginwebView = (WebView) findViewById(R.id.webloginview);
-       
+       if(mClient == null)
         mClient = new WebViewClient()
         	{
+    	   
+    	   @Override
+    	   public void onReceivedError (WebView view, int errorCode, String description, String failingUrl)
+    	   {
+    		   status = errorCode; //spome error occured
+    		   //check if active and if logged in then suggest user to play the last know stream
+    		   AlertDialog.Builder alert1 = new AlertDialog.Builder(WebLogin.this);                 
+	        	 alert1.setTitle("Error");  
+	        	 alert1.setMessage("We have encountered an error would you like to play the last known stream?");                
+	        	 alert1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
+	 	        	     public void onClick(DialogInterface dialog, int whichButton) { 
+	 	        	    	 //play last known stream
+	 	        	    	 final String  urlfinal;
+	 	        	    	 String url = "http://icecast.kab.tv/live1-heb-574bcfd5.mp3";
+	 	        	    	String lang = getLastKnownLang();
+	 	        	    	if(lang == null)
+	 	        	    		new AlertDialog.Builder(WebLogin.this).setTitle("No last known stream").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+									
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										// TODO Auto-generated method stub
+										dialogBackpressed();
+									}
+								});
+	 	        	    	urlfinal = url = url.replace("heb", lang);
+	 	        	    	svc=new Intent(WebLogin.this, BackgroundPlayer.class);
+	        		    	 svc.putExtra("audioUrl", url);
+	        		    	 svc.putExtra("sviva", true);
+	        	            startService(svc);
+	        	            playDialog = new Dialog(WebLogin.this);
+	        	            playDialog.setTitle("Playing audio");
+	        	            playDialog.setContentView(R.layout.mediacontroller);
+	        	            final ImageButton but = (ImageButton) playDialog.findViewById(R.id.mediacontroller_play_pause);
+	        	            but.setImageResource(R.drawable.mediacontroller_pause01);
+	        	            but.setOnClickListener(new OnClickListener() {
+	        					
+	        					@Override
+	        					public void onClick(View v) {
+	        						// TODO Auto-generated method stub
+	        						if(svc!=null)
+	        						{
+	        						but.setImageResource(R.drawable.mediacontroller_play01);
+	        						stopService(svc);
+	        						svc= null;
+	        						}
+	        						else
+	        						{
+	        							but.setImageResource(R.drawable.mediacontroller_pause01);
+	        							svc=new Intent(WebLogin.this, BackgroundPlayer.class);
+	        							svc.putExtra("audioUrl", urlfinal);
+	        							startService(svc);
+	        						}
+	        					}
+	        				});
+	        	            playDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+	        	            {
+	        	                @Override
+	        					public
+	        	                void onCancel(DialogInterface dialog)
+	        	                {
+	        	                     dialogBackpressed();
+	        	                }
+	        	            });
+	        	            playDialog.show();      
+	        	            
+	 	        	         return;                 
+		        	        }  
+		        	      });  
+
+	        	 alert1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+		        	         public void onClick(DialogInterface dialog, int which) {
+		        	             // TODO Auto-generated method stub
+		        	        	 
+		        	        	 Intent intent = new Intent(WebLogin.this,StreamListActivity.class);
+		        	         	startActivity(intent);   
+		        	        return;   
+		        	         }
+		        	     });
+	        	 alert1.show();
+    		   
+    	   }
         	    @Override
         	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
         	    	 Boolean success;
@@ -154,23 +242,18 @@ public class WebLogin extends Activity implements WebCallbackInterface {
 						}
     	    			
     	    		}
-        	    	if(url.contains("login"))
-    	    		{
-//    	    			 SharedPreferences userInfoPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//    	    			 SharedPreferences.Editor editor = userInfoPreferences.edit();
-//    	    			 editor.putBoolean("activated", false);
-//    	    			  success = editor.commit();
-    	    			  setActivated(false);
-    	    			  
-    		    			
+        	    	if(url.contains("login") )
+    	    		{   	    			 
+    	    			  setActivated(false);	
     	    		}
         	    	else
         	    	{
-//        	    		SharedPreferences userInfoPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        	    		 SharedPreferences.Editor editor = userInfoPreferences.edit();
-//    	    			 editor.putBoolean("activated", true);
-//    	    			  success = editor.commit();
+        	    		
+        	    		
+        	    		     
     	    			  setActivated(true);
+    	    			 
+     		    			
         	    	}
         	         view.loadUrl(url);
         	        return true;
@@ -188,17 +271,49 @@ public class WebLogin extends Activity implements WebCallbackInterface {
         	    	Log.v("WebViewClient","page finished");
         	    	if(url.contains("http://kabbalahgroup.info/"))
         	    	{
-        	    		//remove the type of login
-        	    		//mLoginwebView.loadUrl("javascript:(function() { " + "document.getElementsByTag('fieldset')[0].style.display = 'none'; " + "})()");
-        	    		//mLoginwebView.loadUrl("javascript:(function() { " + "elem = document.getElementsByTag('fieldset'); if (elem) {elem.style.display = 'none; ';})()");
+        	    		
+        	    	
         	    	}
         	    	//check what language what clicked
         	    	if(url.contains("http://kabbalahgroup.info/internet/en/mobile") || url.contains("http://icecast.kab.tv"))
         	    	{
-//        	    		SharedPreferences userInfoPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//       	    		 SharedPreferences.Editor editor = userInfoPreferences.edit();
-//   	    			 editor.putBoolean("activated", true);
-//   	    			  Boolean success = editor.commit();
+        	    		if(getActivated() && getGroup().length()==0)// && url.contains("http://kabbalahgroup.info/internet/en/mobile"))
+        	    		{
+        	    		if(alert==null)
+        	    		{	
+        	    		 alert = new AlertDialog.Builder(WebLogin.this);                 
+     	 	        	 alert.setTitle("Group name");  
+     	 	        	 alert.setMessage("Please enter group name you belong:");                
+
+     	 	        	  // Set an EditText view to get user input   
+     	 	        	  final EditText input = new EditText(WebLogin.this); 
+     	 	        	  alert.setView(input);
+
+     	 	        	     alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
+     	 	        	     public void onClick(DialogInterface dialog, int whichButton) {  
+     	 	        	         String value = input.getText().toString();
+     	 	        	         setGroup(value);
+     	 	        	         Log.d( "Login", "Group member : " + value);
+     	 	        	         EasyTracker.getTracker().trackEvent("Group", "name", value,0L);
+     	 	        	         alert = null;
+     		        	         return;                  
+     		        	        }  
+     		        	      });  
+
+     		        	     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+     		        	         public void onClick(DialogInterface dialog, int which) {
+     		        	             // TODO Auto-generated method stub
+     		        	        	 alert = null;
+     		        	             return;   
+     		        	         }
+     		        	     });
+     		        	             alert.show();
+     		        	             return;
+        	    		}   
+        	    	}
+        	    		
+        	    		
    	    			 setActivated(true);
    	    			  
         	    		//if got here then move to video
@@ -251,7 +366,7 @@ public class WebLogin extends Activity implements WebCallbackInterface {
    	    						 streamList.add(jsonrep);
    	    						 }
    	    						 EasyTracker.getTracker().trackEvent("web login", "lang", keyset.toArray()[i].toString(),0L);
-        	    				  
+   	    						setLastKnownLang(keyset.toArray()[i].toString());
    	    						 
    	    					  }
    	    				  }
@@ -279,6 +394,7 @@ public class WebLogin extends Activity implements WebCallbackInterface {
         	        	    		//background audio player
         	        	    		 svc=new Intent(WebLogin.this, BackgroundPlayer.class);
         	        		    	 svc.putExtra("audioUrl", url);
+        	        		    	 svc.putExtra("sviva", true);
         	        	            startService(svc);
         	        	            playDialog = new Dialog(WebLogin.this);
         	        	            playDialog.setTitle("Playing audio");
@@ -377,7 +493,7 @@ public class WebLogin extends Activity implements WebCallbackInterface {
         mLoginwebView.addJavascriptInterface(new JavaScriptInterface(this), "Android");
         
         String url = new String("http://kabbalahgroup.info/");
-        mLoginwebView.loadUrl(url);
+        mLoginwebView.loadUrl(url); 
         
         
         
@@ -411,6 +527,38 @@ public class WebLogin extends Activity implements WebCallbackInterface {
 		edit.putBoolean("activated", val);
 		edit.commit();
     }
+	
+	private boolean getActivated()
+    {
+    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+		return shared.getBoolean("activated", false);
+    }
+	
+	private void setGroup(String val)
+    {
+    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+		SharedPreferences.Editor edit = shared.edit();
+		edit.putString("group", val);
+		edit.commit();
+    }
+	
+	private String getGroup()
+    {
+    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+		return shared.getString("group", "");
+    }
+	 private void setLastKnownLang(String val)
+	    {
+	    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+			SharedPreferences.Editor edit = shared.edit();
+			edit.putString("lang", val);
+			edit.commit();
+	    }
+	 private String getLastKnownLang()
+	    {
+	    	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+			return shared.getString("lang", "eng");
+	    }
 	
    
 //    @Override
@@ -476,12 +624,30 @@ private boolean checkAvailability(String url)
 	}
 	return true;
 }
-
-
+public boolean onPrepareOptionsMenu (Menu menu)
+{
+	MenuItem Item = menu.findItem(R.id.quality);
+	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+	
+	if(shared.getBoolean("quality", false))
+		Item.setTitle(getResources().getString(R.string.quality)+": High");
+	else
+		Item.setTitle(getResources().getString(R.string.quality)+": Medium");	
+	return true;
+}
+private void updateMenuTitles() {
+//    MenuItem bedMenuItem = menu.findItem(R.id.quality);
+//    if (inBed) {
+//        bedMenuItem.setTitle(outOfBedMenuTitle);
+//    } else {
+//        bedMenuItem.setTitle(inBedMenuTitle);
+//    }
+}
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.activity_web_login, menu);
+    updateMenuTitles();
     return true;
 	 
 }
@@ -522,6 +688,22 @@ public boolean onOptionsItemSelected(MenuItem item) {
         	Intent intent = new Intent(WebLogin.this,StreamListActivity.class);
         	startActivity(intent);
             return true;
+        case R.id.quality:
+        	SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(WebLogin.this);
+        	SharedPreferences.Editor edit = shared.edit();
+        	if(shared.getBoolean("quality", false))
+         	{
+         		Toast.makeText(WebLogin.this, "Changed quality to medium", Toast.LENGTH_LONG).show();
+         		edit.putBoolean("quality", false);
+     			edit.commit();
+         	}
+         	else
+         	{
+         		Toast.makeText(WebLogin.this, "Changed quality to high", Toast.LENGTH_LONG).show();
+         		edit.putBoolean("quality", true);
+     			edit.commit();
+         	}
+            return true;
         default:
             return super.onOptionsItemSelected(item);
     }
@@ -560,7 +742,14 @@ public void onResume()
       //parse key
       if(content!=null)
       {
-     	 int i = content.indexOf("special-")+"special-".length() ;
+     	 int i = content.indexOf("\"secret_word\":\"") ;
+     	
+     	 if(i==-1 || content.length()<i+8)
+     	 {
+     		Toast.makeText(this, "No valid broadcast, please try again later",5);
+     		return;
+     	 }
+     	 i+= "\"secret_word\":\"".length();
      	 String key = content.substring(i, i+8);
      	 setKey(key);
       }
@@ -673,7 +862,15 @@ public void onResume()
 			chooseToInstall.show();
 			e.printStackTrace();
 		}
-		
+		if(status!=0)
+		{
+				mLoginwebView.setWebViewClient(mClient);
+		        mLoginwebView.getSettings().setJavaScriptEnabled(true);
+		        mLoginwebView.addJavascriptInterface(new JavaScriptInterface(this), "Android");
+		        
+		        String url = new String("http://kabbalahgroup.info/");
+		        mLoginwebView.loadUrl(url);
+		}
      
 }
 @Override 

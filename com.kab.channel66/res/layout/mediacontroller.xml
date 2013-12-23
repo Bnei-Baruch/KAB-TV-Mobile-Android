@@ -21,13 +21,25 @@
         android:contentDescription="@string/mediacontroller_play_pause"
         android:gravity="center"
         android:src="@drawable/mediacontroller_pause_button" />
-
+ 	<ImageButton
+        android:id="@+id/mediacontroller_ask"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="61.0dip"
+        android:background="#00000000"
+        android:contentDescription="@string/mediacontroller_play_pause"
+        android:gravity="center"
+        android:src="@drawable/system_help" />
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dip"
         android:layout_marginLeft="7.0dip"
-        android:layout_marginRight="7.0dip"
+        android:layout_marginRight="40.0dip"
         android:layout_marginTop="2dip"
         android:layout_toLeftOf="@+id/mediacontroller_play_pause" >
 

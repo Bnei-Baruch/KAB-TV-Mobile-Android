@@ -75,6 +75,7 @@ public class MediaController extends FrameLayout {
 	private static final int SHOW_PROGRESS = 2;
 	private boolean mFromXml = false;
 	private ImageButton mPauseButton;
+	private ImageButton mAskButton;
 
 	private AudioManager mAM;
 
@@ -144,6 +145,12 @@ public class MediaController extends FrameLayout {
 		if (mPauseButton != null) {
 			mPauseButton.requestFocus();
 			mPauseButton.setOnClickListener(mPauseListener);
+		}
+		
+		mAskButton = (ImageButton) v.findViewById(R.id.mediacontroller_ask);
+		if (mAskButton != null) {
+			mAskButton.requestFocus();
+			mAskButton.setOnClickListener(mAsk);
 		}
 
 		mProgress = (ProgressBar) v.findViewById(R.id.mediacontroller_seekbar);
@@ -397,6 +404,13 @@ public class MediaController extends FrameLayout {
 			show(sDefaultTimeout);
 		}
 	};
+	
+	private View.OnClickListener mAsk = new View.OnClickListener() {
+		public void onClick(View v) {
+			askQuestion();
+			show(sDefaultTimeout);
+		}
+	};
 
 	private void updatePausePlay() {
 		if (mRoot == null || mPauseButton == null)
@@ -414,6 +428,11 @@ public class MediaController extends FrameLayout {
 		else
 			mPlayer.start();
 		updatePausePlay();
+	}
+	private void askQuestion()
+	{
+		Questions question = new Questions(mContext);
+    	question.show();
 	}
 
 	private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {

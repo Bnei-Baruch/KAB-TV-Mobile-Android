@@ -12,9 +12,13 @@ import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 //import android.util.Log;
 import com.apphance.android.Log;
 import android.view.SurfaceHolder;
@@ -30,10 +34,11 @@ public class PlayerActivity extends Activity implements OnBufferingUpdateListene
 	private SurfaceView mPreview;
 	private SurfaceHolder holder;
 	private String path = "mms://wms1.il.kab.tv/heb";
-
+	private WakeLock mWakeLock;
 	private boolean mIsVideoSizeKnown = false;
 	private boolean mIsVideoReadyToBePlayed = false;
 	private ProgressDialog progress;
+	@SuppressLint("Wakelock")
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -44,6 +49,10 @@ public class PlayerActivity extends Activity implements OnBufferingUpdateListene
 		progress = new ProgressDialog(PlayerActivity.this);
 		progress.setMax(100);
 		progress.setMessage("Buffering");
+		
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "My Tag");
+		mWakeLock.acquire();
 		
 	}
 
@@ -121,11 +130,13 @@ public class PlayerActivity extends Activity implements OnBufferingUpdateListene
 		doCleanUp();
 	}
 
+	@SuppressLint("Wakelock")
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		releaseMediaPlayer();
 		doCleanUp();
+		mWakeLock.release();
 	}
 
 	private void releaseMediaPlayer() {

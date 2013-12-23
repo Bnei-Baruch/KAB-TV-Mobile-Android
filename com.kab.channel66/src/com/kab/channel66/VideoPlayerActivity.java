@@ -12,10 +12,14 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -24,15 +28,22 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class VideoPlayerActivity extends Activity implements OnCompletionListener {
 
@@ -55,11 +66,14 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 	private GestureDetector mGestureDetector;
 	private MediaController mMediaController;
 	private ProgressDialog progress;
+	private WakeLock mWakeLock;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "My Tag");
+		mWakeLock.acquire();
 		
 		Intent intent = getIntent();
 		mPath = intent.getStringExtra("path");
@@ -96,16 +110,23 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 		
 		public void onBufferingUpdate(MediaPlayer arg0, int percent) {
 			// TODO Auto-generated method stub
+			int multiplier;
+			SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(VideoPlayerActivity.this);
+        	if(shared.getBoolean("quality", false))
+				multiplier= 4;
+			else
+				multiplier = 8;
 			if(!progress.isShowing())
 				progress.show();
-			progress.setProgress(percent);
-			progress.setMessage("Buffering "+Integer.toString(percent)+"%");
-			if(percent>98){
+			progress.setProgress(percent*multiplier);
+			progress.setMessage("Buffering "+Integer.toString(multiplier*percent)+"%");
+			if(percent*multiplier>=92){
 				progress.hide();
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 				if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM) //this is done due to a bug on some devices that the video won't start if layout is not zoom
 					mLayout = VideoView.VIDEO_LAYOUT_SCALE;
-					mVideoView.setVideoLayout(mLayout, 0);
+				mVideoView.setVideoLayout(mLayout, 0);
+				arg0.start();
 				
 			}
 		}
@@ -116,6 +137,8 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 		mGestureDetector = new GestureDetector(this, new MyGestureListener());
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		
 	}
 
 	@Override
@@ -137,6 +160,8 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 		super.onDestroy();
 		if (mVideoView != null)
 			mVideoView.stopPlayback();
+		
+		mWakeLock.release();
 	}
 
 	@Override
@@ -308,4 +333,28 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 	   // The rest of your onStop() code.
 	  EasyTracker.getInstance().activityStop(this); // Add this method.
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.video_menu, menu);
+	    return true;
+		 
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.questions:
+	        	Questions question = new Questions(VideoPlayerActivity.this);
+	        	question.show();
+	        	
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	  
+	}
+
 }
