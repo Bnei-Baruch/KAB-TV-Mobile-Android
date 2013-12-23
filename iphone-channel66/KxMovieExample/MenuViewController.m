@@ -11,9 +11,10 @@
 #import "MainViewController.h"
 #import "ChooseQualityViewController.h"
 #import "SvivaTovaLoginViewController.h"
+#import "LangSelectorViewController.h"
 
 @interface MenuViewController () {
-NSArray *menu_details;
+    NSArray *menu_details;
 }
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -38,7 +39,7 @@ NSArray *menu_details;
     self = [super init];
     if (self) {
         self.title = @"settings";
-           }
+    }
     return self;
 }
 
@@ -52,17 +53,17 @@ NSArray *menu_details;
 
 - (void)loadView
 {
-    NSLog(@"+-+- MenuViewController.m: loadView");   
+    NSLog(@"+-+- MenuViewController.m: loadView");
     if (fromWhere == 1) {
         menu_details = @[
-        @"Sviva Tova",
-        @"Choose Quality"
-        ];
+                         @"Sviva Tova",
+                         @"Choose Quality"
+                         ];
     } else {
         menu_details = @[
-        @"Channel 66",
-        @"Choose Quality"
-        ];
+                         @"Channel 66",
+                         @"Choose Quality"
+                         ];
     }
     
     
@@ -101,10 +102,10 @@ NSArray *menu_details;
 }
 -(void)openSvivaTova{
     NSLog(@"+-+- MenuViewController.m: openSvivaTova");
-
-//    LoginControllerViewController *web = [[LoginControllerViewController alloc]init];
-//   [self.navigationController pushViewController:web animated:YES];
-//    
+    
+    //    LoginControllerViewController *web = [[LoginControllerViewController alloc]init];
+    //   [self.navigationController pushViewController:web animated:YES];
+    //
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if(!([defaults valueForKey:@"password"]!=NULL && [defaults valueForKey:@"username"]!=NULL))
     {
@@ -143,7 +144,7 @@ NSArray *menu_details;
     }
     
     cell.textLabel.text = menu_details[indexPath.row];
-
+    
     return cell;
 }
 
@@ -151,74 +152,75 @@ NSArray *menu_details;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        switch (indexPath.row) {
-            case 0:
-                if (fromWhere == 1) {
-                    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-                    if ([@"1" isEqualToString:[userD objectForKey:@"isLogin"]]) {
-                        [self openSvivaTova];
-                    } else {
-                        [self showAlertWithText];
-                    }
+    switch (indexPath.row) {
+        case 0:
+            if (fromWhere == 1) {
+                NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+                if ([@"1" isEqualToString:[userD objectForKey:@"isLogin"]]) {
+                    [self openSvivaTova];
                 } else {
-                    [self openChannel66];
+                    [self showAlertWithText];
                 }
-                break;
-            case 1:
-                NSLog(@"Choose quality");
-                [self openQualitySettings];
-                break;
-            default:
-                break;
-        }
-//    }
+            } else {
+                [self openChannel66];
+            }
+            break;
+        case 1:
+            NSLog(@"Choose quality");
+            [self openQualitySettings];
+            break;
+        default:
+            break;
+    }
+    //    }
 }
-    -(void)showAlertWithText {
-        
-        UIAlertView *passwordAlert = [[UIAlertView alloc] initWithTitle:@"Enter Pin" message:@"\n\n\n"
-                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"OK",nil), nil];
-        passwordAlert.tag = 1;
-        
-        UILabel *passwordLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,40,260,25)];
-        passwordLabel.font = [UIFont systemFontOfSize:16];
-        passwordLabel.textColor = [UIColor whiteColor];
-        passwordLabel.backgroundColor = [UIColor clearColor];
-        passwordLabel.shadowColor = [UIColor blackColor];
-        passwordLabel.shadowOffset = CGSizeMake(0,-1);
-        passwordLabel.textAlignment = UITextAlignmentCenter;
-        passwordLabel.text = @"";
-        //[passwordAlert addSubview:passwordLabel];
-        
-        UIImageView *passwordImage = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"passwordfield" ofType:@"png"]]];
-        passwordImage.frame = CGRectMake(11,79,262,31);
-        //[passwordAlert addSubview:passwordImage];
-        
-        UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(16,83,252,25)];
-        passwordField.font = [UIFont systemFontOfSize:18];
-        passwordField.backgroundColor = [UIColor whiteColor];
-        passwordField.secureTextEntry = YES;
-        passwordField.keyboardAppearance = UIKeyboardAppearanceAlert;
-        //passwordField.delegate = self;
-        [passwordField becomeFirstResponder];
-        passwordField.borderStyle = UITextBorderStyleRoundedRect;
-        passwordField.tag = 100;
-        [passwordAlert addSubview:passwordField];
-        
-        
-        
-        //[passwordAlert setTransform:CGAffineTransformMakeTranslation(0,109)];
-        [passwordAlert show];
-        
+-(void)showAlertWithText {
+    
+    UIAlertView *passwordAlert = [[UIAlertView alloc] initWithTitle:@"Enter Pin" message:@""
+                                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"OK",nil), nil];
+    passwordAlert.tag = 1;
+    
+    UILabel *passwordLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,40,260,25)];
+    passwordLabel.font = [UIFont systemFontOfSize:16];
+    passwordLabel.textColor = [UIColor whiteColor];
+    passwordLabel.backgroundColor = [UIColor clearColor];
+    passwordLabel.shadowColor = [UIColor blackColor];
+    passwordLabel.shadowOffset = CGSizeMake(0,-1);
+    passwordLabel.textAlignment = UITextAlignmentCenter;
+    passwordLabel.text = @"";
+    //[passwordAlert addSubview:passwordLabel];
+    
+    UIImageView *passwordImage = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"passwordfield" ofType:@"png"]]];
+    passwordImage.frame = CGRectMake(11,79,262,31);
+    //[passwordAlert addSubview:passwordImage];
+    
+//    UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(16,83,252,25)];
+//    passwordField.font = [UIFont systemFontOfSize:18];
+//    passwordField.backgroundColor = [UIColor whiteColor];
+//    passwordField.secureTextEntry = YES;
+//    passwordField.keyboardAppearance = UIKeyboardAppearanceAlert;
+//    //passwordField.delegate = self;
+//    [passwordField becomeFirstResponder];
+//    passwordField.borderStyle = UITextBorderStyleRoundedRect;
+//    passwordField.tag = 100;
+    [passwordAlert setAlertViewStyle:UIAlertViewStyleSecureTextInput];
+    //[passwordAlert addSubview:passwordField];
+    
+    
+    
+    //[passwordAlert setTransform:CGAffineTransformMakeTranslation(0,109)];
+    [passwordAlert show];
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     NSLog(@"didDismissWithButtonIndex");
     
     //get the textField from the UIalertView
-    UITextField *getTextView = (UITextField*)[alertView viewWithTag:100];
-    NSLog(@"key pressed = %d, getTextView = %@", buttonIndex, getTextView.text);
+    //UITextField *getTextView = (UITextField*)[alertView viewWithTag:100];
+  //  NSLog(@"key pressed = %d, getTextView = %@", buttonIndex, getTextView.text);
     
-    if (buttonIndex == 1 && ([@"arvut" caseInsensitiveCompare:getTextView.text] == NSOrderedSame ) ) {
+    if (buttonIndex == 1 && ([@"arvut" caseInsensitiveCompare:[[alertView textFieldAtIndex:0] text]] == NSOrderedSame ) ) {
         [self openSvivaTova];
         
         NSUserDefaults *userD = [[NSUserDefaults alloc] init];

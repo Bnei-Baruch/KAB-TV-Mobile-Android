@@ -8,6 +8,7 @@
 
 #import "AudioWebViewController.h"
 #import "LangSelectorViewController.h"
+
 @interface AudioWebViewController ()
 
 @end
@@ -34,6 +35,8 @@
     //mWebview.delegate = self;
     // Do any additional setup after loading the view from its nib.
   //  [mWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
 }
 
 -(void)viewDidUnload
@@ -54,7 +57,6 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    
     
     if(!mPlaying)
     {

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Reachability.h"
 @interface AudioWebViewController : UIViewController <UIWebViewDelegate>
 
 {

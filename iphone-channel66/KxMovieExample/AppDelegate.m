@@ -8,11 +8,13 @@
 //  https://github.com/kolyvan/kxmovie
 //  this file is part of KxMovie
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
-
+//#define TESTING 0
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "GAI.h"
+#ifdef TESTING
 #import "TestFlight.h"
+#endif
 #import "Parse/Parse.h"
 
 @implementation AppDelegate
@@ -30,12 +32,13 @@
     // Create tracker instance.
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-36608494-1"];
     
-//#define TESTING
+
 #ifdef TESTING
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-#endif
+
     
     [TestFlight takeOff:@"8d2caf14-8df9-4937-a9d7-3e91b0a5465b"];
+#endif    
     //
     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
     if (![userD objectForKey:@"quality"]) {
@@ -53,21 +56,25 @@
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     
+    [Parse setApplicationId:@"dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD" clientKey:@"b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U"];
+
+    
     [application registerForRemoteNotificationTypes:
      UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeAlert |
      UIRemoteNotificationTypeSound];
     
-    return YES;
+        return YES;
 }
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     // Store the deviceToken in the current installation and save it to Parse.
-//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//    [currentInstallation setDeviceTokenFromData:newDeviceToken];
-//    [currentInstallation saveInBackground];
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:@"RABASH" forKey:@"channels"];
+    [currentInstallation setDeviceTokenFromData:newDeviceToken];
+    [currentInstallation saveInBackground];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

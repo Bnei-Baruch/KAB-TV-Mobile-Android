@@ -70,7 +70,7 @@ enum {
 
 static NSMutableDictionary * gHistory;
 
-#define DEFAULT_DECODE_DURATION   0.1
+#define DEFAULT_DECODE_DURATION   0.01
 #define NETWORK_BUFFERED_DURATION 4
 
 @interface KxMovieViewController () {
@@ -222,7 +222,7 @@ static NSMutableDictionary * gHistory;
     _topHUD.opaque = NO;
     _bottomHUD.opaque = NO;
     
-    _topHUD.frame = CGRectMake(0,0,width,30);
+    _topHUD.frame = CGRectMake(0,10,width,30);
     _bottomHUD.frame = CGRectMake(30,height-(75+15),width-(30*2),75);
     
     _topHUD.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -1000,7 +1000,7 @@ static NSMutableDictionary * gHistory;
 - (CGFloat) presentVideoFrame: (KxVideoFrame *) frame
 {
     
-    if([UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
+    if([UIApplication sharedApplication].applicationState != UIApplicationStateInactive && [UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
     {
 
     if (_glView ) {
@@ -1072,7 +1072,7 @@ static NSMutableDictionary * gHistory;
     _hiddenHUD = !show;    
     _panGestureRecognizer.enabled = _hiddenHUD;
     
-    [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
+    //[[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
     
     [UIView animateWithDuration:0.2
                           delay:0.0

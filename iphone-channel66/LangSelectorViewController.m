@@ -180,6 +180,24 @@
      */
     //NSRange isRange = [request.URL.absoluteString rangeOfString:@"mp3" options:NSCaseInsensitiveSearch];
 
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reachability"
+    //                                                    message:[self stringFromStatus:status] delegate:nil
+    //                                          cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    //    [alert show];
+    
+    if(status == NotReachable)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Channel 66"
+                                                        message:@"No Internet connection available" delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+
+    
     NSString *url = @"http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true";
     NSString* keyData = [self getKeyDataFromUrl:url];
 //    
@@ -251,7 +269,7 @@
             if ([self checkIsActive: keyData])
             {
                 if (langjsonData && keyData) {
-                    NSString *keyToReplace = [self getKeyValueForAsxFile: keyData];
+                    NSString *keyToReplace = [self getSecretKeyValueForAsxFile: keyData];
                     NSLog(@"langjsonData = %@, keyJsonData = %@", langjsonData, keyData);
                     NSMutableArray *locales = [[NSMutableArray alloc] init];
                     for( NSDictionary *locale in [langjsonData objectForKey:@"locale"])
@@ -310,6 +328,7 @@
                             NSLog(@" asxUrlToPlay = %@", asxUrlToPlay);
                             asxUrlToPlay = [self replaceKeyForAsx:asxUrlToPlay: keyToReplace];
                             NSLog(@"url = %@", asxUrlToPlay);
+                            break;
                         }
                     }
                     if (asxUrlToPlay) {
@@ -365,8 +384,8 @@
 //                
 //                audiocontroller.delegate = self;
                 [vc setUrl:audio];
-                [self presentViewController:vc animated:YES completion:^{[self loadDone];}];
-                //[self.navigationController pushViewController:vc animated:YES];
+                //[self presentViewController:vc animated:YES completion:^{[self loadDone];}];
+                [self.navigationController pushViewController:vc animated:YES];
                 
                 NSLog(@"Audio actionSheet.accessibilityValue = %@", actionSheet.accessibilityValue);
                 NSLog(@"Audio picked");
@@ -429,6 +448,21 @@
     
     
     return retData;
+}
+
+-(NSString *) getSecretKeyValueForAsxFile :(NSString*) stringData {
+    //get current key for .asx url
+    NSLog(@"+-+- LoginControllerViewController: getKeyValueForAsxFile");
+    NSString *retKey;
+    NSString *strToFind = @"\"secret_word\":\"";
+    NSRange range = [stringData rangeOfString:strToFind];
+    NSLog(@"range.length %d", range.length);
+    NSLog(@"range.location %d", range.location);
+    
+    retKey = [stringData substringWithRange:NSMakeRange(range.location + strToFind.length, 8)];
+    
+    return retKey;
+    
 }
 
 -(NSString *) getKeyValueForAsxFile :(NSString*) stringData {

@@ -13,24 +13,51 @@
 #import "KxMovieViewController.h"
 #import "LoginControllerViewController.h"
 #import "MenuViewController.h"
-#import "AudioWebViewController.h"
+#import "Reachability.h"
+//#import "AudioWebViewController.h"
+
 @interface MainViewController () {
     NSArray *_localMovies;
     NSArray *_remoteMovies;
     NSArray *_localMoviesName;
-    
-    
 }
+
 @property (strong, nonatomic) UITableView *tableView;
 @end
 
+
+
+#pragma mark - Private definitions
+
+@interface MainViewController (Private)
+-(void)playFromURL:(NSURL *)URL;
+@end
+
+
+#pragma mark - implementation
 @implementation MainViewController
+
 @synthesize streamNames;
+@synthesize mp;
+@synthesize mpVC;
+
+
+
 - (id)init
 {
     self = [super init];
     if (self) {
         self.title = @"Channel 66";
+    
+        // current SvivaTova links for testing:
+        // http://streams.kab.tv/heb-special-fNgO58zb_medium.asx
+        // http://streams.kab.tv/heb-special-fNgO58zb.asx
+        // http://streams.kab.tv/rus-special-fNgO58zb_medium.asx
+        // http://streams.kab.tv/rus-special-fNgO58zb.asx
+        // http://streams.kab.tv/eng-special-fNgO58zb.asx
+        // http://streams.kab.tv/eng-special-fNgO58zb_medium.asx
+        // http://streams.kab.tv/spa-special-fNgO58zb.asx
+        // http://streams.kab.tv/spa-special-fNgO58zb_medium.asx
         
         _remoteMovies = @[
 //            @"http://www.wowza.com/_h264/BigBuckBunny_175k.mov",
@@ -79,6 +106,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    
+    
+    
+    //for audio playing in background:
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (setCategoryError) {
+        NSLog(@"setCategoryError");
+    }
+    
+    NSError *activationError = nil;
+    [audioSession setActive:YES error:&activationError];
+    if (activationError) {
+        NSLog(@"activationError");
+    }
+    
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(beginReceivingRemoteControlEvents) ]) {
+        [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    }
+    
+
     
 }
 
@@ -209,6 +261,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    
+    if(status == NotReachable)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Channel 66"
+                                                        message:@"No Internet connection available" delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    
     NSString *path;
     path = _remoteMovies[indexPath.row];
     NSRange range = [path rangeOfString:@"mp3"];
@@ -221,25 +287,74 @@
             path = [path stringByAppendingString:@"_medium"];
         
         
-    } 
+    }
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"Channel 66", path];
-     //googleAnalytic
+    //googleAnalytic
     self.trackedViewName = analyticPrm;
     if(video)
     {
         KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path];
-    [self presentViewController:vc animated:YES completion:nil];
+        [self presentViewController:vc animated:YES completion:nil];
     }
     else
     {
-        AudioWebViewController *vc =[[AudioWebViewController alloc]init];
-        [vc setUrl:path];
-         [self presentViewController:vc animated:YES completion:nil];
+        //AudioWebViewController *vc =[[AudioWebViewController alloc]init];
+        //[vc setUrl:path];
+        [self playFromURL:[NSURL URLWithString:path]]; // to save memory
+        //[self presentViewController:vc animated:YES completion:nil];
     }
     
-        //[self.navigationController pushViewController:vc animated:YES];
+    //[self.navigationController pushViewController:vc animated:YES];
 }
 
+/* OLD:
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    NSString *path;
+    
+    if (indexPath.section == 0) {
+        
+        path = _remoteMovies[indexPath.row];
+        
+        // TODO: this is temp, should build a wise mechanism:
+        NSRange isAudioStream = [path rangeOfString:@"mp3"]; // use localization
+        NSRange isHebrewStream = [path rangeOfString:@"heb"]; // use localization
+        NSRange isRussiantream = [path rangeOfString:@"rus"]; // use localization
+        
+        if (isAudioStream.length && isHebrewStream.length) {
+            [self playFromURL:[NSURL URLWithString:path]];
+            return;
+        }
+        else if (isAudioStream.length && isRussiantream.length) {
+            [self playFromURL:[NSURL URLWithString:path]];
+            return;
+        }
+        
+        
+        
+        //unused: NSRange range = [path rangeOfString:@"mp3"];
+        Boolean video = [path rangeOfString:@"mp3"].length==0;
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"quality"] isKindOfClass:[NSString class]]) {
+            Boolean quality = [[[NSUserDefaults standardUserDefaults] valueForKey:@"quality"] isEqualToString:@"Medium"];
+            //if( video && quality)
+            //path = [path stringByAppendingString:@"_medium"];
+        }
+        
+        
+    }
+    NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"Channel 66", path];
+    //googleAnalytic
+    self.trackedViewName = analyticPrm;
+    
+    KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path];
+    [self presentViewController:vc animated:YES completion:nil];
+    //[self.navigationController pushViewController:vc animated:YES];
+}
+*/
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -254,4 +369,66 @@
     
     
 }
+
+
+#pragma mark - Audio playback using Apple's player to save resources
+
+
+-(void)playFromURL:(NSURL *)URL {
+    
+    
+	self.mpVC = [[MPMoviePlayerViewController alloc] initWithContentURL:URL];
+	if (self.mpVC)
+	{
+		self.mp = [mpVC moviePlayer];
+        
+        self.mp.useApplicationAudioSession = NO;// for audio playing in background. (3.x)
+        
+		// Register to receive a notification when the movie has finished playing
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(moviePlayBackDidFinish:)
+													 name:MPMoviePlayerPlaybackDidFinishNotification
+												   object:nil];
+        
+        
+		[self presentMoviePlayerViewControllerAnimated:mpVC];
+		[self.mp play];
+        
+        
+        
+	}
+}
+
+-(void) moviePlayBackDidFinish:(NSNotification*)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:nil];
+    self.mp = nil;
+    self.mpVC = nil;
+}
+
+
+
+/*tmp4test
+#pragma mark - Shake Gesture
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    NSLog(@"{motion ended event ");
+    if (motion == UIEventSubtypeMotionShake) {
+        NSLog(@"{shaken state ");
+        [self resignFirstResponder];  // deny double shake gesture
+
+        //SvivaTovaLoginViewController *svivaTovaLoginViewController = [[SvivaTovaLoginViewController alloc] init];
+        //[self presentModalViewController:svivaTovaLoginViewController animated:YES];
+        
+    }
+    else {
+        NSLog(@"{not shaken state ");
+    }
+}
+*/
+
 @end

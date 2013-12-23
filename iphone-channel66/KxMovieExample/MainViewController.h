@@ -12,9 +12,20 @@
 #import <UIKit/UIKit.h>
 #import "GAITrackedViewController.h"
 
+// for background audio playback &| apple's internal player:
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <MediaPlayer/MediaPlayer.h>
+
 @interface MainViewController : GAITrackedViewController<UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate> {
     NSMutableDictionary *streamNames;
-}
 
-@property(nonatomic,retain) NSMutableDictionary *streamNames;
+    // For Apple's audio player:
+	MPMoviePlayerController *mp;
+	MPMoviePlayerViewController *mpVC;
+}
+@property (nonatomic, strong) MPMoviePlayerController *mp;
+@property (nonatomic, strong) MPMoviePlayerViewController *mpVC;
+
+@property(nonatomic,strong) NSMutableDictionary *streamNames;
 @end
