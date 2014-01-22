@@ -26,7 +26,13 @@
 		272DD43716E9D6BE009734A0 /* ChooseQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DD43516E9D6BE009734A0 /* ChooseQualityViewController.m */; };
 		272DD43816E9D6BE009734A0 /* ChooseQualityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 272DD43616E9D6BE009734A0 /* ChooseQualityViewController.xib */; };
 		272DD43E16E9DF0C009734A0 /* indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 272DD43D16E9DF0C009734A0 /* indicator.png */; };
-		278EBF7716F2BFC9000F98D5 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EBF7616F2BFC9000F98D5 /* libGoogleAnalytics.a */; };
+		4D092735188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D092734188F5C7700C6B10F /* libGoogleAnalyticsServices.a */; };
+		4D092736188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D092734188F5C7700C6B10F /* libGoogleAnalyticsServices.a */; };
+		4D092737188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D092734188F5C7700C6B10F /* libGoogleAnalyticsServices.a */; };
+		4D092739188F5E8400C6B10F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D092738188F5E8400C6B10F /* CoreData.framework */; };
+		4D09273B188F5F2200C6B10F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D09273A188F5F2200C6B10F /* SystemConfiguration.framework */; };
+		4D09273D188F5F6A00C6B10F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D09273C188F5F6A00C6B10F /* libz.dylib */; };
+		4D09273F188F5F7200C6B10F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D09273E188F5F7200C6B10F /* AdSupport.framework */; };
 		4D15A60516F6A1E3001FC87C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A60416F6A1E3001FC87C /* CFNetwork.framework */; };
 		4D15A61F16F6A563001FC87C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7940816390F6D000A0848 /* main.m */; };
 		4D15A62016F6A563001FC87C /* KxAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7941E1639107F000A0848 /* KxAudioManager.m */; };
@@ -54,13 +60,6 @@
 		4D15A63616F6A563001FC87C /* ChooseQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DD43516E9D6BE009734A0 /* ChooseQualityViewController.m */; };
 		4D15A63816F6A563001FC87C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7EB3516F2C18B00FC247F /* SystemConfiguration.framework */; };
 		4D15A63916F6A563001FC87C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7EB3216F2C17800FC247F /* CoreData.framework */; };
-		4D15A63B16F6A563001FC87C /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944416391B9E000A0848 /* libavcodec.a */; };
-		4D15A63C16F6A563001FC87C /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944516391B9E000A0848 /* libavdevice.a */; };
-		4D15A63D16F6A563001FC87C /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944616391B9E000A0848 /* libavformat.a */; };
-		4D15A63E16F6A563001FC87C /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944716391B9E000A0848 /* libavutil.a */; };
-		4D15A63F16F6A563001FC87C /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944816391B9E000A0848 /* libswresample.a */; };
-		4D15A64016F6A563001FC87C /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944916391B9E000A0848 /* libswscale.a */; };
-		4D15A64A16F6A563001FC87C /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EBF7616F2BFC9000F98D5 /* libGoogleAnalytics.a */; };
 		4D15A64C16F6A563001FC87C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87E7940516390F6D000A0848 /* InfoPlist.strings */; };
 		4D15A64F16F6A563001FC87C /* kxmovie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E7941F1639107F000A0848 /* kxmovie.bundle */; };
 		4D15A65016F6A563001FC87C /* icon_iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48AF167AB760006380C6 /* icon_iPhone@2x.png */; };
@@ -69,9 +68,6 @@
 		4D15A65416F6A563001FC87C /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 272DD43116E99373009734A0 /* MenuViewController.xib */; };
 		4D15A65516F6A563001FC87C /* ChooseQualityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 272DD43616E9D6BE009734A0 /* ChooseQualityViewController.xib */; };
 		4D15A65616F6A563001FC87C /* indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 272DD43D16E9DF0C009734A0 /* indicator.png */; };
-		4D15A66116F7F1E2001FC87C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A65D16F7F1E2001FC87C /* libTestFlight.a */; };
-		4D15A66216F7F1E2001FC87C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D15A65E16F7F1E2001FC87C /* README.md */; };
-		4D15A66316F7F1E2001FC87C /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D15A65F16F7F1E2001FC87C /* release_notes.md */; };
 		4D15A66516F7F226001FC87C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A66416F7F226001FC87C /* libz.dylib */; };
 		4D15A66616F7F2A3001FC87C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A61716F6A367001FC87C /* Accelerate.framework */; };
 		4D15A66716F7F2C8001FC87C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A61B16F6A373001FC87C /* OpenGLES.framework */; };
@@ -96,6 +92,12 @@
 		4D48DDC51831C392002C92E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D48DDC41831C392002C92E2 /* Images.xcassets */; };
 		4D4A48B1167AB760006380C6 /* icon_iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48AF167AB760006380C6 /* icon_iPhone@2x.png */; };
 		4D4A48BB167ABA49006380C6 /* StreamFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A48BA167ABA49006380C6 /* StreamFetcher.m */; };
+		4D8EDF41188B5FDF0094C7C9 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF3B188B5FDF0094C7C9 /* libavdevice.a */; };
+		4D8EDF42188B5FDF0094C7C9 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF3C188B5FDF0094C7C9 /* libavcodec.a */; };
+		4D8EDF43188B5FDF0094C7C9 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF3D188B5FDF0094C7C9 /* libavformat.a */; };
+		4D8EDF44188B5FDF0094C7C9 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF3E188B5FDF0094C7C9 /* libswscale.a */; };
+		4D8EDF45188B5FDF0094C7C9 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF3F188B5FDF0094C7C9 /* libswresample.a */; };
+		4D8EDF46188B5FDF0094C7C9 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8EDF40188B5FDF0094C7C9 /* libavutil.a */; };
 		4D91B8B41833310100923051 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D48DDC41831C392002C92E2 /* Images.xcassets */; };
 		4DBCE3261767FBF6001FCC10 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBCE3251767FBF6001FCC10 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4DBCE3271767FD5E001FCC10 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D15A60416F6A1E3001FC87C /* CFNetwork.framework */; };
@@ -117,22 +119,10 @@
 		87E7942A1639107F000A0848 /* KxMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E794251639107F000A0848 /* KxMovieViewController.m */; };
 		87E7942F1639108E000A0848 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7942C1639108E000A0848 /* AppDelegate.m */; };
 		87E794301639108E000A0848 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7942E1639108E000A0848 /* MainViewController.m */; };
-		87E7944A16391B9E000A0848 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944416391B9E000A0848 /* libavcodec.a */; };
-		87E7944B16391B9E000A0848 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944516391B9E000A0848 /* libavdevice.a */; };
-		87E7944C16391B9E000A0848 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944616391B9E000A0848 /* libavformat.a */; };
-		87E7944D16391B9E000A0848 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944716391B9E000A0848 /* libavutil.a */; };
-		87E7944E16391B9E000A0848 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944816391B9E000A0848 /* libswresample.a */; };
-		87E7944F16391B9E000A0848 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944916391B9E000A0848 /* libswscale.a */; };
 		87FD6182163A75AF0090956E /* KxAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7941E1639107F000A0848 /* KxAudioManager.m */; };
 		87FD6183163A75B10090956E /* KxMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E794211639107F000A0848 /* KxMovieDecoder.m */; };
 		87FD6184163A75B50090956E /* KxMovieGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E794231639107F000A0848 /* KxMovieGLView.m */; };
 		87FD6185163A75B70090956E /* KxMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E794251639107F000A0848 /* KxMovieViewController.m */; };
-		87FD6186163A75BF0090956E /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944416391B9E000A0848 /* libavcodec.a */; };
-		87FD6187163A75C10090956E /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944516391B9E000A0848 /* libavdevice.a */; };
-		87FD6188163A75C30090956E /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944616391B9E000A0848 /* libavformat.a */; };
-		87FD6189163A75C60090956E /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944716391B9E000A0848 /* libavutil.a */; };
-		87FD618A163A75C80090956E /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944816391B9E000A0848 /* libswresample.a */; };
-		87FD618B163A75C90090956E /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7944916391B9E000A0848 /* libswscale.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -183,14 +173,19 @@
 		272DD43516E9D6BE009734A0 /* ChooseQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseQualityViewController.m; sourceTree = "<group>"; };
 		272DD43616E9D6BE009734A0 /* ChooseQualityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseQualityViewController.xib; sourceTree = "<group>"; };
 		272DD43D16E9DF0C009734A0 /* indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = indicator.png; path = Source/indicator.png; sourceTree = "<group>"; };
-		278EBF7116F2BFC9000F98D5 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		278EBF7216F2BFC9000F98D5 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		278EBF7316F2BFC9000F98D5 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		278EBF7416F2BFC9000F98D5 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		278EBF7516F2BFC9000F98D5 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		278EBF7616F2BFC9000F98D5 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		27C7EB3216F2C17800FC247F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		27C7EB3516F2C18B00FC247F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		4D09272E188F5C6900C6B10F /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		4D09272F188F5C6900C6B10F /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		4D092730188F5C6900C6B10F /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		4D092731188F5C6900C6B10F /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		4D092732188F5C6900C6B10F /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		4D092733188F5C6900C6B10F /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		4D092734188F5C7700C6B10F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../Library/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		4D092738188F5E8400C6B10F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		4D09273A188F5F2200C6B10F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		4D09273C188F5F6A00C6B10F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		4D09273E188F5F7200C6B10F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 		4D15A60416F6A1E3001FC87C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		4D15A60916F6A330001FC87C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
 		4D15A60B16F6A338001FC87C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -203,10 +198,6 @@
 		4D15A61916F6A36E001FC87C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		4D15A61B16F6A373001FC87C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		4D15A65A16F6A563001FC87C /* KxMovieExample copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KxMovieExample copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D15A65D16F7F1E2001FC87C /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		4D15A65E16F7F1E2001FC87C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		4D15A65F16F7F1E2001FC87C /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		4D15A66016F7F1E2001FC87C /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		4D15A66416F7F226001FC87C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		4D15A67216F7F393001FC87C /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		4D15A67A16F7F6B5001FC87C /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libsqlite3.0.dylib; sourceTree = DEVELOPER_DIR; };
@@ -224,6 +215,12 @@
 		4D4A48AF167AB760006380C6 /* icon_iPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_iPhone@2x.png"; sourceTree = "<group>"; };
 		4D4A48B9167ABA49006380C6 /* StreamFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamFetcher.h; sourceTree = "<group>"; };
 		4D4A48BA167ABA49006380C6 /* StreamFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamFetcher.m; sourceTree = "<group>"; };
+		4D8EDF3B188B5FDF0094C7C9 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = libs/libavdevice.a; sourceTree = "<group>"; };
+		4D8EDF3C188B5FDF0094C7C9 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = libs/libavcodec.a; sourceTree = "<group>"; };
+		4D8EDF3D188B5FDF0094C7C9 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = libs/libavformat.a; sourceTree = "<group>"; };
+		4D8EDF3E188B5FDF0094C7C9 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = libs/libswscale.a; sourceTree = "<group>"; };
+		4D8EDF3F188B5FDF0094C7C9 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = libs/libswresample.a; sourceTree = "<group>"; };
+		4D8EDF40188B5FDF0094C7C9 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = libs/libavutil.a; sourceTree = "<group>"; };
 		4D91B8B018332C0100923051 /* KL_new_66_58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KL_new_66_58x58.png; sourceTree = "<group>"; };
 		4D91B8B118332C1900923051 /* KL_new_66_80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KL_new_66_80x80.png; sourceTree = "<group>"; };
 		4D91B8B318332FC600923051 /* icon_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_iPhone.png; sourceTree = "<group>"; };
@@ -262,12 +259,6 @@
 		87E7942C1639108E000A0848 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		87E7942D1639108E000A0848 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		87E7942E1639108E000A0848 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		87E7944416391B9E000A0848 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = libs/libavcodec.a; sourceTree = "<group>"; };
-		87E7944516391B9E000A0848 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = libs/libavdevice.a; sourceTree = "<group>"; };
-		87E7944616391B9E000A0848 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = libs/libavformat.a; sourceTree = "<group>"; };
-		87E7944716391B9E000A0848 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = libs/libavutil.a; sourceTree = "<group>"; };
-		87E7944816391B9E000A0848 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = libs/libswresample.a; sourceTree = "<group>"; };
-		87E7944916391B9E000A0848 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = libs/libswscale.a; sourceTree = "<group>"; };
 		87E7946116394577000A0848 /* KxAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxAudioManager.h; sourceTree = "<group>"; };
 		87FD6175163A75440090956E /* libkxmovie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkxmovie.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87FD6179163A75440090956E /* kxmovie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kxmovie-Prefix.pch"; sourceTree = "<group>"; };
@@ -281,14 +272,8 @@
 				4D15A67916F7F56D001FC87C /* CoreAudio.framework in Frameworks */,
 				4D15A67816F7F568001FC87C /* AudioToolbox.framework in Frameworks */,
 				4D15A63816F6A563001FC87C /* SystemConfiguration.framework in Frameworks */,
+				4D092737188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */,
 				4D15A63916F6A563001FC87C /* CoreData.framework in Frameworks */,
-				4D15A63B16F6A563001FC87C /* libavcodec.a in Frameworks */,
-				4D15A63C16F6A563001FC87C /* libavdevice.a in Frameworks */,
-				4D15A63D16F6A563001FC87C /* libavformat.a in Frameworks */,
-				4D15A63E16F6A563001FC87C /* libavutil.a in Frameworks */,
-				4D15A63F16F6A563001FC87C /* libswresample.a in Frameworks */,
-				4D15A64016F6A563001FC87C /* libswscale.a in Frameworks */,
-				4D15A64A16F6A563001FC87C /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,33 +281,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D09273F188F5F7200C6B10F /* AdSupport.framework in Frameworks */,
+				4D09273D188F5F6A00C6B10F /* libz.dylib in Frameworks */,
+				4D09273B188F5F2200C6B10F /* SystemConfiguration.framework in Frameworks */,
+				4D092739188F5E8400C6B10F /* CoreData.framework in Frameworks */,
 				4DBCE3271767FD5E001FCC10 /* CFNetwork.framework in Frameworks */,
 				4D15A67F16F7F6F3001FC87C /* SystemConfiguration.framework in Frameworks */,
 				4DEB3FB61765500000756CC8 /* AVFoundation.framework in Frameworks */,
+				4D092735188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */,
 				4DBDCF5D174AFDF000549E80 /* MobileCoreServices.framework in Frameworks */,
 				4DBDCF5B174AFDCC00549E80 /* Security.framework in Frameworks */,
 				4DBDCF59174AFD8B00549E80 /* CoreLocation.framework in Frameworks */,
+				4D8EDF41188B5FDF0094C7C9 /* libavdevice.a in Frameworks */,
 				4D2D528F17179725000564A2 /* Parse.framework in Frameworks */,
 				4D15A67D16F7F6D3001FC87C /* CoreData.framework in Frameworks */,
+				4D8EDF46188B5FDF0094C7C9 /* libavutil.a in Frameworks */,
 				4D15A67B16F7F6B5001FC87C /* libsqlite3.0.dylib in Frameworks */,
+				4D8EDF45188B5FDF0094C7C9 /* libswresample.a in Frameworks */,
 				4D15A67616F7F44F001FC87C /* AudioToolbox.framework in Frameworks */,
+				4D8EDF44188B5FDF0094C7C9 /* libswscale.a in Frameworks */,
 				4D15A67516F7F440001FC87C /* CoreAudio.framework in Frameworks */,
+				4D8EDF43188B5FDF0094C7C9 /* libavformat.a in Frameworks */,
 				4D15A66516F7F226001FC87C /* libz.dylib in Frameworks */,
-				87E7944A16391B9E000A0848 /* libavcodec.a in Frameworks */,
-				87E7944B16391B9E000A0848 /* libavdevice.a in Frameworks */,
 				4D15A66716F7F2C8001FC87C /* OpenGLES.framework in Frameworks */,
 				4D15A66816F7F2C8001FC87C /* QuartzCore.framework in Frameworks */,
 				4D15A66616F7F2A3001FC87C /* Accelerate.framework in Frameworks */,
 				4D15A66B16F7F2C8001FC87C /* MediaPlayer.framework in Frameworks */,
 				4D15A66C16F7F2C8001FC87C /* CoreGraphics.framework in Frameworks */,
+				4D8EDF42188B5FDF0094C7C9 /* libavcodec.a in Frameworks */,
 				4D15A66D16F7F2C8001FC87C /* Foundation.framework in Frameworks */,
 				4D15A66E16F7F2C8001FC87C /* UIKit.framework in Frameworks */,
-				87E7944C16391B9E000A0848 /* libavformat.a in Frameworks */,
-				87E7944D16391B9E000A0848 /* libavutil.a in Frameworks */,
-				87E7944E16391B9E000A0848 /* libswresample.a in Frameworks */,
-				87E7944F16391B9E000A0848 /* libswscale.a in Frameworks */,
-				278EBF7716F2BFC9000F98D5 /* libGoogleAnalytics.a in Frameworks */,
-				4D15A66116F7F1E2001FC87C /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,12 +320,7 @@
 			files = (
 				4D15A67416F7F3CC001FC87C /* AudioUnit.framework in Frameworks */,
 				4D15A60516F6A1E3001FC87C /* CFNetwork.framework in Frameworks */,
-				87FD6186163A75BF0090956E /* libavcodec.a in Frameworks */,
-				87FD6187163A75C10090956E /* libavdevice.a in Frameworks */,
-				87FD6188163A75C30090956E /* libavformat.a in Frameworks */,
-				87FD6189163A75C60090956E /* libavutil.a in Frameworks */,
-				87FD618A163A75C80090956E /* libswresample.a in Frameworks */,
-				87FD618B163A75C90090956E /* libswscale.a in Frameworks */,
+				4D092736188F5C7700C6B10F /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,29 +378,18 @@
 			path = Tidy;
 			sourceTree = "<group>";
 		};
-		278EBF6F16F2BF5A000F98D5 /* GoogleAnalytic */ = {
+		4D09272D188F5C6900C6B10F /* Google Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				278EBF7116F2BFC9000F98D5 /* GAI.h */,
-				278EBF7216F2BFC9000F98D5 /* GAITrackedViewController.h */,
-				278EBF7316F2BFC9000F98D5 /* GAITracker.h */,
-				278EBF7416F2BFC9000F98D5 /* GAITransaction.h */,
-				278EBF7516F2BFC9000F98D5 /* GAITransactionItem.h */,
-				278EBF7616F2BFC9000F98D5 /* libGoogleAnalytics.a */,
+				4D09272E188F5C6900C6B10F /* GAI.h */,
+				4D09272F188F5C6900C6B10F /* GAIDictionaryBuilder.h */,
+				4D092730188F5C6900C6B10F /* GAIFields.h */,
+				4D092731188F5C6900C6B10F /* GAILogger.h */,
+				4D092732188F5C6900C6B10F /* GAITrackedViewController.h */,
+				4D092733188F5C6900C6B10F /* GAITracker.h */,
 			);
-			name = GoogleAnalytic;
-			sourceTree = "<group>";
-		};
-		4D15A65C16F7F1E2001FC87C /* TestFlightSDK1.2.1 */ = {
-			isa = PBXGroup;
-			children = (
-				4D15A65D16F7F1E2001FC87C /* libTestFlight.a */,
-				4D15A65E16F7F1E2001FC87C /* README.md */,
-				4D15A65F16F7F1E2001FC87C /* release_notes.md */,
-				4D15A66016F7F1E2001FC87C /* TestFlight.h */,
-			);
-			name = TestFlightSDK1.2.1;
-			path = ../TestFlightSDK1.2.1;
+			name = "Google Analytics";
+			path = Library;
 			sourceTree = "<group>";
 		};
 		4DBDCF5E174AFEE100549E80 /* SvivaTovaLoginController */ = {
@@ -456,6 +428,7 @@
 		87E793EB16390F10000A0848 = {
 			isa = PBXGroup;
 			children = (
+				4D09272D188F5C6900C6B10F /* Google Analytics */,
 				4D91B8B318332FC600923051 /* icon_iPhone.png */,
 				4D91B8B118332C1900923051 /* KL_new_66_80x80.png */,
 				4D91B8B018332C0100923051 /* KL_new_66_58x58.png */,
@@ -470,7 +443,6 @@
 				4D15A67E16F7F6F3001FC87C /* SystemConfiguration.framework */,
 				4D15A67C16F7F6D3001FC87C /* CoreData.framework */,
 				4D15A67A16F7F6B5001FC87C /* libsqlite3.0.dylib */,
-				4D15A65C16F7F1E2001FC87C /* TestFlightSDK1.2.1 */,
 				272DD42D16E99086009734A0 /* Default.png */,
 				87E7940216390F6D000A0848 /* channel66 */,
 				87FD6177163A75440090956E /* kxmovie */,
@@ -492,6 +464,16 @@
 		87E793FB16390F6D000A0848 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D09273E188F5F7200C6B10F /* AdSupport.framework */,
+				4D09273C188F5F6A00C6B10F /* libz.dylib */,
+				4D09273A188F5F2200C6B10F /* SystemConfiguration.framework */,
+				4D092738188F5E8400C6B10F /* CoreData.framework */,
+				4D8EDF3B188B5FDF0094C7C9 /* libavdevice.a */,
+				4D8EDF3C188B5FDF0094C7C9 /* libavcodec.a */,
+				4D8EDF3D188B5FDF0094C7C9 /* libavformat.a */,
+				4D8EDF3E188B5FDF0094C7C9 /* libswscale.a */,
+				4D8EDF3F188B5FDF0094C7C9 /* libswresample.a */,
+				4D8EDF40188B5FDF0094C7C9 /* libavutil.a */,
 				4D2D528E17179725000564A2 /* Parse.framework */,
 				4D15A60916F6A330001FC87C /* libxml2.dylib */,
 				4D15A66416F7F226001FC87C /* libz.dylib */,
@@ -506,12 +488,6 @@
 				4D15A60D16F6A33F001FC87C /* Foundation.framework */,
 				4D15A60B16F6A338001FC87C /* UIKit.framework */,
 				4D15A60416F6A1E3001FC87C /* CFNetwork.framework */,
-				87E7944416391B9E000A0848 /* libavcodec.a */,
-				87E7944516391B9E000A0848 /* libavdevice.a */,
-				87E7944616391B9E000A0848 /* libavformat.a */,
-				87E7944716391B9E000A0848 /* libavutil.a */,
-				87E7944816391B9E000A0848 /* libswresample.a */,
-				87E7944916391B9E000A0848 /* libswscale.a */,
 				27C7EB3516F2C18B00FC247F /* SystemConfiguration.framework */,
 				27C7EB3216F2C17800FC247F /* CoreData.framework */,
 			);
@@ -529,7 +505,6 @@
 				87E7942C1639108E000A0848 /* AppDelegate.m */,
 				87E7942D1639108E000A0848 /* MainViewController.h */,
 				87E7942E1639108E000A0848 /* MainViewController.m */,
-				278EBF6F16F2BF5A000F98D5 /* GoogleAnalytic */,
 				270656AC16DB26B20033034D /* TouchXML */,
 				87E7940316390F6D000A0848 /* Supporting Files */,
 				4DED345D167D6EE600050304 /* LoginControllerViewController.h */,
@@ -566,6 +541,7 @@
 		87FD6177163A75440090956E /* kxmovie */ = {
 			isa = PBXGroup;
 			children = (
+				4D092734188F5C7700C6B10F /* libGoogleAnalyticsServices.a */,
 				87E7941F1639107F000A0848 /* kxmovie.bundle */,
 				87E7946116394577000A0848 /* KxAudioManager.h */,
 				87E7941E1639107F000A0848 /* KxAudioManager.m */,
@@ -699,8 +675,6 @@
 				272DD43316E99373009734A0 /* MenuViewController.xib in Resources */,
 				272DD43816E9D6BE009734A0 /* ChooseQualityViewController.xib in Resources */,
 				272DD43E16E9DF0C009734A0 /* indicator.png in Resources */,
-				4D15A66216F7F1E2001FC87C /* README.md in Resources */,
-				4D15A66316F7F1E2001FC87C /* release_notes.md in Resources */,
 				4DBDCF65174AFF2200549E80 /* SvivaTovaLoginViewController.xib in Resources */,
 				4DBDCF6D174B039000549E80 /* LangSelectorViewController.xib in Resources */,
 				4D1AB18A174C58B3002349BC /* AudioWebViewController.xib in Resources */,
@@ -834,8 +808,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/KxMovieExample\"",
+					"\\\"$(SRCROOT)/libs\\\"",
+					"\\\"$(SRCROOT)/KxMovieExample\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "KxMovieExample copy";
@@ -870,8 +845,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/KxMovieExample\"",
+					"\\\"$(SRCROOT)/libs\\\"",
+					"\\\"$(SRCROOT)/KxMovieExample\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "KxMovieExample copy";
@@ -892,7 +868,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D4A5488F-0142-4755-B254-3EE6520A60EE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "301C91C3-D069-43A7-B2A0-8CDD152CE7F3";
 			};
 			name = Debug;
 		};
@@ -943,9 +919,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/KxMovieExample\"",
-					"\"$(SRCROOT)/../TestFlightSDK1.2.1\"",
+					"\\\\\\\"$(SRCROOT)/libs\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/KxMovieExample\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/../TestFlightSDK1.2.1\\\\\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/libs",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/KxMovieExample",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -987,9 +966,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/KxMovieExample\"",
-					"\"$(SRCROOT)/../TestFlightSDK1.2.1\"",
+					"\\\\\\\"$(SRCROOT)/libs\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/KxMovieExample\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/../TestFlightSDK1.2.1\\\\\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/libs",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/KxMovieExample",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1035,8 +1017,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/../GoogleAnalyticsiOS_2.0beta4/Library\"",
+					"\\\"$(SRCROOT)/libs\\\"",
+					"\\\"$(SRCROOT)/../GoogleAnalyticsiOS_2.0beta4/Library\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -1078,8 +1061,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs\"",
-					"\"$(SRCROOT)/../GoogleAnalyticsiOS_2.0beta4/Library\"",
+					"\\\"$(SRCROOT)/libs\\\"",
+					"\\\"$(SRCROOT)/../GoogleAnalyticsiOS_2.0beta4/Library\\\"",
+					"/Users/igal/Documents/KAB-TV-Mobile-Android/iphone-channel66/Library",
 				);
 				New_Setting = "";
 				OTHER_LDFLAGS = (

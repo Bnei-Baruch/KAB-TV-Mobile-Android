@@ -5,7 +5,7 @@
 //  Created by Igal Avraham on 5/21/13.
 //
 //
-
+#import <SystemConfiguration/CaptiveNetwork.h>
 #import "LangSelectorViewController.h"
 #import "KxMovieViewController.h"
 #import "AudioWebViewController.h"
@@ -14,7 +14,7 @@
 @end
 
 @implementation LangSelectorViewController
-@synthesize mFromActionview;
+@synthesize mFromActionview,mp,mpVC;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -255,20 +255,28 @@
     NSLog(@"LoginControllerViewController: clickedButtonAtIndex");
     NSString *url = @"http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true";
     NSString* keyData = [self getKeyDataFromUrl:url];
+    
+     //parse for langugae and select from streams
+    url = @"http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json";
+    NSDictionary* langjsonData = [self getJsonDataFromUrl:url];
+    
     switch (buttonIndex) {
         case 0:
         {
             //video
             //http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json
             //http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true
-            //parse for langugae and select from streams
-            url = @"http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json";
-            NSDictionary* langjsonData = [self getJsonDataFromUrl:url];
-            
+           
+           
             
             if ([self checkIsActive: keyData])
             {
                 if (langjsonData && keyData) {
+                    
+                    NSString *isHLS = [langjsonData objectForKey:@"HLSSupport"];
+                    
+                    if([isHLS isEqualToString:@"no"])
+                    {
                     NSString *keyToReplace = [self getSecretKeyValueForAsxFile: keyData];
                     NSLog(@"langjsonData = %@, keyJsonData = %@", langjsonData, keyData);
                     NSMutableArray *locales = [[NSMutableArray alloc] init];
@@ -351,6 +359,113 @@
                         [noBrodMessage show];
                     }
                 }
+                else
+                {
+                    NSString *keyToReplace = [self getSecretKeyValueForAsxFile: keyData];
+                    NSLog(@"langjsonData = %@, keyJsonData = %@", langjsonData, keyData);
+                    NSMutableArray *locales = [[NSMutableArray alloc] init];
+                    for( NSDictionary *locale in [langjsonData objectForKey:@"localeHLS"])
+                    {
+                        [locales addObject:[[locale allKeys] objectAtIndex:0]];
+                    }
+                    NSLog(@"Video actionSheet.accessibilityValue = %@", actionSheet.accessibilityValue);
+                    NSString *url_clicked = actionSheet.accessibilityValue;
+                    NSString *asxUrlToPlay;
+                    for(NSString *lang in locales)
+                    {
+                        NSRange range = [url_clicked rangeOfString:lang];
+                        NSLog(@"range.length %d", range.length);
+                        NSLog(@"range.location %d", range.location);
+                        if(range.length  > 0)
+                        {
+                            //find the correct leng in the json
+                            int index =  [locales indexOfObject:lang];
+                            
+                            NSArray *urls = [[[[[[[langjsonData objectForKey:@"localeHLS"] objectAtIndex:index] objectForKey:lang]objectForKey:@"pages"] objectAtIndex:0] objectForKey:@"regular"] objectForKey:@"urls"];
+                            
+                            NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+                            NSString *strQ = [[userD objectForKey:@"quality"] lowercaseString];
+                            
+                            if (urls.count == 1) {
+                                NSDictionary *tempUrls = [urls objectAtIndex:0];
+                                asxUrlToPlay = [tempUrls objectForKey:@"url_value"];
+                            } else {
+                                //need to complete here
+                                int minUrlLength=100;
+                                for( NSDictionary *urlsT  in urls)
+                                {
+                                    NSString *asxUrlToPlayT = [urlsT objectForKey:@"url_value"];
+                                    NSRange urlRange = [asxUrlToPlayT rangeOfString:strQ];
+                                    NSLog(@"urlRange.length %d", urlRange.length);
+                                    NSLog(@"urlRange.location %d", urlRange.location);
+                                    
+                                    
+                                    if ([strQ isEqualToString:@"high"] ) {
+                                        if([[urlsT objectForKey:@"url_quality"] isEqualToString:@"300k"])
+                                            asxUrlToPlay = asxUrlToPlayT;
+                                        
+                                    } else {
+                                        if([[urlsT objectForKey:@"url_quality"] isEqualToString:@"100k"])
+                                            asxUrlToPlay = asxUrlToPlayT;
+                                        }
+                                
+                                        NSLog(@" urlsT = %@", urlsT);
+                                    }
+                            
+                                }
+                            }
+                            
+                        
+                        
+                    }
+                    if (asxUrlToPlay) {
+                        
+                        NSString *urlToPlay = asxUrlToPlay;
+                        NSLog(@"urlToPlay = %@", urlToPlay );
+                        if (urlToPlay) {
+                            //googleAnalytic
+                            NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Video", urlToPlay];
+                            //self.trackedViewName = analyticPrm;
+//                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
+                            self.mpVC = [[MPMoviePlayerViewController alloc] init];// initWithContentURL:URL];
+                            
+                            
+                            if (self.mpVC)
+                            {
+                                [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+                                self.mp = [mpVC moviePlayer];
+                                self.mp.movieSourceType = MPMovieSourceTypeStreaming;
+                                [self.mp setContentURL:[NSURL URLWithString:urlToPlay]];
+                                [self.mp prepareToPlay];
+                                self.mp.fullscreen = YES;
+                                self.mp.allowsAirPlay =YES;
+                                [self.mp prepareToPlay];
+                                self.mp.useApplicationAudioSession = YES;// for audio playing in background. (3.x)
+                                
+                                // Register to receive a notification when the movie has finished playing
+                                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                         selector:@selector(moviePlayBackDidFinish:)
+                                                                             name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                           object:nil];
+                                
+                                ////        CGRect viewInsetRect = CGRectInset ([self.view bounds],0.0, 0.0 );
+                                ////        [[self.mpVC view] setFrame: viewInsetRect ];
+                                ////        [self.view addSubview:self.mpVC.view];
+                                [self presentMoviePlayerViewControllerAnimated:mpVC];
+                                [self.mp play];
+                            }
+                            
+                            //                            [self.navigationController pushViewController:vc animated:YES completion:nil];
+                            //[self.navigationController pushViewController:vc animated:YES];
+                           // [self presentModalViewController:vc animated:YES];
+                            
+                        }
+                    } else { // else show message for unavailble stream
+                        UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Broadcast not avilable, please try later"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+                        [noBrodMessage show];
+                    }
+
+                }
             } else { // is_active = false
                 UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Sorry No Broadcast"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
                 [noBrodMessage show];
@@ -358,14 +473,40 @@
             NSLog(@"Video picked");
             break;
         }
+        }
         case 1:
         {
             if(!mFromActionview)
             {
             if ([self checkIsActive: keyData] )
             {
+                BOOL isTranslationMode = NO;
+                //check if inside a wifi area then use urls for realtime translations otherwise use regualr urls
+                NSDictionary *wifisupport =  [langjsonData valueForKey:@"TranslationWIFISupport"];
+                NSArray * ssid = [wifisupport valueForKey:@"ssid"];
+                NSArray * urls  = [wifisupport valueForKey:@"urls"];
+               
+                
                 NSString *audio = [[NSString alloc]init];
                 audio = @"http://icecast.kab.tv/live1-heb-574bcfd5.mp3";
+                audio = [audio stringByReplacingOccurrencesOfString:@"heb" withString:actionSheet.accessibilityValue];
+                
+                
+                for(NSString *ssidString in ssid)
+                {
+                    if([ssidString isEqualToString:[self currentWifiSSID]])
+                    {
+                    for(NSDictionary *url in urls)
+                    {
+                        
+                        NSString *urlvalue = [url objectForKey:actionSheet.accessibilityValue];
+                    
+                        audio =  urlvalue;
+                        isTranslationMode = YES;
+                        break;
+                    }
+                    }
+                }
                 
                 //googleAnalytic
                 NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Audio", actionSheet];
@@ -375,17 +516,30 @@
                 
                // mWebview = [[UIWebView alloc]init];
                 //[self.tableView addSubview:mWebview];
-                audio = [audio stringByReplacingOccurrencesOfString:@"heb" withString:actionSheet.accessibilityValue];
+                
                // [mWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:audio]]];
-               // KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:audio];
-                AudioWebViewController *vc = [[AudioWebViewController alloc]init];
+                if(isTranslationMode)
+                {
+                KxMovieViewController *ac = [KxMovieViewController movieViewControllerWithContentPath:audio];
+                   
+                    [self.navigationController pushViewController:ac animated:YES];
+                    [ac pause];
+                    [ac play];
+                
+                        
+                }
+                else
+                {
+                AudioWebViewController *ac = [[AudioWebViewController alloc]init];
 //                if(audiocontroller== nil)
 //                    audiocontroller = [[AudioWebViewController alloc]init];
-//                
-//                audiocontroller.delegate = self;
-                [vc setUrl:audio];
+                    ac.delegate = self;
+                    [ac setUrl:audio];
+                    [self.navigationController pushViewController:ac animated:YES];
+
+               }
+               
                 //[self presentViewController:vc animated:YES completion:^{[self loadDone];}];
-                [self.navigationController pushViewController:vc animated:YES];
                 
                 NSLog(@"Audio actionSheet.accessibilityValue = %@", actionSheet.accessibilityValue);
                 NSLog(@"Audio picked");
@@ -405,6 +559,20 @@
     }
 }
 
+-(void) moviePlayBackDidFinish:(NSNotification*)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:nil];
+    
+    NSError *error = [[notification userInfo] objectForKey:@"error"];
+    if (error) {
+        NSLog(@"Did finish with error: %@", error);
+        
+    }
+    
+    self.mp = nil;
+    self.mpVC = nil;
+}
 - (void) dismissAudio
 {
     
@@ -563,5 +731,36 @@
     return res;
 }
 
+
+
+- (id)fetchSSIDInfo
+{
+    NSArray *ifs = (__bridge id)CNCopySupportedInterfaces();
+    NSLog(@"%s: Supported interfaces: %@", __func__, ifs);
+    id info = nil;
+    for (NSString *ifnam in ifs) {
+        info = (__bridge id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        NSLog(@"%s: %@ => %@", __func__, ifnam, info);
+        if (info && [info count]) {
+            break;
+        }
+        
+    }
+ 
+    return info;
+}
+
+- (NSString *)currentWifiSSID {
+    // Does not work on the simulator.
+    NSString *ssid = nil;
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *ifnam in ifs) {
+        NSDictionary *info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        if (info[@"SSID"]) {
+            ssid = info[@"SSID"];
+        }
+    }
+    return ssid;
+}
 
 @end

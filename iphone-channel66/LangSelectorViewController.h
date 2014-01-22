@@ -11,6 +11,9 @@
 #import "CXMLElement.h"
 #import "GAITrackedViewController.h"
 #import "AudioWebViewController.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface LangSelectorViewController : UITableViewController <UITableViewDataSource>
 
@@ -19,7 +22,12 @@
     NSArray * locales;
     Boolean mFromActionview;
    // AudioWebViewController *audiocontroller;
+    MPMoviePlayerController *mp;
+	MPMoviePlayerViewController *mpVC;
 }
+@property (nonatomic, strong) MPMoviePlayerController *mp;
+@property (nonatomic, strong) MPMoviePlayerViewController *mpVC;
+
 
 //@property (retain, nonatomic) AudioWebViewController *audiocontroller;
 @property (nonatomic,assign) Boolean  mFromActionview;

@@ -66,9 +66,9 @@
 //            @"http://santai.tv/vod/test/test_format_1.3gp",
 //            @"http://santai.tv/vod/test/test_format_1.mp4",
         @"http://icecast.kab.tv/heb.mp3",
-        @"mmst://wms1.il.kab.tv/heb",
+       @"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8",
         @"http://icecast.kab.tv/rus.mp3",
-        @"mmst://wms1.il.kab.tv/rus",
+        @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8",
         //@"http://icecast.kab.tv/live1-heb-574bcfd5.mp3"
         
             //@"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov",
@@ -77,9 +77,9 @@
         self.streamNames = [[ NSMutableDictionary alloc]
          init];
         [self.streamNames setObject:@"ערוץ 66 - אודיו" forKey:@"http://icecast.kab.tv/heb.mp3"];
-        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"mmst://wms1.il.kab.tv/heb"];
+        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8"];
         [self.streamNames setObject:@"Канал 66 - Русском Аудио" forKey:@"http://icecast.kab.tv/rus.mp3"];
-        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"mmst://wms1.il.kab.tv/rus"];
+        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8"];
         
     }
     
@@ -283,78 +283,18 @@
     if (indexPath.section == 0) {
         
         
-        if( video && quality)
-            path = [path stringByAppendingString:@"_medium"];
-        
+        if( video && !quality)
+            path = [path stringByReplacingOccurrencesOfString:@"medium" withString:@"high"];
+//
         
     }
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"Channel 66", path];
     //googleAnalytic
-    self.trackedViewName = analyticPrm;
-    if(video)
-    {
-        KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path];
-        [self presentViewController:vc animated:YES completion:nil];
-    }
-    else
-    {
-        //AudioWebViewController *vc =[[AudioWebViewController alloc]init];
-        //[vc setUrl:path];
+    self.screenName = analyticPrm;
+
         [self playFromURL:[NSURL URLWithString:path]]; // to save memory
-        //[self presentViewController:vc animated:YES completion:nil];
-    }
-    
-    //[self.navigationController pushViewController:vc animated:YES];
 }
 
-/* OLD:
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
-    NSString *path;
-    
-    if (indexPath.section == 0) {
-        
-        path = _remoteMovies[indexPath.row];
-        
-        // TODO: this is temp, should build a wise mechanism:
-        NSRange isAudioStream = [path rangeOfString:@"mp3"]; // use localization
-        NSRange isHebrewStream = [path rangeOfString:@"heb"]; // use localization
-        NSRange isRussiantream = [path rangeOfString:@"rus"]; // use localization
-        
-        if (isAudioStream.length && isHebrewStream.length) {
-            [self playFromURL:[NSURL URLWithString:path]];
-            return;
-        }
-        else if (isAudioStream.length && isRussiantream.length) {
-            [self playFromURL:[NSURL URLWithString:path]];
-            return;
-        }
-        
-        
-        
-        //unused: NSRange range = [path rangeOfString:@"mp3"];
-        Boolean video = [path rangeOfString:@"mp3"].length==0;
-        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"quality"] isKindOfClass:[NSString class]]) {
-            Boolean quality = [[[NSUserDefaults standardUserDefaults] valueForKey:@"quality"] isEqualToString:@"Medium"];
-            //if( video && quality)
-            //path = [path stringByAppendingString:@"_medium"];
-        }
-        
-        
-    }
-    NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"Channel 66", path];
-    //googleAnalytic
-    self.trackedViewName = analyticPrm;
-    
-    KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path];
-    [self presentViewController:vc animated:YES completion:nil];
-    //[self.navigationController pushViewController:vc animated:YES];
-}
-*/
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -403,6 +343,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:nil];
+    NSError *error = [[notification userInfo] objectForKey:@"error"];
+    if (error) {
+        NSLog(@"Did finish with error: %@", error);
+        UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Sorry No Broadcast"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+        [noBrodMessage show];
+        
+    }
     self.mp = nil;
     self.mpVC = nil;
 }

@@ -952,8 +952,8 @@ static NSMutableDictionary * gHistory;
     
     NSTimeInterval destTime = _startTime + _moviePosition + interval;
     NSTimeInterval diffTime = destTime - [NSDate timeIntervalSinceReferenceDate];
-    diffTime = MAX(diffTime, 0.02);
-    NSLog(@"next tick %f", diffTime);
+    diffTime = MIN(diffTime, 0.02);
+   // NSLog(@"next tick %f", diffTime);
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, diffTime * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self tick];
@@ -1049,6 +1049,8 @@ static NSMutableDictionary * gHistory;
     if (_disableUpdateHUD)
         return;
     
+   // NSLog(@"_hiddenHUD: %s", _hiddenHUD?"true":"false");
+ 
     CGFloat duration = _decoder.duration;
     if (_progressSlider.state == UIControlStateNormal)
         _progressSlider.value = _moviePosition / duration;
@@ -1072,7 +1074,7 @@ static NSMutableDictionary * gHistory;
     _hiddenHUD = !show;    
     _panGestureRecognizer.enabled = _hiddenHUD;
     
-    //[[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
+   // [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
     
     [UIView animateWithDuration:0.2
                           delay:0.0
