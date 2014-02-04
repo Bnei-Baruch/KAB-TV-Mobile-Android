@@ -1,7 +1,9 @@
 package com.kab.channel66;
 
-import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
-import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+
+import io.vov.vitamio.LibsChecker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,6 +72,9 @@ public class StreamListActivity extends BaseListActivity {
 	public void onCreate(Bundle icicle) {
 	    super.onCreate(icicle);
 	    
+	    if (!LibsChecker.checkVitamioLibs(this))
+			return;
+	    /*
         try {
         	
         	
@@ -125,7 +130,7 @@ public class StreamListActivity extends BaseListActivity {
 			chooseToInstall.show();
 			e.printStackTrace();
 		}
-	    
+	    */
 	    ArrayList<String> channels = new ArrayList<String>();
 	    channels = getIntent().getStringArrayListExtra("channel");
 	    ArrayList<String> description = new ArrayList<String>();

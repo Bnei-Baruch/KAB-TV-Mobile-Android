@@ -8,9 +8,9 @@ package com.kab.channel66;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
+import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
-
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -67,10 +71,17 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 	private MediaController mMediaController;
 	private ProgressDialog progress;
 	private WakeLock mWakeLock;
+	private SurfaceHolder holder;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		
+		 if (!LibsChecker.checkVitamioLibs(this))
+				return;
+		
+			
+		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "My Tag");
 		mWakeLock.acquire();
@@ -85,6 +96,9 @@ public class VideoPlayerActivity extends Activity implements OnCompletionListene
 
 		setContentView(R.layout.videoview);
 		mVideoView = (com.kab.channel66.VideoView) findViewById(R.id.surface_view);
+		holder = mVideoView.getHolder();
+		//holder.addCallback( this);
+		holder.setFormat(PixelFormat.RGBA_8888);  
 		mVolumeBrightnessLayout = findViewById(R.id.operation_volume_brightness);
 		mOperationBg = (ImageView) findViewById(R.id.operation_bg);
 		mOperationPercent = (ImageView) findViewById(R.id.operation_percent);

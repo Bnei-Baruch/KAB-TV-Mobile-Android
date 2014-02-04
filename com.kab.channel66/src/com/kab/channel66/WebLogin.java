@@ -16,7 +16,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -24,27 +23,37 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.LangUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.apphance.android.Apphance;
-
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.myjson.Gson;
+import com.google.myjson.JsonObject;
+import com.google.myjson.JsonParseException;
 import com.kab.channel66.R;
 import com.parse.Parse;
 import com.parse.PushService;
 
-import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
-import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+
+
+
+
+
+
+import io.vov.vitamio.LibsChecker;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
 import io.vov.vitamio.widget.VideoView;
 import android.R.string;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PowerManager;
-
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.annotation.SuppressLint;
@@ -61,8 +70,15 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+
+
+
+
+
+
 //import android.util.Log;
 import com.apphance.android.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -83,6 +99,7 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
 	private WebView mLoginwebView;
 	private WebViewClient mClient;
 	private Events events;
+	private String TranslationInfoString;
 	private int status = 0;
 	private ProgressDialog myProgressDialog = null;
 	private StreamAvailabilityChecker myChecker = null;
@@ -120,7 +137,8 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
 //	    Apphance.setReportOnShakeEnabled(true);
 //        System.setProperty("http.keepAlive", "false");
 //
-        
+        if (!LibsChecker.checkVitamioLibs(this))
+			return;
         PushService.subscribe(this, "", WebLogin.class);
         PushService.setDefaultPushCallback(this, WebLogin.class);
         
@@ -387,13 +405,52 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
          	    				  Intent player = new Intent(Intent.ACTION_VIEW,uri);
          	    				 
           	    				  player.setDataAndType(uri, "audio/*");
-        	    				   //player.putExtra("path", url.toString());
-        	    				  // player.putExtra("type", "audio/*");
-        	        	    		//startActivity(player);
-        	        	    		
+        	    				 
+          	    				  
+          	    				  
+          	    				  //check if translations audio is needed
+          	    				  //what wifi are we in?
+          	    				 WifiManager mainWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+          	    			    WifiInfo currentWifi = mainWifi.getConnectionInfo();
+          	    				String ssid = currentWifi.getSSID();
+          	    				String urlTrans= null;
+          	    				try {	
+          	    				
+          	    				JSONObject TranslationJsonObj = new JSONObject(TranslationInfoString);
+          	    				JSONArray ssidArray;
+								
+									ssidArray = TranslationJsonObj.getJSONArray("ssid");
+								 
+									for(int count=0;count<ssidArray.length();count++)
+									{
+										if(ssidArray.get(count).equals(ssid))
+										{
+											JSONArray array = TranslationJsonObj.getJSONArray("urls");
+											
+											 for (int i=0;i< array.length();i++) {
+												 JSONObject URLO =  (JSONObject)array.get(i);
+												 String key = URLO.keys().next().toString();
+												
+												 if(url.contains(key))
+												 {
+													 urlTrans = URLO.getString(key);
+													break;
+												 }
+													
+											}
+										}
+									}
+          	    				}
+          	    				catch (JSONException e)
+          	    				{
+          	    					android.util.Log.e("Parse","Failed to parse json of translation");
+          	    					e.printStackTrace();
+          	    				}
+          	    				
+          	    				
         	        	    		//background audio player
         	        	    		 svc=new Intent(WebLogin.this, BackgroundPlayer.class);
-        	        		    	 svc.putExtra("audioUrl", url);
+        	        		    	 svc.putExtra("audioUrl", urlTrans!=null?urlTrans:url);
         	        		    	 svc.putExtra("sviva", true);
         	        	            startService(svc);
         	        	            playDialog = new Dialog(WebLogin.this);
@@ -768,6 +825,7 @@ public void onResume()
 			time_stamp = returned_Val.getString("time_stamp");
 			isUpdate = returned_Val.getString("updateandlock");
 			version = returned_Val.getString("version");
+			TranslationInfoString = returned_Val.getString("TranslationWIFISupport");
 			
 			if(isUpdate.equalsIgnoreCase("true"))
 			{
@@ -807,6 +865,7 @@ public void onResume()
      events.parse();
      
      ///
+     /*
        try {
      	
      	
@@ -862,6 +921,7 @@ public void onResume()
 			chooseToInstall.show();
 			e.printStackTrace();
 		}
+		*/
 		if(status!=0)
 		{
 				mLoginwebView.setWebViewClient(mClient);

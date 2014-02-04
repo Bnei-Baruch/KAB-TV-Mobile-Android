@@ -1,7 +1,9 @@
 package com.kab.channel66;
 
-import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
-import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+
+import io.vov.vitamio.LibsChecker;
 
 import java.io.IOException;
 
@@ -37,6 +39,7 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 	private static final int NOTIFICATION_ID = 0;
 	private CallStateListener calllistener;
 	private  io.vov.vitamio.MediaPlayer mediaPlayer;
+	
 	NotificationManager mNM;
 	Thread thread;
 	StreamProxy sp; //adding streamproxy to solve audio failure of some devices before ics - http://stackoverflow.com/questions/9840523/mediaplayer-streams-mp3-in-emulator-but-not-on-device
@@ -56,21 +59,21 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 			return 1;
 		
 		
-		int sdkVersion = 0;
-	    try {
-	      sdkVersion = Integer.parseInt(Build.VERSION.SDK);
-	    } catch (NumberFormatException e) { }
-
-		if ( sdkVersion <= 10) {
-		      if (sp == null) {
-		        sp = new StreamProxy();
-		        sp.init();
-		        sp.start();
-		      }
-		      String proxyUrl = String.format("http://127.0.0.1:%d/%s",
-			          sp.getPort(), url);
-		      url = proxyUrl;
-		    }
+//		int sdkVersion = 0;
+//	    try {
+//	      sdkVersion = Integer.parseInt(Build.VERSION.SDK);
+//	    } catch (NumberFormatException e) { }
+//
+//		if ( sdkVersion <= 10) {
+//		      if (sp == null) {
+//		        sp = new StreamProxy();
+//		        sp.init();
+//		        sp.start();
+//		      }
+//		      String proxyUrl = String.format("http://127.0.0.1:%d/%s",
+//			          sp.getPort(), url);
+//		      url = proxyUrl;
+//		    }
 
 
 		String songName;
@@ -113,15 +116,15 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 		//String url = "http://icecast.kab.tv/heb.mp3"; // your URL here
 		
 //		 mediaPlayer = new MediaPlayer();
-		try {
+		//try {
 			mediaPlayer = new io.vov.vitamio.MediaPlayer(this);
-		} catch (VitamioNotCompatibleException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (VitamioNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		} catch (VitamioNotCompatibleException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (VitamioNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		//mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //		mediaPlayer.setOnBufferingUpdateListener(new OnBufferingUpdateListener() {
 //			

@@ -9,7 +9,7 @@ import com.kab.channel66.R;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnErrorListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
-import io.vov.vitamio.MediaPlayer.OnSubtitleUpdateListener;
+//import io.vov.vitamio.MediaPlayer.OnSubtitleUpdateListener;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
@@ -88,16 +88,16 @@ public class VideoViewDemo extends Activity {
 //				
 //			}
 //		});
-		mVideoView.setOnSubtitleUpdateListener(new OnSubtitleUpdateListener() {
-			
-			public void onSubtitleUpdate(String arg0) {
-				Log.i("VitamioDemo", arg0);
-			}
-
-			
-			public void onSubtitleUpdate(byte[] arg0, int arg1, int arg2) {
-			}
-		});
+//		mVideoView.setOnSubtitleUpdateListener(new OnSubtitleUpdateListener() {
+//			
+//			public void onSubtitleUpdate(String arg0) {
+//				Log.i("VitamioDemo", arg0);
+//			}
+//
+//			
+//			public void onSubtitleUpdate(byte[] arg0, int arg1, int arg2) {
+//			}
+//		});
 		//mVideoView.setMediaController(new MediaController(this));
 		mVideoView.requestFocus();
 	}

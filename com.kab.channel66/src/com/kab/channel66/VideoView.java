@@ -12,10 +12,10 @@ import io.vov.vitamio.MediaPlayer.OnErrorListener;
 import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnSeekCompleteListener;
-import io.vov.vitamio.MediaPlayer.OnSubtitleUpdateListener;
+//import io.vov.vitamio.MediaPlayer.OnSubtitleUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
-import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
-import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotCompatibleException;
+//import io.vov.vitamio.VitamioInstaller.VitamioNotFoundException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 	private OnPreparedListener mOnPreparedListener;
 	private OnErrorListener mOnErrorListener;
 	private OnSeekCompleteListener mOnSeekCompleteListener;
-	private OnSubtitleUpdateListener mOnSubtitleUpdateListener;
+	//private OnSubtitleUpdateListener mOnSubtitleUpdateListener;
 	private OnInfoListener mOnInfoListener;
 	private OnBufferingUpdateListener mOnBufferingUpdateListener;
 	private int mCurrentBufferPercentage;
@@ -211,15 +211,15 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 		try {
 			mDuration = -1;
 			mCurrentBufferPercentage = 0;
-			try {
+//			try {
 				mMediaPlayer = new MediaPlayer(mContext);
-			} catch (VitamioNotCompatibleException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (VitamioNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			} catch (VitamioNotCompatibleException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (VitamioNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			mMediaPlayer.setOnPreparedListener(mPreparedListener);
 			mMediaPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);
 			mMediaPlayer.setOnCompletionListener(mCompletionListener);
@@ -227,7 +227,7 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 			mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
 			mMediaPlayer.setOnInfoListener(mInfoListener);
 			mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
-			mMediaPlayer.setOnSubtitleUpdateListener(mSubtitleUpdateListener);
+			//mMediaPlayer.setOnSubtitleUpdateListener(mSubtitleUpdateListener);
 			mMediaPlayer.setDataSource(mContext, mUri);
 			mMediaPlayer.setDisplay(mSurfaceHolder);
 			mMediaPlayer.setScreenOnWhilePlaying(true);
@@ -397,21 +397,21 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 		}
 	};
 
-	private OnSubtitleUpdateListener mSubtitleUpdateListener = new OnSubtitleUpdateListener() {
-		@Override
-		public void onSubtitleUpdate(byte[] pixels, int width, int height) {
-			//log.i("onSubtitleUpdate: bitmap subtitle, %dx%d", width, height);
-			if (mOnSubtitleUpdateListener != null)
-				mOnSubtitleUpdateListener.onSubtitleUpdate(pixels, width, height);
-		}
-
-		@Override
-		public void onSubtitleUpdate(String text) {
-			//log.i("onSubtitleUpdate: %s", text);
-			if (mOnSubtitleUpdateListener != null)
-				mOnSubtitleUpdateListener.onSubtitleUpdate(text);
-		}
-	};
+//	private OnSubtitleUpdateListener mSubtitleUpdateListener = new OnSubtitleUpdateListener() {
+//		@Override
+//		public void onSubtitleUpdate(byte[] pixels, int width, int height) {
+//			//log.i("onSubtitleUpdate: bitmap subtitle, %dx%d", width, height);
+//			if (mOnSubtitleUpdateListener != null)
+//				mOnSubtitleUpdateListener.onSubtitleUpdate(pixels, width, height);
+//		}
+//
+//		@Override
+//		public void onSubtitleUpdate(String text) {
+//			//log.i("onSubtitleUpdate: %s", text);
+//			if (mOnSubtitleUpdateListener != null)
+//				mOnSubtitleUpdateListener.onSubtitleUpdate(text);
+//		}
+//	};
 
 	public void setOnPreparedListener(OnPreparedListener l) {
 		mOnPreparedListener = l;
@@ -433,9 +433,9 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 		mOnSeekCompleteListener = l;
 	}
 
-	public void setOnSubtitleUpdateListener(OnSubtitleUpdateListener l) {
-		mOnSubtitleUpdateListener = l;
-	}
+//	public void setOnSubtitleUpdateListener(OnSubtitleUpdateListener l) {
+//		mOnSubtitleUpdateListener = l;
+//	}
 
 	public void setOnInfoListener(OnInfoListener l) {
 		mOnInfoListener = l;
@@ -649,11 +649,11 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 		return null;
 	}
 
-	public HashMap<String, Integer> getAudioTrackMap(String encoding) {
-		if (mMediaPlayer != null)
-			return mMediaPlayer.getAudioTrackMap(encoding);
-		return null;
-	}
+//	public HashMap<String, Integer> getAudioTrackMap(String encoding) {
+//		if (mMediaPlayer != null)
+//			return mMediaPlayer.getAudioTrackMap(encoding);
+//		return null;
+//	}
 
 	public int getAudioTrack() {
 		if (mMediaPlayer != null)
@@ -661,54 +661,54 @@ public class VideoView extends SurfaceView implements  MediaPlayerControl {
 		return -1;
 	}
 
-	public void setAudioTrack(int audioIndex) {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setAudioTrack(audioIndex);
-	}
-
-	public void setSubShown(boolean shown) {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setSubShown(shown);
-	}
-
-	public void setSubEncoding(String encoding) {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setSubEncoding(encoding);
-	}
-
-	public int getSubLocation() {
-		if (mMediaPlayer != null)
-			return mMediaPlayer.getSubLocation();
-		return -1;
-	}
-
-	public void setSubPath(String subPath) {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setSubPath(subPath);
-	}
-
-	public String getSubPath() {
-		if (mMediaPlayer != null)
-			return mMediaPlayer.getSubPath();
-		return null;
-	}
-
-	public void setSubTrack(int trackId) {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setSubTrack(trackId);
-	}
-
-	public int getSubTrack() {
-		if (mMediaPlayer != null)
-			return mMediaPlayer.getSubTrack();
-		return -1;
-	}
-
-	public HashMap<String, Integer> getSubTrackMap(String encoding) {
-		if (mMediaPlayer != null)
-			return mMediaPlayer.getSubTrackMap(encoding);
-		return null;
-	}
+//	public void setAudioTrack(int audioIndex) {
+//		if (mMediaPlayer != null)
+//			mMediaPlayer.setAudioTrack(audioIndex);
+//	}
+//
+//	public void setSubShown(boolean shown) {
+//		if (mMediaPlayer != null)
+//			mMediaPlayer.setSubShown(shown);
+//	}
+//
+//	public void setSubEncoding(String encoding) {
+//		if (mMediaPlayer != null)
+//			mMediaPlayer.setSubEncoding(encoding);
+//	}
+//
+//	public int getSubLocation() {
+//		if (mMediaPlayer != null)
+//			return mMediaPlayer.getSubLocation();
+//		return -1;
+//	}
+//
+//	public void setSubPath(String subPath) {
+//		if (mMediaPlayer != null)
+//			mMediaPlayer.setSubPath(subPath);
+//	}
+//
+//	public String getSubPath() {
+//		if (mMediaPlayer != null)
+//			return mMediaPlayer.getSubPath();
+//		return null;
+//	}
+//
+//	public void setSubTrack(int trackId) {
+//		if (mMediaPlayer != null)
+//			mMediaPlayer.setSubTrack(trackId);
+//	}
+//
+//	public int getSubTrack() {
+//		if (mMediaPlayer != null)
+//			return mMediaPlayer.getSubTrack();
+//		return -1;
+//	}
+//
+//	public HashMap<String, Integer> getSubTrackMap(String encoding) {
+//		if (mMediaPlayer != null)
+//			return mMediaPlayer.getSubTrackMap(encoding);
+//		return null;
+//	}
 
 	protected boolean isInPlaybackState() {
 		return (mMediaPlayer != null && mCurrentState != STATE_ERROR && mCurrentState != STATE_IDLE && mCurrentState != STATE_PREPARING);
