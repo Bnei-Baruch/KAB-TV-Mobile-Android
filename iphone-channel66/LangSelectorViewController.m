@@ -499,11 +499,17 @@
                     for(NSDictionary *url in urls)
                     {
                         
-                        NSString *urlvalue = [url objectForKey:actionSheet.accessibilityValue];
                     
+                        NSString *urlvalue = [url objectForKey:actionSheet.accessibilityValue];
+                        if(urlvalue==nil)
+                            continue;
+                        else
+                        {
+                           
                         audio =  urlvalue;
                         isTranslationMode = YES;
                         break;
+                        }
                     }
                     }
                 }
