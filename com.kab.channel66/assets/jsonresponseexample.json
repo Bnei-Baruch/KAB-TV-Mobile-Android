@@ -1,7 +1,7 @@
 {
     "locale": [
         {
-            "he": {
+            "heb": {
                 "pages": [
                     {
                         "regular": {
@@ -41,7 +41,7 @@
             }
         },
         {
-            "en": {
+            "eng": {
                 "pages": [
                     {
                         "regular": {
@@ -188,7 +188,7 @@
     ],
     "localeHLS": [
         {
-            "he": {
+            "heb": {
                 "pages": [
                     {
                         "regular": {
@@ -224,7 +224,7 @@
             }
         },
         {
-            "en": {
+            "eng": {
                 "pages": [
                     {
                         "regular": {
@@ -390,6 +390,6 @@
     "version": "0.9",
     "server_url": "http://player.kbb1.com/api/",
     "HLSSupport": "yes",
-    "TranslationWIFISupport": {"ssid":[ "BB","Bezeq_69acd7","test"], "urls":[{"heb":"rtsp://bmd3.bbdomain.org:20101/heb"},{"rus":"rtsp://bmd3.bbdomain.org:20303/rus"},{"eng":"rtsp://bmd3.bbdomain.org:20202/eng"},{"ita":"rtsp://bmd3.bbdomain.org:20606/ita"},{"spa":"rtsp://bmd3.bbdomain.org:20404/spa"},{"fra":"rtsp://bmd3.bbdomain.org:20505/fra"},{"ger":"rtsp://bmd3.bbdomain.org:20707/ger"}]}
+    "TranslationWIFISupport": {"ssid":[ "BB1","Bezeq_69acd7","test"], "urls":[{"heb":"rtsp://bmd3.bbdomain.org:20101/heb"},{"rus":"rtsp://bmd3.bbdomain.org:20303/rus"},{"eng":"rtsp://bmd3.bbdomain.org:20202/eng"},{"ita":"rtsp://bmd3.bbdomain.org:20606/ita"},{"spa":"rtsp://bmd3.bbdomain.org:20404/spa"},{"fra":"rtsp://bmd3.bbdomain.org:20505/fra"},{"ger":"rtsp://bmd3.bbdomain.org:20707/ger"}]}
     
 }

@@ -14,6 +14,10 @@ public class BaseActivity extends Activity {
 	public void onResume()
 	{
 		super.onResume();
+		checkConnectivity();
+	}
+	public boolean checkConnectivity()
+	{
 		Dialog blockApp;
 		boolean state;
 		if(!(state = isOnline(BaseActivity.this)))
@@ -31,7 +35,10 @@ public class BaseActivity extends Activity {
 		    
 		    
 		     .show();
+			
+			return false;
 		}
+		return true;
 	}
 	 public boolean isOnline(Context context) { 
 		    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);    

@@ -15,14 +15,18 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.location.GpsStatus.NmeaListener;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -32,8 +36,9 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.ViewDebug.FlagToString;
+import android.widget.Toast;
 
-public class BackgroundPlayer extends Service implements OnPreparedListener,OnBufferingUpdateListener,CallStateInterface{
+public class BackgroundPlayer extends BaseService implements OnPreparedListener,OnBufferingUpdateListener,CallStateInterface{
 
 	TelephonyManager telephony;
 	private static final int NOTIFICATION_ID = 0;
@@ -47,33 +52,25 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 	public int onStartCommand(Intent intent, int flags, int startId) 
 	{
 		
+		super.onStartCommand(intent, flags, startId);
 		telephony = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE); //TelephonyManager object  
 		calllistener = new CallStateListener(this); 
+		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
        if(intent==null)
        {
-    	   //defaulting to channel 66
+    	   //no intent recevied defaulting to channel 66
     	   
+    	   mNM.cancel(NOTIFICATION_ID);
+    	   return START_NOT_STICKY;
        }
         String url = intent.getStringExtra("audioUrl");
 		if(url==null)
-			return 1;
+		{
+			mNM.cancel(NOTIFICATION_ID);
+			return START_NOT_STICKY;
+		}
 		
-		
-//		int sdkVersion = 0;
-//	    try {
-//	      sdkVersion = Integer.parseInt(Build.VERSION.SDK);
-//	    } catch (NumberFormatException e) { }
-//
-//		if ( sdkVersion <= 10) {
-//		      if (sp == null) {
-//		        sp = new StreamProxy();
-//		        sp.init();
-//		        sp.start();
-//		      }
-//		      String proxyUrl = String.format("http://127.0.0.1:%d/%s",
-//			          sp.getPort(), url);
-//		      url = proxyUrl;
-//		    }
 
 
 		String songName;
@@ -107,9 +104,8 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 		
 		startForeground(NOTIFICATION_ID, notification);
 		
-		 mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
-		mNM.notify(NOTIFICATION_ID, notification);
+		 
+		
 		
 
 		
@@ -153,10 +149,7 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 		}
 
 		
-		 //mediaPlayer.reset();
-		//mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		//mediaPlayer.setOnPreparedListener(this);
-//		mediaPlayer.prepareAsync();
+		
 		try {
 			mediaPlayer.prepare();
 		} catch (IllegalStateException e) {
@@ -168,38 +161,9 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 		}
 		mediaPlayer.start();
 		
-//		
-//		
-//		Thread thread = new Thread()
-//		{
-//		    @Override
-//		    public void run() {
-//		    	try {
-//		    		
-//					mediaPlayer.setDataSource(url);
-//					
-//					mediaPlayer.setOnPreparedListener(BackgroundPlayer.this);
-//					mediaPlayer.prepareAsync();
-//				} catch (IllegalArgumentException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (SecurityException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (IllegalStateException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//				
-//		    }
-//		};
-//		
-//		thread.start();
-		return startId;
+		mNM.notify(NOTIFICATION_ID, notification);
+
+		return START_REDELIVER_INTENT;
 		
 		
 		
@@ -253,8 +217,27 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 	public void onCreate() {
 
 	    super.onCreate();
-	       
+	    registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) ;  
 	}
+	
+	 private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
+	        public void onReceive(Context context, Intent intent) {
+	            boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+	            String reason = intent.getStringExtra(ConnectivityManager.EXTRA_REASON);
+	            boolean isFailover = intent.getBooleanExtra(ConnectivityManager.EXTRA_IS_FAILOVER, false);
+
+	            NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+	            NetworkInfo otherNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO);
+
+	            if(currentNetworkInfo.isConnected()){
+	                //Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+	            }else{
+	                Toast.makeText(getApplicationContext(), "Lost data connection", Toast.LENGTH_LONG).show();
+	                BackgroundPlayer.this.mediaPlayer.stop();
+	                BackgroundPlayer.this.stopSelf();
+	            }
+	        }
+	    };
 	@Override
 	public void onStart(Intent intent, int startId) {
 
@@ -274,10 +257,11 @@ public class BackgroundPlayer extends Service implements OnPreparedListener,OnBu
 	public void onDestroy() {
 
 	    super.onDestroy();
-	   
+	    unregisterReceiver(mConnReceiver);
 	    if (mediaPlayer != null)
 	    {
 	    	mediaPlayer.stop();
+	    	mediaPlayer.reset();
 	    	mediaPlayer.release();
 	    	mediaPlayer = null;
 	    	if(sp!=null)

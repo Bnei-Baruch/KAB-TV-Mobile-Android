@@ -3,6 +3,7 @@ package com.kab.channel66;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.kab.channel66.R;
+import com.kab.channel66.utils.CommonUtils;
 import com.parse.Parse;
 
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
+
 import com.bugsense.trace.BugSenseHandler; 
 
 public class SplashScreen extends Activity {
@@ -78,6 +80,7 @@ public void onStart() {
    // The rest of your onStart() code.
   EasyTracker.getInstance().setContext(this.getApplicationContext());
   EasyTracker.getInstance().activityStart(this);
+  
  
 }
 

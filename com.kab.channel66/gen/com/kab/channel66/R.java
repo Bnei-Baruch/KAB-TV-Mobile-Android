@@ -39,34 +39,45 @@ public final class R {
         public static final int mediacontroller_seekbar02=0x7f02000e;
         public static final int mediacontroller_seekbar_thumb=0x7f02000f;
         public static final int splash=0x7f020010;
-        public static final int video_back=0x7f020011;
-        public static final int video_brightness_bg=0x7f020012;
-        public static final int video_file=0x7f020013;
-        public static final int video_num_bg=0x7f020014;
-        public static final int video_num_front=0x7f020015;
-        public static final int video_online=0x7f020016;
-        public static final int video_volumn_bg=0x7f020017;
+        public static final int system_help=0x7f020011;
+        public static final int video_back=0x7f020012;
+        public static final int video_brightness_bg=0x7f020013;
+        public static final int video_file=0x7f020014;
+        public static final int video_num_bg=0x7f020015;
+        public static final int video_num_front=0x7f020016;
+        public static final int video_online=0x7f020017;
+        public static final int video_volumn_bg=0x7f020018;
     }
     public static final class id {
-        public static final int Autocheck=0x7f090014;
-        public static final int KL_ST_android=0x7f09000d;
+        public static final int Autocheck=0x7f09001d;
+        public static final int KL_ST_android=0x7f090015;
+        public static final int btn_ask=0x7f090014;
         public static final int btn_login=0x7f090005;
-        public static final int channel66=0x7f090013;
+        public static final int channel66=0x7f09001b;
+        public static final int et_from=0x7f090011;
+        public static final int et_name=0x7f09000f;
         public static final int et_pw=0x7f090004;
+        public static final int et_question=0x7f090013;
         public static final int et_un=0x7f090002;
-        public static final int login=0x7f090015;
-        public static final int mediacontroller_file_name=0x7f09000b;
+        public static final int from=0x7f090010;
+        public static final int login=0x7f09001e;
+        public static final int mediacontroller_ask=0x7f090008;
+        public static final int mediacontroller_file_name=0x7f09000c;
         public static final int mediacontroller_play_pause=0x7f090007;
-        public static final int mediacontroller_seekbar=0x7f09000a;
-        public static final int mediacontroller_time_current=0x7f090008;
-        public static final int mediacontroller_time_total=0x7f090009;
-        public static final int operation_bg=0x7f090010;
-        public static final int operation_full=0x7f090011;
-        public static final int operation_percent=0x7f090012;
-        public static final int operation_volume_brightness=0x7f09000f;
-        public static final int surface=0x7f09000c;
-        public static final int surface_view=0x7f09000e;
-        public static final int sviva=0x7f090016;
+        public static final int mediacontroller_seekbar=0x7f09000b;
+        public static final int mediacontroller_time_current=0x7f090009;
+        public static final int mediacontroller_time_total=0x7f09000a;
+        public static final int name=0x7f09000e;
+        public static final int operation_bg=0x7f090018;
+        public static final int operation_full=0x7f090019;
+        public static final int operation_percent=0x7f09001a;
+        public static final int operation_volume_brightness=0x7f090017;
+        public static final int quality=0x7f09001c;
+        public static final int question=0x7f090012;
+        public static final int questions=0x7f090020;
+        public static final int surface=0x7f09000d;
+        public static final int surface_view=0x7f090016;
+        public static final int sviva=0x7f09001f;
         public static final int tv_error=0x7f090006;
         public static final int tv_pw=0x7f090003;
         public static final int tv_un=0x7f090001;
@@ -77,13 +88,15 @@ public final class R {
         public static final int login=0x7f030001;
         public static final int mediacontroller=0x7f030002;
         public static final int mediaplayer=0x7f030003;
-        public static final int splash=0x7f030004;
-        public static final int videoview=0x7f030005;
+        public static final int questions=0x7f030004;
+        public static final int splash=0x7f030005;
+        public static final int videoview=0x7f030006;
     }
     public static final class menu {
         public static final int activity_web_login=0x7f080000;
         public static final int streamoptionmenu=0x7f080001;
         public static final int streamoptionmenu_activated=0x7f080002;
+        public static final int video_menu=0x7f080003;
     }
     public static final class string {
         public static final int VideoView_error_button=0x7f04000a;
@@ -91,7 +104,7 @@ public final class R {
         public static final int VideoView_error_text_unknown=0x7f040009;
         public static final int VideoView_error_title=0x7f040007;
         public static final int app_name=0x7f040001;
-        public static final int autocheck=0x7f04000f;
+        public static final int autocheck=0x7f040011;
         public static final int channel66=0x7f04000d;
         /** Replace placeholder ID with your tracking ID
          */
@@ -100,7 +113,9 @@ public final class R {
         public static final int login=0x7f04000c;
         public static final int mediacontroller_play_pause=0x7f04000b;
         public static final int menu_settings=0x7f040004;
-        public static final int sviva=0x7f04000e;
+        public static final int quality=0x7f04000e;
+        public static final int questions=0x7f04000f;
+        public static final int sviva=0x7f040010;
         public static final int title_activity_web_login=0x7f040005;
         public static final int version_name=0x7f040002;
         public static final int vitamio_theme_app_name=0x7f040006;

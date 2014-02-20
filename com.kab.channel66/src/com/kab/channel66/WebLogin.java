@@ -33,8 +33,12 @@ import com.google.myjson.Gson;
 import com.google.myjson.JsonObject;
 import com.google.myjson.JsonParseException;
 import com.kab.channel66.R;
+import com.kab.channel66.utils.CommonUtils;
 import com.parse.Parse;
 import com.parse.PushService;
+
+
+
 
 
 
@@ -52,6 +56,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -76,6 +82,9 @@ import android.content.res.Resources;
 
 
 
+
+
+
 //import android.util.Log;
 import com.apphance.android.Log;
 
@@ -94,6 +103,7 @@ import android.widget.Toast;
 
 
 
+@SuppressLint("NewApi")
 public class WebLogin extends BaseActivity implements WebCallbackInterface {
 
 	private WebView mLoginwebView;
@@ -137,6 +147,8 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
 //	    Apphance.setReportOnShakeEnabled(true);
 //        System.setProperty("http.keepAlive", "false");
 //
+        CommonUtils.RemoveOldPlugin(this);
+        
         if (!LibsChecker.checkVitamioLibs(this))
 			return;
         PushService.subscribe(this, "", WebLogin.class);
@@ -150,6 +162,8 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
     	   @Override
     	   public void onReceivedError (WebView view, int errorCode, String description, String failingUrl)
     	   {
+    		   if(!checkConnectivity())
+    			   return;
     		   status = errorCode; //spome error occured
     		   //check if active and if logged in then suggest user to play the last know stream
     		   AlertDialog.Builder alert1 = new AlertDialog.Builder(WebLogin.this);                 
@@ -385,6 +399,7 @@ public class WebLogin extends BaseActivity implements WebCallbackInterface {
    	    						 }
    	    						 EasyTracker.getTracker().trackEvent("web login", "lang", keyset.toArray()[i].toString(),0L);
    	    						setLastKnownLang(keyset.toArray()[i].toString());
+   	    						
    	    						 
    	    					  }
    	    				  }
@@ -767,6 +782,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
   
 }
 
+@SuppressLint("NewApi")
 @Override
 public void onResume()
 {
@@ -778,10 +794,20 @@ public void onResume()
      myProgressDialog.show();
      //http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true
      ContentParser cparser = new ContentParser();
-     cparser.execute("http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true");
-      JSONParser parser = new JSONParser();
-      parser.execute("http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json");
+     JSONParser parser = new JSONParser();
      
+     if (Build.VERSION.SDK_INT >= 11)
+     {
+     cparser.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true");
+     parser.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json");
+     
+     }
+     else
+     {
+    	 cparser.execute("http://kabbalahgroup.info/internet/events/render_event_response?locale=he&source=stream_container&type=update_presets&timestamp=2011-11-25+13:29:53+UTC&stream_preset_id=3&flash=true&wmv=true");
+         parser.execute("http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json");    
+     }
+    
       try {
      	 serverJSON = parser.get();
      	  content = cparser.get();
