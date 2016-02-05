@@ -7,7 +7,6 @@
 //
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "LangSelectorViewController.h"
-#import "KxMovieViewController.h"
 #import "AudioWebViewController.h"
 @interface LangSelectorViewController ()
 
@@ -203,26 +202,58 @@
 //    
 //    if(isRange.location!=NSNotFound && !mFromActionview)
 //    {
-    if(!mFromActionview)
+    
+    
+    url = @"http://mobile.kbb1.com/kab_channel/sviva_tova/jsonresponseexample.json";
+    NSDictionary* langjsonData = [self getJsonDataFromUrl:url];
+   
+     NSArray * temp2 = [[langjsonData objectForKey:@"localeHLS"] valueForKey:[locales objectAtIndex:indexPath.row]];
+    
+    NSDictionary *page;
+    for (NSDictionary *temppage in temp2)
     {
-        if ([self checkIsActive: keyData])
+        if (![temppage isKindOfClass:[NSNull class]])
         {
-            UIActionSheet *select = [[UIActionSheet alloc]initWithTitle:@"Stream type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Video",@"Audio", nil];
-            select.accessibilityValue = [locales objectAtIndex:indexPath.row];
-            [select showInView:self.tableView];
-            mFromActionview = NO;
-            
-            
-           // return false;
+            page = [(NSArray*)[temppage objectForKey:@"pages"] objectAtIndex:0 ] ;
+            break;
         }
-        else { // is_active = false
-            UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Sorry No Broadcast"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-            [noBrodMessage show];
-         //   return false;
-        }
-        
-        
-   }
+    }
+            
+//    NSMutableSet* set1 = [NSMutableSet setWithArray:temp2];
+//    NSMutableSet* set2 = [NSMutableSet setWithArray:[[langjsonData objectForKey:@"localeHLS"] allValues]];
+//    [set1 intersectSet:set2]; //this will give you only the obejcts that are in both sets
+//    
+//    NSArray* result = [set1 allObjects];
+    
+    
+//    NSDictionary *page = [[[[[[langjsonData objectForKey:@"localeHLS"] objectAtIndex:temp2] allValues]objectAtIndex:0] objectForKey:@"pages"] objectAtIndex:0];
+    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    
+    [userD setObject:page forKey:@"currentSvivaTovaData"];
+    [userD synchronize];
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
+    
+//    if(!mFromActionview)
+//    {
+//        if ([self checkIsActive: keyData] || [[locales objectAtIndex:indexPath.row] isEqualToString:@"heb"])
+//        {
+//            UIActionSheet *select = [[UIActionSheet alloc]initWithTitle:@"Stream type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Video",@"Audio", nil];
+//            select.accessibilityValue = [locales objectAtIndex:indexPath.row];
+//            [select showInView:self.tableView];
+//            mFromActionview = NO;
+//            
+//            
+//           // return false;
+//        }
+//        else { // is_active = false
+//            UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Sorry No Broadcast"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+//            [noBrodMessage show];
+//         //   return false;
+//        }
+//        
+//        
+//   }
 
 }
 
@@ -275,92 +306,7 @@
                     
                     NSString *isHLS = [langjsonData objectForKey:@"HLSSupport"];
                     
-                    if([isHLS isEqualToString:@"no"])
-                    {
-                    NSString *keyToReplace = [self getSecretKeyValueForAsxFile: keyData];
-                    NSLog(@"langjsonData = %@, keyJsonData = %@", langjsonData, keyData);
-                    NSMutableArray *locales = [[NSMutableArray alloc] init];
-                    for( NSDictionary *locale in [langjsonData objectForKey:@"locale"])
-                    {
-                        [locales addObject:[[locale allKeys] objectAtIndex:0]];
-                    }
-                    NSLog(@"Video actionSheet.accessibilityValue = %@", actionSheet.accessibilityValue);
-                    NSString *url_clicked = actionSheet.accessibilityValue;
-                    NSString *asxUrlToPlay;
-                    for(NSString *lang in locales)
-                    {
-                        NSRange range = [url_clicked rangeOfString:lang];
-                        NSLog(@"range.length %d", range.length);
-                        NSLog(@"range.location %d", range.location);
-                        if(range.length  > 0)
-                        {
-                            //find the correct leng in the json
-                            int index =  [locales indexOfObject:lang];
-                            
-                            NSArray *urls = [[[[[[[langjsonData objectForKey:@"locale"] objectAtIndex:index] objectForKey:lang]objectForKey:@"pages"] objectAtIndex:0] objectForKey:@"regular"] objectForKey:@"urls"];
-                            
-                            NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-                            NSString *strQ = [[userD objectForKey:@"quality"] lowercaseString];
-                            
-                            if (urls.count == 1) {
-                                NSDictionary *tempUrls = [urls objectAtIndex:0];
-                                asxUrlToPlay = [tempUrls objectForKey:@"url_value"];
-                            } else {
-                                //need to complete here
-                                int minUrlLength=100;
-                                for( NSDictionary *urlsT  in urls)
-                                {
-                                    NSString *asxUrlToPlayT = [urlsT objectForKey:@"url_value"];
-                                    NSRange urlRange = [asxUrlToPlayT rangeOfString:strQ];
-                                    NSLog(@"urlRange.length %d", urlRange.length);
-                                    NSLog(@"urlRange.location %d", urlRange.location);
-                                    
-                                    
-                                    if ([strQ isEqualToString:@"high"] ) {
-                                        if ([asxUrlToPlayT length] < minUrlLength) {
-                                            //find the shortest asx url
-                                            minUrlLength = [asxUrlToPlayT length];
-                                            asxUrlToPlay = asxUrlToPlayT;
-                                        }
-                                    } else {
-                                        if (urlRange.length  > 0) {
-                                            //find the match asx url
-                                            asxUrlToPlay = asxUrlToPlayT;
-                                            break;
-                                        }
-                                    }
-                                    NSLog(@" urlsT = %@", urlsT);
-                                }
-                            }
-                            
-                            NSLog(@" asxUrlToPlay = %@", asxUrlToPlay);
-                            asxUrlToPlay = [self replaceKeyForAsx:asxUrlToPlay: keyToReplace];
-                            NSLog(@"url = %@", asxUrlToPlay);
-                            break;
-                        }
-                    }
-                    if (asxUrlToPlay) {
-                        NSArray* streamUrls = [self parseAsxFile :asxUrlToPlay];
-                        NSString *urlToPlay = [self checkForActiveUrl: streamUrls];
-                        NSLog(@"urlToPlay = %@", urlToPlay );
-                        if (urlToPlay) {
-                            //googleAnalytic
-                            NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Video", urlToPlay];
-                            //self.trackedViewName = analyticPrm;
-                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
-                        
-//                            [self.navigationController pushViewController:vc animated:YES completion:nil];
-                            //[self.navigationController pushViewController:vc animated:YES];
-                            [self presentModalViewController:vc animated:YES];
-                            
-                        }
-                    } else { // else show message for unavailble stream
-                        UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Broadcast not avilable, please try later"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-                        [noBrodMessage show];
-                    }
-                }
-                else
-                {
+                    
                     NSString *keyToReplace = [self getSecretKeyValueForAsxFile: keyData];
                     NSLog(@"langjsonData = %@, keyJsonData = %@", langjsonData, keyData);
                     NSMutableArray *locales = [[NSMutableArray alloc] init];
@@ -473,12 +419,12 @@
             NSLog(@"Video picked");
             break;
         }
-        }
+        
         case 1:
         {
             if(!mFromActionview)
             {
-            if ([self checkIsActive: keyData] )
+            if ([self checkIsActive: keyData] || [actionSheet.accessibilityValue isEqualToString:@"heb"]==1 )
             {
                 BOOL isTranslationMode = NO;
                 //check if inside a wifi area then use urls for realtime translations otherwise use regualr urls
@@ -524,26 +470,14 @@
                 //[self.tableView addSubview:mWebview];
                 
                // [mWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:audio]]];
-                if(isTranslationMode)
-                {
-                KxMovieViewController *ac = [KxMovieViewController movieViewControllerWithContentPath:audio];
-                   
-                    [self.navigationController pushViewController:ac animated:YES];
-                    [ac pause];
-                    [ac play];
-                
-                        
-                }
-                else
-                {
-                AudioWebViewController *ac = [[AudioWebViewController alloc]init];
+                                AudioWebViewController *ac = [[AudioWebViewController alloc]init];
 //                if(audiocontroller== nil)
 //                    audiocontroller = [[AudioWebViewController alloc]init];
                     ac.delegate = self;
                     [ac setUrl:audio];
                     [self.navigationController pushViewController:ac animated:YES];
 
-               }
+               
                
                 //[self presentViewController:vc animated:YES completion:^{[self loadDone];}];
                 

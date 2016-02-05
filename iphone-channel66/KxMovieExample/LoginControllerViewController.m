@@ -7,7 +7,6 @@
 //
 
 #import "LoginControllerViewController.h"
-#import "KxMovieViewController.h"
 #import "MenuViewController.h"
 
 
@@ -159,8 +158,8 @@
                             //googleAnalytic
                             NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Video", urlToPlay];
                             self.screenName = analyticPrm;
-                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
-                            [self presentViewController:vc animated:YES completion:nil];
+//                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
+//                            [self presentViewController:vc animated:YES completion:nil];
                         }
                     } else { // else show message for unavailble stream
                         UIAlertView *noBrodMessage = [[UIAlertView alloc] initWithTitle: @"" message: @"Broadcast not avilable, please try later"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];

@@ -12,6 +12,7 @@
 #import "ChooseQualityViewController.h"
 #import "SvivaTovaLoginViewController.h"
 #import "LangSelectorViewController.h"
+#import "BBmessagesTableViewController.h"
 
 @interface MenuViewController () {
     NSArray *menu_details;
@@ -55,14 +56,26 @@
 {
     NSLog(@"+-+- MenuViewController.m: loadView");
     if (fromWhere == 1) {
+         NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+         if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+         {
         menu_details = @[
-                         @"Sviva Tova",
+                         @"Login",
                          @"Choose Quality"
                          ];
+         }
+         else{
+             menu_details = @[
+                               @"Change language",
+                              @"Choose Quality",
+                                @"BB messages"
+                              ];
+         }
     } else {
         menu_details = @[
-                         @"Channel 66",
-                         @"Choose Quality"
+                         @"Change language",
+                         @"Choose Quality",
+                         @"BB messages"
                          ];
     }
     
@@ -119,6 +132,14 @@
     }
     
 }
+
+-(void) openBBmessages
+{
+     NSLog(@"+-+- MenuViewController.m: openBBmessages");
+    BBmessagesTableViewController *bbm = [[BBmessagesTableViewController alloc]init];
+    [self.navigationController pushViewController:bbm animated:YES];
+    
+}
 -(void) openChannel66 {
     NSLog(@"+-+- MenuViewController.m: openChannel66");
     MainViewController *web = [[MainViewController alloc]init];
@@ -168,6 +189,9 @@
         case 1:
             NSLog(@"Choose quality");
             [self openQualitySettings];
+            break;
+        case 2:
+            [self openBBmessages];
             break;
         default:
             break;

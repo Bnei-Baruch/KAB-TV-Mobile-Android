@@ -10,7 +10,6 @@
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 
 #import "MainViewController.h"
-#import "KxMovieViewController.h"
 #import "LoginControllerViewController.h"
 #import "MenuViewController.h"
 #import "Reachability.h"
@@ -38,6 +37,9 @@
 @implementation MainViewController
 
 @synthesize streamNames;
+@synthesize svivaTovastreamNames;
+@synthesize joinedStreamNames;
+
 @synthesize mp;
 @synthesize mpVC;
 
@@ -66,6 +68,7 @@
 //            @"http://santai.tv/vod/test/test_format_1.3gp",
 //            @"http://santai.tv/vod/test/test_format_1.mp4",
         @"http://icecast.kab.tv/heb.mp3",
+        @"http://icecast.kab.tv/radiozohar2014.mp3",
        @"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8",
         @"http://icecast.kab.tv/rus.mp3",
         @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8",
@@ -76,10 +79,41 @@
         ];
         self.streamNames = [[ NSMutableDictionary alloc]
          init];
-        [self.streamNames setObject:@"ערוץ 66 - אודיו" forKey:@"http://icecast.kab.tv/heb.mp3"];
-        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8"];
-        [self.streamNames setObject:@"Канал 66 - Русском Аудио" forKey:@"http://icecast.kab.tv/rus.mp3"];
-        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8"];
+        self.joinedStreamNames = [[ NSMutableDictionary alloc]
+                                  init];
+
+//        [self.streamNames setObject:@"ערוץ 66 - אודיו" forKey:@"http://icecast.kab.tv/heb.mp3"];
+//        [self.streamNames setObject:@"רדיו ערוץ 66" forKey:@"http://icecast.kab.tv/radiozohar2014.mp3"];
+//
+//        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8"];
+//        [self.streamNames setObject:@"Канал 66 - Русском Аудио" forKey:@"http://icecast.kab.tv/rus.mp3"];
+//        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8"];
+//        
+//        
+        
+        [self.streamNames setObject:@"http://icecast.kab.tv/heb.mp3"  forKey:@"ערוץ 66 - אודיו"];
+        [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו ערוץ 66" ];
+        
+        [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ 66 - וידאו" ];
+        [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Канал 66 - Русском Аудио" ];
+        [self.streamNames setObject: @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8" forKey:@"Канал 66 - Русском Видео"];
+        
+        NSMutableArray *keyChannel66 = [[NSMutableArray alloc]init];
+        [keyChannel66 addObject:@"ערוץ 66 - אודיו"];
+        [keyChannel66 addObject:@"רדיו ערוץ 66"];
+        [keyChannel66 addObject:@"ערוץ 66 - וידאו"];
+        [keyChannel66 addObject:@"Канал 66 - Русском Аудио"];
+        [keyChannel66 addObject:@"Канал 66 - Русском Видео"];
+        
+        
+        
+        dataSource = [[NSMutableArray alloc ]initWithCapacity:5];
+      
+        NSMutableDictionary *sectionChannel66 = [[NSMutableDictionary alloc]init];
+        [sectionChannel66 setValue:keyChannel66 forKey:@"Channel 66"];
+        [dataSource addObject:sectionChannel66];
+        
+        //[self processSvivaTovaStreams];
         
     }
     
@@ -147,6 +181,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self processSvivaTovaStreams];
     [self reloadMovies];
     [self.tableView reloadData];
 }
@@ -214,25 +249,82 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+//    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+//    
+//    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+//    return 1;
+//    else
+//        return 2;
+    
+    return [dataSource count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:     return @"Channel 66";
-        //case 1:     return @"Extra";
-    }
-    return @"";
+//    switch (section) {
+//            //check if login is done then show sviva tovs first
+//        case 0:
+//        {
+//            NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+//            
+//            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+//                return @"Channel 66";
+//            else
+//                return [@"Sviva Tova" stringByAppendingString:@" Hebrew"];
+//            break;
+//           
+////            case 0:
+////                break;
+//        }
+//        case 1:
+//                return @"Channel 66";
+//                break;
+//            }
+//        //case 1:     return @"Extra";
+//    
+//    return @"";
+    
+    
+    NSString *title =    [[[(NSMutableDictionary*)[dataSource objectAtIndex:section] keyEnumerator]allObjects]objectAtIndex:0];
+    return title;
+                    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:     return _remoteMovies.count;
-        //case 1:     return _localMovies.count;
-    }
-    return 0;
+    
+     //if app activated then show the sviva tova with selected language on activation
+//    switch (section) {
+//        case 0:     3; //2 video types quality and 1 audio
+//            
+//        case 1:     return _remoteMovies.count;;
+//    }
+
+//    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+//    
+//    switch (section) {
+//            
+//            
+//           case 0:
+//            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+//                return _remoteMovies.count;
+//            
+//            else
+//                3;
+//            break;
+//            
+//           
+//        case 1:
+//                if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+//
+//                return 0;
+//            else
+//                return _remoteMovies.count;
+//            break;
+//    }
+//    return 0;
+    
+    return [[[(NSDictionary*)[dataSource objectAtIndex:section] allValues]objectAtIndex:0] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -245,15 +337,35 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    NSString *path;
+//    NSString *path;
+//    
+//     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+//    
+//    //if activated then put sviva tova as first menu
+//    
+//    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+//    {
+//    if (indexPath.section == 0) {
+//        
+////        path = 'get the url from urls saved from language selector'
+////        cell.textLabel.text = 'get the description from urls saved from language selector';
+////        
+//    }
+//    if (indexPath.section == 1) {
+//        
+//        path = _remoteMovies[indexPath.row];
+//        cell.textLabel.text = [self.streamNames objectForKey:path];
+//        
+//    }
+//    }
+//    else if (indexPath.section == 0) {
+//        
+//        path = _remoteMovies[indexPath.row];
+//        cell.textLabel.text = [self.streamNames objectForKey:path];
+//        
+//    } 
     
-    if (indexPath.section == 0) {
-        
-        path = _remoteMovies[indexPath.row];
-        cell.textLabel.text = [self.streamNames objectForKey:path];
-        
-    } 
-    
+    cell.textLabel.text = [(NSMutableArray*)[[(NSDictionary*)[dataSource objectAtIndex:indexPath.section] allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -277,9 +389,15 @@
     
     NSString *path;
     path = _remoteMovies[indexPath.row];
+    NSArray *key = [[[[dataSource objectAtIndex:indexPath.section] allValues]objectAtIndex:0] objectAtIndex:indexPath.row];
+    path = [self.joinedStreamNames valueForKey:key];
     NSRange range = [path rangeOfString:@"mp3"];
     Boolean video = [path rangeOfString:@"mp3"].length==0;
     Boolean quality = [[[NSUserDefaults standardUserDefaults] valueForKey:@"quality"] isEqualToString:@"Medium"];
+    //if activated then play the url form sviva tova section which is 0
+    
+    
+    
     if (indexPath.section == 0) {
         
         
@@ -299,6 +417,43 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSLog(@"textFieldDidEndEditing");
+}
+
+- (void) processSvivaTovaStreams
+{
+    
+    [joinedStreamNames removeAllObjects];
+    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    NSDictionary *svivaStreams = [userD objectForKey:@"currentSvivaTovaData"];
+    if(svivaStreams !=nil)
+        {
+    NSDictionary *regular = [svivaStreams objectForKey:@"regular"];
+    NSArray *urls = [regular objectForKey:@"urls"];
+    svivaTovastreamNames = [[NSMutableDictionary alloc]init];
+    NSMutableArray *sectionSviva = [[NSMutableArray alloc]init];
+    for(int i =0;i<urls.count;i++)
+    {
+        NSDictionary *urlData = [urls objectAtIndex:i];
+        [svivaTovastreamNames setObject:[urlData objectForKey:@"url_value"] forKey: [urlData objectForKey:@"url_quality_name"]];
+        [sectionSviva addObject:[urlData objectForKey:@"url_quality_name"]];
+        
+        
+    }
+    NSMutableDictionary *svivaTova = [[NSMutableDictionary alloc]init];
+    [svivaTova setObject:sectionSviva forKey:[regular valueForKey:@"description"]];
+            if([dataSource count]>1)
+            [dataSource removeObjectAtIndex:0];
+    [dataSource insertObject:svivaTova atIndex:0];
+            
+            [self.joinedStreamNames addEntriesFromDictionary:self.svivaTovastreamNames];
+            [self.joinedStreamNames addEntriesFromDictionary:self.streamNames];
+            
+        }
+    else
+        [self.joinedStreamNames addEntriesFromDictionary:self.streamNames];
+    
+    [self.tableView reloadData];
+    
 }
 
 -(void) openMenu {

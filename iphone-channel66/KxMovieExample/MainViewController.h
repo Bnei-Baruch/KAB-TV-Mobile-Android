@@ -19,13 +19,20 @@
 
 @interface MainViewController : GAITrackedViewController<UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate> {
     NSMutableDictionary *streamNames;
+     NSMutableDictionary *svivaTovastreamNames;
+    NSMutableDictionary  *joinedStreamNames;
 
     // For Apple's audio player:
 	MPMoviePlayerController *mp;
 	MPMoviePlayerViewController *mpVC;
+    
+    NSMutableArray *dataSource;
 }
 @property (nonatomic, strong) MPMoviePlayerController *mp;
 @property (nonatomic, strong) MPMoviePlayerViewController *mpVC;
 
 @property(nonatomic,strong) NSMutableDictionary *streamNames;
+@property(nonatomic,strong) NSMutableDictionary *svivaTovastreamNames;
+@property(nonatomic,strong) NSMutableDictionary *joinedStreamNames;
+
 @end
