@@ -7,12 +7,15 @@
 //
 
 #import "BBmessagesTableViewController.h"
+#import "Parse/Parse.h"
 
 @interface BBmessagesTableViewController ()
 
 @end
 
 @implementation BBmessagesTableViewController
+
+NSMutableArray *msgData;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,36 +25,72 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //msgData = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
+
+    msgData = [[NSMutableArray alloc] init];
+    @try {
+        PFQuery *query = [PFQuery queryWithClassName:@"messages"];
+        [query fromLocalDatastore];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            for (PFObject *object in objects){
+                NSMutableString *text = [object objectForKey:@"text"];
+                [msgData addObject:text];
+            }
+            [self.tableView reloadData];
+        }];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error get object");
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 #pragma mark - Table view data source
-
+/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
-
+*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [msgData count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+  //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    
+    cell.textLabel.text = [msgData objectAtIndex:indexPath.row];
     return cell;
 }
-*/
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+     NSString *text = cell.text;
+    NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    NSArray* matches = [detector matchesInString:text options:0 range:NSMakeRange(0, [text length])];
+    if([matches count] > 0)
+    {
+        NSURL *url  = [[matches objectAtIndex:0] URL];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
 
 /*
 // Override to support conditional editing of the table view.
