@@ -130,10 +130,17 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
         messagesObject[@"date"] = [NSDate date];
         [messagesObject pinInBackground];
+        
+        NSString *text = [apsInfo objectForKey:@"alert"];
+        NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+        NSArray* matches = [detector matchesInString:text options:0 range:NSMakeRange(0, [text length])];
+        if([matches count] > 0)
+        {
+            NSURL *url  = [[matches objectAtIndex:0] URL];
+            [[UIApplication sharedApplication] openURL:url];
+        }
     }
 }
-
-
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
