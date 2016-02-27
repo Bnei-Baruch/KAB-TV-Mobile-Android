@@ -16,6 +16,7 @@
 #import "TestFlight.h"
 #endif
 #import "Parse/Parse.h"
+#import "BBmessagesTableViewController.h"
 
 @implementation AppDelegate
 
@@ -48,14 +49,14 @@
    
     
     UIViewController * vc = [[MainViewController alloc] init];
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[
-        [[UINavigationController alloc] initWithRootViewController:vc],
-    ];
+    UINavigationController *tabBarController = [[UINavigationController alloc] init];
+//    tabBarController.viewControllers = @[
+//        [[UINavigationController alloc] initWithRootViewController:vc],
+//    ];
     
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
-    
+    [tabBarController pushViewController:vc animated:true];
     
     [Parse enableLocalDatastore];
     //channel 66
@@ -138,6 +139,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         {
             NSURL *url  = [[matches objectAtIndex:0] URL];
             [[UIApplication sharedApplication] openURL:url];
+        }
+        else
+        {
+            BBmessagesTableViewController *bbm = [[BBmessagesTableViewController alloc]init];
+            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+            [navController pushViewController:bbm animated:true];
         }
     }
 }
