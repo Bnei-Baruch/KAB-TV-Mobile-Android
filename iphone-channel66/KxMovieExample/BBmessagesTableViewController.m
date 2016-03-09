@@ -45,6 +45,17 @@ NSMutableArray *msgData;
     
 }
 
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UIFont * font = [UIFont systemFontOfSize:15.0f];
+//    NSString *text = [msgData objectAtIndex:indexPath.row];
+//    CGFloat height = [text boundingRectWithSize:CGSizeMake(self.tableView.frame.size.width, 60) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName: font} context:nil].size.height;
+//    
+//    return height + 3;
+//}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -64,6 +75,15 @@ NSMutableArray *msgData;
     return [msgData count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //minimum size of your cell, it should be single line of label if you are not clear min. then return UITableViewAutomaticDimension;
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
@@ -76,6 +96,7 @@ NSMutableArray *msgData;
     }
     
     cell.textLabel.text = [msgData objectAtIndex:indexPath.row];
+    cell.textLabel.numberOfLines=0;
     return cell;
 }
 
