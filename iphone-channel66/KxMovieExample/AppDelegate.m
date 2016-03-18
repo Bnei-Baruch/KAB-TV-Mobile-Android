@@ -54,18 +54,19 @@
 //        [[UINavigationController alloc] initWithRootViewController:vc],
 //    ];
     
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     [tabBarController pushViewController:vc animated:true];
     
     [Parse enableLocalDatastore];
     //channel 66
-    //[Parse setApplicationId:@"dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD" clientKey:@"b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U"];
+    [Parse setApplicationId:@"dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD" clientKey:@"b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U"];
     // test channle 66
     //[Parse setApplicationId:@"KZGRjYuBEwh6vubjJBRzscvVixyLC8fWg9YqAwVS" clientKey:@"H3JqHHIKrd8xN44weGfAsWmUeCJQdqh8bPR8H4M6"];
     //testchannel2
     
-    [Parse setApplicationId:@"ayoTJHpHAVbwWEprqxzQeYpYCIaxz98HY19DbQiF" clientKey:@"imLHqDJYiH6S3iPtZ3gw1yilsXna8wHM0oSiGktp"];
+//    [Parse setApplicationId:@"ayoTJHpHAVbwWEprqxzQeYpYCIaxz98HY19DbQiF" clientKey:@"imLHqDJYiH6S3iPtZ3gw1yilsXna8wHM0oSiGktp"];
     
    
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])

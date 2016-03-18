@@ -840,6 +840,7 @@
 		87E793F216390F10000A0848 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bnei Baruch USA (88BVT739BF)";
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -847,6 +848,7 @@
 		87E793F316390F10000A0848 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bnei Baruch USA (88BVT739BF)";
 			};
 			name = Release;
 		};
