@@ -176,12 +176,7 @@
     switch (indexPath.row) {
         case 0:
             if (fromWhere == 1) {
-                NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-                if ([@"1" isEqualToString:[userD objectForKey:@"isLogin"]]) {
-                    [self openSvivaTova];
-                } else {
-                    [self showAlertWithText];
-                }
+                [self openSvivaTova];
             } else {
                 [self openChannel66];
             }

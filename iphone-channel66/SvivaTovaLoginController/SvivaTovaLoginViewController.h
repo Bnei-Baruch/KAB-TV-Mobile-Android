@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "LangSelectorViewController.h"
-
-@interface SvivaTovaLoginViewController : UIViewController {
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+@interface SvivaTovaLoginViewController : UIViewController <FBSDKLoginButtonDelegate>{
 
     __weak IBOutlet UITextField *usernameTF;
     __weak IBOutlet UITextField *passwordTF;
@@ -27,4 +27,5 @@
 @property (weak, nonatomic) IBOutlet UISwitch *rememberLoginDetailsSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissScreenButton;
+@property (weak,nonatomic) IBOutlet FBSDKLoginButton * mLoginButton;
 @end

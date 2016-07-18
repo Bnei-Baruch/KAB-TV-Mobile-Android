@@ -12,7 +12,7 @@
 #define kFailedLoginIndicator @"אימייל או סיסמא שגויים"
 #define kSvivaTovaLoginURL @"http://kabbalahgroup.info/internet/he/users/login"
 #define kSvivaTovaLoginURLrest @"http://kabbalahgroup.info/internet/api/v1/tokens.json"
-
+@class FBSDKAccessToken;
 
 @implementation SvivaTovaLoginController
 
@@ -133,6 +133,115 @@
 
 }
 
+
+- (void)loginWithFBToken:(NSString *)token
+          andLocalization:(NSString *)localization
+                   target:(NSObject *)target
+            successAction:(SEL)successSEL
+               failAction:(SEL)failSEL {
+    
+    
+    if (target && successSEL) {
+        self.loginRequestResponseTarget = target;
+        self.loginSuccesResponseSelector = successSEL;
+    }
+    else {
+        LogErr(@"Unable to request service since target Or success Selector are missing");
+    }
+    if (failSEL) {
+        self.loginfailedResponseSelector = failSEL;
+    } else {
+        LogErr(@"Unable to request service since target Or success Selector are missing");
+    }
+    
+    
+    
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    
+    NSArray *mcookies = [cookieStorage cookies];
+    for (NSString *c in mcookies) {
+        //LogDebug(@"new cookie: = %@",c);
+    }
+    
+    
+    NSHTTPURLResponse* response;
+    NSData* dataReply;
+    NSURL* url = [NSURL URLWithString:kSvivaTovaLoginURLrest];
+    
+    
+    
+    
+    /*
+     GET /internet/he/users/login HTTP/1.1
+     Host: kabbalahgroup.info
+     Connection: keep-alive
+     Accept: text/html,application/xhtml+xml,application/xml;q=0.9,* / *;q=0.8
+     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31
+     Accept-Encoding: gzip,deflate,sdch
+     Accept-Language: en-US,en;q=0.8
+     Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+     If-None-Match: "d6446e8ac6a98aaee5a6e74a706fa81e"
+     */
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    [req setHTTPMethod:@"POST"];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    //	[req setValue:@"keep-alive" forHTTPHeaderField:@"Connection"];
+    //    [req setValue:@"gzip,deflate,sdch" forHTTPHeaderField:@"Accept-Encoding"];
+    //	[req setValue:@"kabbalahgroup.info" forHTTPHeaderField:@"Host"];
+    //
+    //	[req setValue: @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16" forHTTPHeaderField: @"User-Agent"];
+    
+    NSDictionary * body = [[NSDictionary alloc]initWithObjectsAndKeys:token ,@"fb_token",nil];
+    
+    NSError *error;
+    NSData *postdata = [NSJSONSerialization dataWithJSONObject:body options:0 error:&error];
+    [req setHTTPBody:postdata];
+    LogDebug(@"%@",req);
+    
+    
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    
+    //dataReply = [NSURLConnection sendSynchronousRequest:req returningResponse:&response error:&error];
+    //strReply = [[NSString alloc]initWithData:dataReply encoding:NSUTF8StringEncoding];
+    //LogDebug(@"%@",strReply);
+    
+    
+    NSURLConnection* conn = [NSURLConnection connectionWithRequest:req delegate:self];
+    
+    if (conn){
+        recievedData = [NSMutableData new];
+        LogWarn(@"Connection to server succeded!");
+    }
+    else{
+        LogErr(@"Can't download data from server!");
+        // TODO: return error here.
+    }
+    
+    
+    
+    //	allHeaderFields = (NSMutableDictionary*)[ response allHeaderFields];
+    //	for (id key in allHeaderFields) {
+    //		LogDebug(@"key: %@, value: %@", key, [allHeaderFields objectForKey:key]);
+    //	}
+    //	LogDebug(@"%d" ,[response statusCode]);
+    //	statusCode = [response statusCode];
+    //
+    //	/*
+    //     allHeaderFields = (NSMutableDictionary*)[ response allHeaderFields];
+    //     for (NSHTTPCookie *cookie in cookieStorage.cookies) {
+    //      NSString *tmp = [NSString stringWithFormat:@"%@=%@; ",[cookie valueForKey:@"name"],[cookie valueForKey:@"value"] ];
+    //      LogDebug(@"cookie saved: %@ ",tmp);
+    //     }
+    //     */
+    //
+    //
+    //    // Post login data to SvivaTova & try to login:
+    //    [self postLoginDataWithUsername:username andPassword:password andLocalization:localization];
+    
+}
 
 
 - (void) postLoginDataWithUsername:(NSString *)username

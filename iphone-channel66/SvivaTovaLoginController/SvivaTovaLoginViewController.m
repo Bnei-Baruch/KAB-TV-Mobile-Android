@@ -9,6 +9,12 @@
 #import "SvivaTovaLoginViewController.h"
 #import "SvivaTovaLoginController.h"
 #import "LangSelectorViewController.h"
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import "LangSelectorViewController.h"
+#import <FBSDKCoreKit/FBSDKProfile.h>
+#import <FBSDKCoreKit/FBSDKGraphRequest.h>
+#import <FBSDKCoreKit/FBSDKSettings.h>
+
 
 #define kActivityViewTagId 8439
 #define kLoadingViewTagId 1993
@@ -155,10 +161,42 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.usernameTF.text =    [defaults valueForKey:@"username"];
     self.passwordTF.text =    [defaults valueForKey:@"password"];
+    
+   
+        _mLoginButton.readPermissions =
+    @[@"public_profile", @"email", @"user_friends"];
+    _mLoginButton.delegate = self;
+    [_mLoginButton setLoginBehavior:FBSDKLoginBehaviorWeb];
+   
 }
 
 
 
+-(void)deleteAllKeysForSecClass:(CFTypeRef)secClass {
+    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    [dict setObject:(__bridge id)secClass forKey:(__bridge id)kSecClass];
+    OSStatus result = SecItemDelete((__bridge CFDictionaryRef) dict);
+    NSAssert(result == noErr || result == errSecItemNotFound, @"Error deleting keychain data (%ld)", result);
+}
+
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton;
+{
+   
+    
+   
+}
+
+- (void)  loginButton:(FBSDKLoginButton *)loginButton
+didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
+                error:(NSError *)error;
+{
+
+    if(result.token!=NULL)
+    {
+
+        [self loginwithFacebook:[result.token tokenString]];
+    }
+}
 
 #pragma mark - Memory managment
 
@@ -183,6 +221,26 @@
     [super viewDidUnload];
 }
 
+#pragma helper functions
+
+- (void)loginwithFacebook:(NSString*)token {
+    
+    SvivaTovaLoginController *svivaTovaLoginController = [[SvivaTovaLoginController alloc] init];
+    
+    
+   
+    
+    
+    
+        [svivaTovaLoginController loginWithFBToken:token
+                                    andLocalization:nil
+                                             target:self
+                                      successAction:@selector(loginSuccesful)
+                                         failAction:@selector(loginFailed)];
+        [self loginInProgress];
+        
+       
+}
 
 
 #pragma mark - Screen transition animation
@@ -282,6 +340,10 @@
         [navigationStack removeObjectAtIndex:[navigationStack count] - 2];
         self.navigationController.viewControllers = navigationStack;
         
+        NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+        [userD setObject:@"1" forKey:@"isLogin"];
+        [userD synchronize];
+
 
         
     }
@@ -301,6 +363,8 @@
     
     [self loginProgressEnded];
     
+    FBSDKLoginManager *manager = [[FBSDKLoginManager alloc] init];
+    [manager logOut];
     // TODO: Localization:
     
     UIAlertView *loginFailedAlertView = [[UIAlertView alloc] initWithTitle:@"Login failed!"

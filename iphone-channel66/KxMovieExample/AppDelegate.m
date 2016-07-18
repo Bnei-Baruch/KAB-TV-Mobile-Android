@@ -17,11 +17,20 @@
 #endif
 #import "Parse/Parse.h"
 #import "BBmessagesTableViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginButton.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+    
+    
+     [FBSDKLoginButton class];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
@@ -86,6 +95,8 @@
     if (!launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
         
     }
+    
+   
     
     
         return YES;
@@ -177,6 +188,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+    [FBSDKAppEvents activateApp];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSDictionary* cookieDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"cookie"];
     NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"kabbala"];
@@ -194,5 +207,15 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
    // [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookies forURL:url mainDocumentURL:nil]; // where cookies is the unarchived array of cookies
   
   }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
 
 @end

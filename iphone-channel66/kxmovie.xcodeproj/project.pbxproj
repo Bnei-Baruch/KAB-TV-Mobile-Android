@@ -54,6 +54,15 @@
 		4D5A0CD71A46732F0008F4E5 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A0CD21A46732F0008F4E5 /* ParseCrashReporting.framework */; };
 		4D5A0CD81A46732F0008F4E5 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A0CD31A46732F0008F4E5 /* ParseFacebookUtils.framework */; };
 		4D5A0CD91A46732F0008F4E5 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A0CD41A46732F0008F4E5 /* ParseUI.framework */; };
+		4D6EC0171D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */; };
+		4D6EC0181D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */; };
+		4D6EC0191D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */; };
+		4D6EC01B1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */; };
+		4D6EC01C1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */; };
+		4D6EC01D1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */; };
+		4D6EC01F1D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */; };
+		4D6EC0201D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */; };
+		4D6EC0211D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */; };
 		4DDC6EE01A47AC8300B71A57 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDC6EDF1A47AC8300B71A57 /* AudioToolbox.framework */; };
 		4DDC6EE21A47AD8100B71A57 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDC6EE11A47AD8100B71A57 /* AVFoundation.framework */; };
 		4DDC6EE41A47ADD000B71A57 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDC6EE31A47ADD000B71A57 /* AdSupport.framework */; };
@@ -182,6 +191,9 @@
 		4D5A0CD21A46732F0008F4E5 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		4D5A0CD31A46732F0008F4E5 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		4D5A0CD41A46732F0008F4E5 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		4DDC6EDF1A47AC8300B71A57 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		4DDC6EE11A47AD8100B71A57 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		4DDC6EE31A47ADD000B71A57 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
@@ -266,6 +278,8 @@
 			files = (
 				4D4A488D167AB5EA006380C6 /* libz.dylib in Frameworks */,
 				4D4A488E167AB5EA006380C6 /* libavcodec.a in Frameworks */,
+				4D6EC01D1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */,
+				4D6EC0191D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */,
 				4D4A488F167AB5EA006380C6 /* libavdevice.a in Frameworks */,
 				4D4A4890167AB5EA006380C6 /* libavformat.a in Frameworks */,
 				4D4A4891167AB5EA006380C6 /* libavutil.a in Frameworks */,
@@ -274,6 +288,7 @@
 				4D4A4894167AB5EA006380C6 /* UIKit.framework in Frameworks */,
 				4D4A4895167AB5EA006380C6 /* Foundation.framework in Frameworks */,
 				4D4A4896167AB5EA006380C6 /* CoreGraphics.framework in Frameworks */,
+				4D6EC0211D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */,
 				4D4A4897167AB5EA006380C6 /* MediaPlayer.framework in Frameworks */,
 				4D4A4898167AB5EA006380C6 /* CoreAudio.framework in Frameworks */,
 				4D4A4899167AB5EA006380C6 /* AudioToolbox.framework in Frameworks */,
@@ -297,7 +312,9 @@
 				4DDC6EF91A47AEE000B71A57 /* CoreLocation.framework in Frameworks */,
 				4DDC6EF71A47AEB000B71A57 /* CoreData.framework in Frameworks */,
 				4DDC6EF51A47AE8600B71A57 /* StoreKit.framework in Frameworks */,
+				4D6EC01B1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */,
 				4DDC6EF41A47AE7B00B71A57 /* MessageUI.framework in Frameworks */,
+				4D6EC01F1D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */,
 				4DDC6EF21A47AE7100B71A57 /* SystemConfiguration.framework in Frameworks */,
 				4DDC6EF01A47AE6300B71A57 /* CoreGraphics.framework in Frameworks */,
 				4DDC6EED1A47AE5300B71A57 /* EventKit.framework in Frameworks */,
@@ -312,6 +329,7 @@
 				87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */,
 				87E7940116390F6D000A0848 /* CoreGraphics.framework in Frameworks */,
 				4D5A0CCE1A4672B70008F4E5 /* libGoogleAnalyticsServices.a in Frameworks */,
+				4D6EC0171D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */,
 				87E7945416391BDC000A0848 /* MediaPlayer.framework in Frameworks */,
 				4D5A0CD61A46732F0008F4E5 /* Parse.framework in Frameworks */,
 				87E7943F1639110F000A0848 /* CoreAudio.framework in Frameworks */,
@@ -329,6 +347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6EC01C1D04FC3300A475F1 /* FBSDKLoginKit.framework in Frameworks */,
 				87FD6176163A75440090956E /* Foundation.framework in Frameworks */,
 				87FD618D163A75CF0090956E /* CoreGraphics.framework in Frameworks */,
 				87FD6186163A75BF0090956E /* libavcodec.a in Frameworks */,
@@ -342,6 +361,8 @@
 				87FD618F163A75D60090956E /* CoreAudio.framework in Frameworks */,
 				87FD6190163A75D90090956E /* AudioToolbox.framework in Frameworks */,
 				87FD6192163A75DF0090956E /* Accelerate.framework in Frameworks */,
+				4D6EC0201D04FC3F00A475F1 /* FBSDKShareKit.framework in Frameworks */,
+				4D6EC0181D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */,
 				87FD6191163A75DC0090956E /* QuartzCore.framework in Frameworks */,
 				87FD6193163A75E10090956E /* OpenGLES.framework in Frameworks */,
 			);
@@ -502,6 +523,9 @@
 				4DDC6EFC1A47AF6C00B71A57 /* libsqlite3.0.dylib */,
 				4DDC6EFA1A47AF3F00B71A57 /* Foundation.framework */,
 				4DDC6EF81A47AEE000B71A57 /* CoreLocation.framework */,
+				4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */,
+				4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */,
+				4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */,
 				4DDC6EF61A47AEB000B71A57 /* CoreData.framework */,
 				4DDC6EF31A47AE7B00B71A57 /* MessageUI.framework */,
 				4DDC6EF11A47AE7100B71A57 /* SystemConfiguration.framework */,
@@ -773,6 +797,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -815,6 +840,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -871,6 +897,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 					"$(PROJECT_DIR)/parse-library-1.6.1",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -923,6 +950,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 					"$(PROJECT_DIR)/parse-library-1.6.1",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -965,6 +993,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1010,6 +1039,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

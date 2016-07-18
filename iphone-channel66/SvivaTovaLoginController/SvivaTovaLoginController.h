@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface SvivaTovaLoginController : NSObject {
     
@@ -28,6 +30,12 @@
                    target:(NSObject *)target
             successAction:(SEL)successSEL
                failAction:(SEL)failSEL;
+
+- (void)loginWithFBToken:(NSString *)token
+         andLocalization:(NSString *)localization
+                  target:(NSObject *)target
+           successAction:(SEL)successSEL
+              failAction:(SEL)failSEL;
 
 - (void) postLoginDataWithUsername:(NSString *)username
                        andPassword:(NSString *)password
