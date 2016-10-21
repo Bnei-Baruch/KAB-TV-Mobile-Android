@@ -7,14 +7,22 @@
 //
 
 #import "BBmessagesTableViewController.h"
-#import "Parse/Parse.h"
+//#import "Parse/Parse.h"
 
 @interface BBmessagesTableViewController ()
 
 @end
 
 @implementation BBmessagesTableViewController
-
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if(self._context == nil)
+    {
+       return self._context = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSConfinementConcurrencyType];
+    }
+    
+    return self._context;
+}
 NSMutableArray *msgData;
 
 - (void)viewDidLoad {
@@ -28,20 +36,36 @@ NSMutableArray *msgData;
     //msgData = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
 
     msgData = [[NSMutableArray alloc] init];
-    @try {
-        PFQuery *query = [PFQuery queryWithClassName:@"messages"];
-        [query fromLocalDatastore];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            for (PFObject *object in objects){
-                NSMutableString *text = [object objectForKey:@"text"];
-                [msgData addObject:text];
-            }
-            [self.tableView reloadData];
-        }];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"error get object");
-    }
+    
+   // AppDelegate *delegate = [[UIApplication sharedApplication] delegate] ;
+    
+    NSManagedObjectContext *managedObjectContext =  [self managedObjectContext];
+    
+   // NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Messages"];
+    
+    NSEntityDescription *entityDesc =
+    [NSEntityDescription entityForName:@"Messages"
+                inManagedObjectContext:managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+   msgData = [[managedObjectContext executeFetchRequest:request error:nil] mutableCopy];
+     [self.tableView reloadData];
+    
+//    @try {
+//        PFQuery *query = [PFQuery queryWithClassName:@"messages"];
+//        [query fromLocalDatastore];
+//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//            for (PFObject *object in objects){
+//                NSMutableString *text = [object objectForKey:@"text"];
+//                [msgData addObject:text];
+//            }
+//            [self.tableView reloadData];
+//        }];
+//    }
+//    @catch (NSException *exception) {
+//        NSLog(@"error get object");
+//    }
     
 }
 

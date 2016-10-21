@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BBmessagesTableViewController : UITableViewController
-
+@property (strong,nonatomic) NSManagedObjectContext * _context;
 @end

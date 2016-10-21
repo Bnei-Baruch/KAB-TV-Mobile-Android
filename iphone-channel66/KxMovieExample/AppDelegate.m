@@ -15,13 +15,26 @@
 #ifdef TESTING
 #import "TestFlight.h"
 #endif
-#import "Parse/Parse.h"
+//#import "Parse/Parse.h"
 #import "BBmessagesTableViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginButton.h>
+#import "Firebase.h"
+#import <UserNotifications/UserNotifications.h>
+#import <CoreData/CoreData.h>
+
+
 
 @implementation AppDelegate
-
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if(self._context == nil)
+    {
+        return self._context = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSConfinementConcurrencyType];
+    }
+    
+    return self._context;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -68,48 +81,80 @@
     [self.window makeKeyAndVisible];
     [tabBarController pushViewController:vc animated:true];
     
-    [Parse enableLocalDatastore];
+   // [Parse enableLocalDatastore];
     //channel 66
-    [Parse setApplicationId:@"dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD" clientKey:@"b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U"];
+   // [Parse setApplicationId:@"dmSTSXcOcBxITZBioUAmC7HXps0OCUteMJEklSCD" clientKey:@"b0gN0SoJgOmQ51fkQoNb9B7bNEIF2agc9SYhFG7U"];
     // test channle 66
     //[Parse setApplicationId:@"KZGRjYuBEwh6vubjJBRzscvVixyLC8fWg9YqAwVS" clientKey:@"H3JqHHIKrd8xN44weGfAsWmUeCJQdqh8bPR8H4M6"];
     //testchannel2
     
 //    [Parse setApplicationId:@"ayoTJHpHAVbwWEprqxzQeYpYCIaxz98HY19DbQiF" clientKey:@"imLHqDJYiH6S3iPtZ3gw1yilsXna8wHM0oSiGktp"];
     
+      [FIRApp configure];
+    
+//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+//    {
+//        // iOS 8 Notifications
+//        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+//        
+//        [application registerForRemoteNotifications];
+//    }
+//    else
+//    {
+//        // iOS < 8 Notifications
+//        [application registerForRemoteNotificationTypes:
+//         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+//    }
+//    
+//    if (!launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+//        
+//    }
+    
    
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-    {
-        // iOS 8 Notifications
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else {
+        // iOS 10 or later
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+        UNAuthorizationOptions authOptions =
+        UNAuthorizationOptionAlert
+        | UNAuthorizationOptionSound
+        | UNAuthorizationOptionBadge;
+        [[UNUserNotificationCenter currentNotificationCenter]
+         requestAuthorizationWithOptions:authOptions
+         completionHandler:^(BOOL granted, NSError * _Nullable error) {
+         }
+         ];
         
-        [application registerForRemoteNotifications];
-    }
-    else
-    {
-        // iOS < 8 Notifications
-        [application registerForRemoteNotificationTypes:
-         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+        // For iOS 10 display notification (sent via APNS)
+        [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+        // For iOS 10 data message (sent via FCM)
+        [[FIRMessaging messaging] setRemoteMessageDelegate:self];
+#endif
     }
     
-    if (!launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        
-    }
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+   
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Messages" inManagedObjectContext:self.managedObjectContext];
+    NSManagedObject *message = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
     
    
-    
-    
         return YES;
 }
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
+    NSLog(@"Didregisterfornotifications");
     // Store the deviceToken in the current installation and save it to Parse.
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+  //  PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     //[currentInstallation addUniqueObject:@"RABASH" forKey:@"channels"];
-    [currentInstallation setDeviceTokenFromData:newDeviceToken];
-    [currentInstallation saveInBackground];
+  //  [currentInstallation setDeviceTokenFromData:newDeviceToken];
+   // [currentInstallation saveInBackground];
 }
 
 - (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -134,15 +179,29 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+    NSLog(@"Recieved Psuh Notification");
+   // [PFPush handlePush:userInfo];
     
     NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
     if( [apsInfo objectForKey:@"alert"] != NULL)
     {
-        PFObject *messagesObject = [PFObject objectWithClassName:@"messages"];
-        messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
-        messagesObject[@"date"] = [NSDate date];
-        [messagesObject pinInBackground];
+//        PFObject *messagesObject = [PFObject objectWithClassName:@"messages"];
+//        messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
+//        messagesObject[@"date"] = [NSDate date];
+//        [messagesObject pinInBackground];
+        NSManagedObjectContext *context = [self managedObjectContext];
+        
+        // Create a new managed object
+        NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
+        [messages setValue:[apsInfo objectForKey:@"alert"] forKey:@"text"];
+        [messages setValue:[NSDate date] forKey:@"date"];
+        
+        NSError *error = nil;
+        // Save the object to persistent store
+        if (![context save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+        
         
         NSString *text = [apsInfo objectForKey:@"alert"];
         NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
@@ -217,5 +276,52 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                                 sourceApplication:sourceApplication
                                                        annotation:annotation];
 }
+
+#pragma mark - Core Data stack
+
+@synthesize persistentContainer = _persistentContainer;
+
+- (NSPersistentContainer *)persistentContainer {
+    // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
+    @synchronized (self) {
+        if (_persistentContainer == nil) {
+            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"channel66"];
+            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
+                if (error != nil) {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    
+                    /*
+                     Typical reasons for an error here include:
+                     * The parent directory does not exist, cannot be created, or disallows writing.
+                     * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                     * The device is out of space.
+                     * The store could not be migrated to the current model version.
+                     Check the error message to determine what the actual problem was.
+                     */
+                    NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+                    abort();
+                }
+            }];
+        }
+    }
+    
+    return _persistentContainer;
+}
+
+#pragma mark - Core Data Saving support
+
+- (void)saveContext {
+    NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    NSError *error = nil;
+    if ([context hasChanges] && ![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+        abort();
+    }
+}
+
+
 
 @end
