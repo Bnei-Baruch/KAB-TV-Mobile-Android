@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class KxMovieViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -18,5 +19,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property (strong,nonatomic) NSManagedObjectContext * _context;
+@property (strong,nonatomic) NSManagedObjectContext * managedObjectContext;
 - (void)saveContext;
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D42667F1DBA41C900B551C3 /* Messages+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42667D1DBA41C900B551C3 /* Messages+CoreDataClass.swift */; };
+		4D4266801DBA41C900B551C3 /* Messages+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42667E1DBA41C900B551C3 /* Messages+CoreDataProperties.swift */; };
+		4D4266881DBD5ADE00B551C3 /* DataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4266871DBD5ADE00B551C3 /* DataStore.m */; };
 		4D4A4885167AB5EA006380C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7940816390F6D000A0848 /* main.m */; };
 		4D4A488A167AB5EA006380C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7942C1639108E000A0848 /* AppDelegate.m */; };
 		4D4A488B167AB5EA006380C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7942E1639108E000A0848 /* MainViewController.m */; };
@@ -156,6 +159,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D42667D1DBA41C900B551C3 /* Messages+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Messages+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4D42667E1DBA41C900B551C3 /* Messages+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Messages+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4D4266871DBD5ADE00B551C3 /* DataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataStore.m; path = KxMovieExample/DataStore.m; sourceTree = "<group>"; };
+		4D4266891DBD5AFD00B551C3 /* DataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataStore.h; path = KxMovieExample/DataStore.h; sourceTree = "<group>"; };
 		4D4A48A6167AB5EA006380C6 /* Sviva Tova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sviva Tova.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D4A48AF167AB760006380C6 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		4D4A48B0167AB760006380C6 /* splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splash.jpg; sourceTree = "<group>"; };
@@ -214,6 +221,7 @@
 		4D5A0CCB1A4672B70008F4E5 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		4D5A0CCC1A4672B70008F4E5 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		4D5A0CCD1A4672B70008F4E5 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		4D608B6C1DBA220400CF0992 /* KxMovieExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KxMovieExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D6EC0161D04FC2400A475F1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		4D6EC01A1D04FC3300A475F1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		4D6EC01E1D04FC3F00A475F1 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -491,6 +499,10 @@
 		87E793EB16390F10000A0848 = {
 			isa = PBXGroup;
 			children = (
+				4D4266871DBD5ADE00B551C3 /* DataStore.m */,
+				4D4266891DBD5AFD00B551C3 /* DataStore.h */,
+				4D42667D1DBA41C900B551C3 /* Messages+CoreDataClass.swift */,
+				4D42667E1DBA41C900B551C3 /* Messages+CoreDataProperties.swift */,
 				4D554C311DB0EE8000A05062 /* Message.xcdatamodeld */,
 				4D554C301DAEE20B00A05062 /* KxMovieExample.entitlements */,
 				4D554C271DAED2D600A05062 /* Firebase.h */,
@@ -521,6 +533,7 @@
 				87E7940216390F6D000A0848 /* channel66 */,
 				87E793FB16390F6D000A0848 /* Frameworks */,
 				87E793F916390F6D000A0848 /* Products */,
+				4D608B6C1DBA220400CF0992 /* KxMovieExample-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -695,6 +708,7 @@
 				TargetAttributes = {
 					87E793F716390F6D000A0848 = {
 						DevelopmentTeam = 88BVT739BF;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -859,7 +873,9 @@
 				4D5A0CC01A4671910008F4E5 /* CXMLNamespaceNode.m in Sources */,
 				4DDC6F231A47B4C300B71A57 /* SvivaTovaLoginController.m in Sources */,
 				4D5A0CBF1A4671910008F4E5 /* CXMLElement_ElementTreeExtensions.m in Sources */,
+				4D42667F1DBA41C900B551C3 /* Messages+CoreDataClass.swift in Sources */,
 				4D5A0CBD1A4671910008F4E5 /* CXMLElement.m in Sources */,
+				4D4266801DBA41C900B551C3 /* Messages+CoreDataProperties.swift in Sources */,
 				4D5A0CC11A4671910008F4E5 /* CXMLNode.m in Sources */,
 				4DDC6F191A47B4B700B71A57 /* BBmessagesTableViewController.m in Sources */,
 				87E7942F1639108E000A0848 /* AppDelegate.m in Sources */,
@@ -868,6 +884,7 @@
 				4DDC6F0D1A47B41A00B71A57 /* Reachability.m in Sources */,
 				4D5A0CC31A4671910008F4E5 /* CXMLNode_XPathExtensions.m in Sources */,
 				4DDC6F1B1A47B4B700B71A57 /* ChooseQualityViewController.m in Sources */,
+				4D4266881DBD5ADE00B551C3 /* DataStore.m in Sources */,
 				4D5A0CB91A4671910008F4E5 /* CXMLNode_CreationExtensions.m in Sources */,
 				4D554C331DB0EE8000A05062 /* Message.xcdatamodeld in Sources */,
 				4DDC6F281A47B4D800B71A57 /* LangSelectorViewController.m in Sources */,
@@ -987,6 +1004,7 @@
 		87E793F216390F10000A0848 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bnei Baruch USA (88BVT739BF)";
 				ONLY_ACTIVE_ARCH = YES;
 			};
@@ -995,6 +1013,7 @@
 		87E793F316390F10000A0848 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bnei Baruch USA (88BVT739BF)";
 			};
 			name = Release;
@@ -1005,9 +1024,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1015,6 +1035,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: apple@kbb1.com (7RL444N35U)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1037,7 +1058,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "KxMovieExample/KxMovieExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1056,6 +1077,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "KxMovieExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				VALID_ARCHS = "armv7 armv7s i386 x86_64 arm64";
@@ -1069,9 +1094,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1079,6 +1105,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bnei Baruch USA (88BVT739BF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1094,7 +1121,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "KxMovieExample/KxMovieExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1114,6 +1141,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "KxMovieExample-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				VALIDATE_PRODUCT = YES;

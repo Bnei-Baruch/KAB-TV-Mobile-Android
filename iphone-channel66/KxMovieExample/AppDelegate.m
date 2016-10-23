@@ -22,19 +22,20 @@
 #import "Firebase.h"
 #import <UserNotifications/UserNotifications.h>
 #import <CoreData/CoreData.h>
-
+#import "KxMovieExample-Swift.h"
+#import "DataStore.h"
 
 
 @implementation AppDelegate
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if(self._context == nil)
-    {
-        return self._context = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSConfinementConcurrencyType];
-    }
-    
-    return self._context;
-}
+//- (NSManagedObjectContext *)managedObjectContext
+//{
+//    if(self._context == nil)
+//    {
+//        return self._context = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSConfinementConcurrencyType];
+//    }
+//    
+//    return self._context;
+//}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -45,6 +46,8 @@
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
@@ -138,10 +141,13 @@
     }
     
     [[UIApplication sharedApplication] registerForRemoteNotifications];
-   
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Messages" inManagedObjectContext:self.managedObjectContext];
-    NSManagedObject *message = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
     
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Messages" inManagedObjectContext:[DataStore getInstance].managedObjectContext];
+//    [[entityDescription managedObjectModel] setValue:@"ttt" forKey:@"text"];
+    NSManagedObject *message = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:[DataStore getInstance].managedObjectContext];
+    [message setValue:@"fff" forKey:@"text"];
+     [message setValue:[NSDate date] forKey:@"date"];
+    [message willSave];
    
         return YES;
 }
@@ -189,7 +195,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 //        messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
 //        messagesObject[@"date"] = [NSDate date];
 //        [messagesObject pinInBackground];
-        NSManagedObjectContext *context = [self managedObjectContext];
+        NSManagedObjectContext *context = [DataStore getInstance].managedObjectContext;
         
         // Create a new managed object
         NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
@@ -322,6 +328,31 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     }
 }
 
-
+- (void)setupManagedObjectContext
+{
+    NSURL *nsurl =[[NSBundle mainBundle] URLForResource:@"Message" withExtension:@"momd"];
+    
+    NSManagedObjectModel * managedObjectModel = [[NSManagedObjectModel alloc]initWithContentsOfURL:nsurl];
+    self.managedObjectContext =
+    [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    self.managedObjectContext.persistentStoreCoordinator =
+    [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    NSError* error;
+    [self.managedObjectContext.persistentStoreCoordinator
+     addPersistentStoreWithType:NSSQLiteStoreType
+     configuration:nil
+     URL:[self storeURL]
+     options:nil
+     error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+    }
+    self.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+}
+- (NSURL*)storeURL
+{
+    NSURL* documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+    return [documentsDirectory URLByAppendingPathComponent:@"db.sqlite"];
+}
 
 @end

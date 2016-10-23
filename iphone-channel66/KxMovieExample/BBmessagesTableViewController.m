@@ -8,6 +8,7 @@
 
 #import "BBmessagesTableViewController.h"
 //#import "Parse/Parse.h"
+#import "DataStore.h"
 
 @interface BBmessagesTableViewController ()
 
@@ -16,12 +17,12 @@
 @implementation BBmessagesTableViewController
 - (NSManagedObjectContext *)managedObjectContext
 {
-    if(self._context == nil)
-    {
-       return self._context = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSConfinementConcurrencyType];
-    }
+//    if(self._context == nil)
+//    {
+//       return self._context = [UIApplication sharedApplication] manage;
+//    }
+    return [DataStore getInstance].managedObjectContext;
     
-    return self._context;
 }
 NSMutableArray *msgData;
 
@@ -119,7 +120,7 @@ NSMutableArray *msgData;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     
-    cell.textLabel.text = [msgData objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[msgData objectAtIndex:indexPath.row] valueForKey:@"text"];
     cell.textLabel.numberOfLines=0;
     return cell;
 }
