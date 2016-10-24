@@ -117,17 +117,19 @@ NSMutableArray *msgData;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
     }
     
     cell.textLabel.text = [[msgData objectAtIndex:indexPath.row] valueForKey:@"text"];
-    cell.textLabel.numberOfLines=0;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[msgData objectAtIndex:indexPath.row] valueForKey:@"date"]];
+   // cell.textLabel.numberOfLines=0;
+    //cell.detailTextLabel.numberOfLines=0;
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-     NSString *text = cell.text;
+     NSString *text = cell.textLabel.text;
     NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     NSArray* matches = [detector matchesInString:text options:0 range:NSMakeRange(0, [text length])];
     if([matches count] > 0)

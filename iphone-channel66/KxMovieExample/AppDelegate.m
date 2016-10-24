@@ -142,12 +142,7 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Messages" inManagedObjectContext:[DataStore getInstance].managedObjectContext];
-//    [[entityDescription managedObjectModel] setValue:@"ttt" forKey:@"text"];
-    NSManagedObject *message = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:[DataStore getInstance].managedObjectContext];
-    [message setValue:@"fff" forKey:@"text"];
-     [message setValue:[NSDate date] forKey:@"date"];
-    [message willSave];
+    
    
         return YES;
 }
@@ -201,6 +196,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
         [messages setValue:[apsInfo objectForKey:@"alert"] forKey:@"text"];
         [messages setValue:[NSDate date] forKey:@"date"];
+        [messages willSave];
         
         NSError *error = nil;
         // Save the object to persistent store
