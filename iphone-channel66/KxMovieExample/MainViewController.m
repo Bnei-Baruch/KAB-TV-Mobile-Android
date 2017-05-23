@@ -369,6 +369,15 @@
     return cell;
 }
 
+-(void) startRadio
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView selectRowAtIndexPath:indexPath
+                                animated:YES
+                          scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

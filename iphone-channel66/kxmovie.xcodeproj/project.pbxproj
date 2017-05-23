@@ -115,6 +115,7 @@
 		4DED3461167D6EE600050304 /* LoginControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED345E167D6EE600050304 /* LoginControllerViewController.m */; };
 		4DED3462167D6EE600050304 /* LoginControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DED345F167D6EE600050304 /* LoginControllerViewController.xib */; };
 		4DED3463167D6EE600050304 /* LoginControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DED345F167D6EE600050304 /* LoginControllerViewController.xib */; };
+		4DEE5D601ED4B10A0072682C /* FirebaseDynamicLinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEE5D5F1ED4B10A0072682C /* FirebaseDynamicLinks.framework */; };
 		87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FC16390F6D000A0848 /* UIKit.framework */; };
 		87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FE16390F6D000A0848 /* Foundation.framework */; };
 		87E7940116390F6D000A0848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7940016390F6D000A0848 /* CoreGraphics.framework */; };
@@ -274,6 +275,7 @@
 		4DED345D167D6EE600050304 /* LoginControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginControllerViewController.h; sourceTree = "<group>"; };
 		4DED345E167D6EE600050304 /* LoginControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginControllerViewController.m; sourceTree = "<group>"; };
 		4DED345F167D6EE600050304 /* LoginControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginControllerViewController.xib; sourceTree = "<group>"; };
+		4DEE5D5F1ED4B10A0072682C /* FirebaseDynamicLinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseDynamicLinks.framework; sourceTree = "<group>"; };
 		87E793F816390F6D000A0848 /* KxMovieExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KxMovieExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E793FC16390F6D000A0848 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		87E793FE16390F6D000A0848 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -372,6 +374,7 @@
 				4D5A0CCE1A4672B70008F4E5 /* libGoogleAnalyticsServices.a in Frameworks */,
 				4D6EC0171D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */,
 				87E7945416391BDC000A0848 /* MediaPlayer.framework in Frameworks */,
+				4DEE5D601ED4B10A0072682C /* FirebaseDynamicLinks.framework in Frameworks */,
 				87E7943F1639110F000A0848 /* CoreAudio.framework in Frameworks */,
 				4D554C1F1DAED29C00A05062 /* FirebaseInstanceID.framework in Frameworks */,
 				87E794401639110F000A0848 /* AudioToolbox.framework in Frameworks */,
@@ -550,6 +553,7 @@
 		87E793FB16390F6D000A0848 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DEE5D5F1ED4B10A0072682C /* FirebaseDynamicLinks.framework */,
 				4D554C341DB0F81300A05062 /* CoreData.framework */,
 				4D554C2E1DAED7EC00A05062 /* UserNotifications.framework */,
 				4D554C2C1DAED5A300A05062 /* AddressBook.framework */,
@@ -711,6 +715,9 @@
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
 						};

@@ -20,5 +20,6 @@
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property (strong,nonatomic) NSManagedObjectContext * _context;
 @property (strong,nonatomic) NSManagedObjectContext * managedObjectContext;
+@property (strong,nonatomic) UIViewController * vc;
 - (void)saveContext;
 @end

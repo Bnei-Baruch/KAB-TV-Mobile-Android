@@ -20,9 +20,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginButton.h>
 #import "Firebase.h"
+
 #import <UserNotifications/UserNotifications.h>
 #import <CoreData/CoreData.h>
-#import "KxMovieExample-Swift.h"
+
 #import "DataStore.h"
 
 
@@ -73,7 +74,7 @@
     }
    
     
-    UIViewController * vc = [[MainViewController alloc] init];
+    _vc = [[MainViewController alloc] init];
     UINavigationController *tabBarController = [[UINavigationController alloc] init];
 //    tabBarController.viewControllers = @[
 //        [[UINavigationController alloc] initWithRootViewController:vc],
@@ -82,7 +83,7 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
-    [tabBarController pushViewController:vc animated:true];
+    [tabBarController pushViewController:_vc animated:true];
     
    // [Parse enableLocalDatastore];
     //channel 66
@@ -93,6 +94,7 @@
     
 //    [Parse setApplicationId:@"ayoTJHpHAVbwWEprqxzQeYpYCIaxz98HY19DbQiF" clientKey:@"imLHqDJYiH6S3iPtZ3gw1yilsXna8wHM0oSiGktp"];
     
+    [FIROptions defaultOptions].deepLinkURLScheme = @"fjca5.app.goo.gl";
       [FIRApp configure];
     
 //    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
@@ -162,6 +164,29 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     NSLog(@"failed");
 }
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *, id> *)options {
+    return [self application:app openURL:url sourceApplication:nil annotation:@{}];
+}
+
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation {
+//    FIRDynamicLink *dynamicLink =
+//    [[FIRDynamicLinks dynamicLinks] dynamicLinkFromCustomSchemeURL:url];
+//    
+//    if (dynamicLink) {
+//        // Handle the deep link. For example, show the deep-linked content or
+//        // apply a promotional offer to the user's account.
+//        // ...
+//        return YES;
+//    }
+//    
+//    return NO;
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -242,6 +267,27 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     }];
 }
 
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray *))restorationHandler {
+    
+    BOOL handled = [[FIRDynamicLinks dynamicLinks]
+                    handleUniversalLink:userActivity.webpageURL
+                    completion:^(FIRDynamicLink * _Nullable dynamicLink,
+                                 NSError * _Nullable error) {
+                        // ...
+                        if([[[dynamicLink url ] absoluteString] isEqualToString:@"https://channel66.com/radio"])
+                        {
+                            NSLog(@"Got a link");
+                            //play radio
+                            [((MainViewController*)_vc) startRadio];
+                        }
+                    }];
+    
+    
+    return handled;
+}
+
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
@@ -273,6 +319,19 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
+    
+    FIRDynamicLink *dynamicLink =
+    [[FIRDynamicLinks dynamicLinks] dynamicLinkFromCustomSchemeURL:url];
+    
+    if (dynamicLink) {
+        // Handle the deep link. For example, show the deep-linked content or
+        // apply a promotional offer to the user's account.
+        // ...
+        return YES;
+    }
+
+    
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication

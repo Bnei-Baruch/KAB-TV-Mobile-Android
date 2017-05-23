@@ -35,4 +35,5 @@
 @property(nonatomic,strong) NSMutableDictionary *svivaTovastreamNames;
 @property(nonatomic,strong) NSMutableDictionary *joinedStreamNames;
 
+-(void) startRadio;
 @end
