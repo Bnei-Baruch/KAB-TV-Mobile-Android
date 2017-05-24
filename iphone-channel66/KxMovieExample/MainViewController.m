@@ -369,9 +369,17 @@
     return cell;
 }
 
+
 -(void) startRadio
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *indexPath;
+    if([self.tableView numberOfSections]>1)
+     indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+   else
+       indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+
+    
+    
     [self.tableView selectRowAtIndexPath:indexPath
                                 animated:YES
                           scrollPosition:UITableViewScrollPositionNone];
