@@ -189,7 +189,7 @@
     if(status == NotReachable)
     {
         [self dismissViewControllerAnimated:YES completion:nil];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Channel 66"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bnei Baruch Kabbalah"
                                                         message:@"No Internet connection available" delegate:nil
                                               cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];

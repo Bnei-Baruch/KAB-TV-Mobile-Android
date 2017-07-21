@@ -30,9 +30,7 @@
 		4D4A489B167AB5EA006380C6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E79437163910D0000A0848 /* QuartzCore.framework */; };
 		4D4A489C167AB5EA006380C6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E79435163910CA000A0848 /* OpenGLES.framework */; };
 		4D4A489E167AB5EA006380C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87E7940516390F6D000A0848 /* InfoPlist.strings */; };
-		4D4A48B1167AB760006380C6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48AF167AB760006380C6 /* icon.png */; };
 		4D4A48B2167AB760006380C6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48AF167AB760006380C6 /* icon.png */; };
-		4D4A48B3167AB760006380C6 /* splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48B0167AB760006380C6 /* splash.jpg */; };
 		4D4A48B4167AB760006380C6 /* splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D4A48B0167AB760006380C6 /* splash.jpg */; };
 		4D4A48BB167ABA49006380C6 /* StreamFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A48BA167ABA49006380C6 /* StreamFetcher.m */; };
 		4D4A48BC167ABA49006380C6 /* StreamFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A48BA167ABA49006380C6 /* StreamFetcher.m */; };
@@ -108,8 +106,6 @@
 		4DDC6F281A47B4D800B71A57 /* LangSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC6F261A47B4D800B71A57 /* LangSelectorViewController.m */; };
 		4DDC6F2D1A47B53200B71A57 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC6F2C1A47B53200B71A57 /* LoginController.m */; };
 		4DDC6F301A47B5DE00B71A57 /* AudioWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC6F2F1A47B5DE00B71A57 /* AudioWebViewController.m */; };
-		4DDC6F321A47B64100B71A57 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC6F311A47B64100B71A57 /* Default.png */; };
-		4DDC6F341A47B69400B71A57 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC6F331A47B69400B71A57 /* Default-568h@2x.png */; };
 		4DDC6F361A47B6CD00B71A57 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC6F351A47B6CD00B71A57 /* Images-2.xcassets */; };
 		4DED3460167D6EE600050304 /* LoginControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED345E167D6EE600050304 /* LoginControllerViewController.m */; };
 		4DED3461167D6EE600050304 /* LoginControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED345E167D6EE600050304 /* LoginControllerViewController.m */; };
@@ -766,11 +762,7 @@
 				4D5A0CC41A4671910008F4E5 /* indicator.png in Resources */,
 				4DDC6F1A1A47B4B700B71A57 /* BBmessagesTableViewController.xib in Resources */,
 				4DDC6F121A47B48700B71A57 /* MenuViewController.xib in Resources */,
-				4DDC6F321A47B64100B71A57 /* Default.png in Resources */,
 				4DDC6F361A47B6CD00B71A57 /* Images-2.xcassets in Resources */,
-				4D4A48B1167AB760006380C6 /* icon.png in Resources */,
-				4DDC6F341A47B69400B71A57 /* Default-568h@2x.png in Resources */,
-				4D4A48B3167AB760006380C6 /* splash.jpg in Resources */,
 				4DDC6F1C1A47B4B700B71A57 /* ChooseQualityViewController.xib in Resources */,
 				4DED3462167D6EE600050304 /* LoginControllerViewController.xib in Resources */,
 			);
@@ -1029,8 +1021,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1099,8 +1091,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

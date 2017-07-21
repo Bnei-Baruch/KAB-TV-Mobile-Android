@@ -49,7 +49,7 @@
 {
     self = [super init];
     if (self) {
-        self.title = @"Channel 66";
+        self.title = @"Bnei Baruch Kabbalah";
     
         // current SvivaTova links for testing:
         // http://streams.kab.tv/heb-special-fNgO58zb_medium.asx
