@@ -91,26 +91,26 @@
 //        
 //        
         
-        [self.streamNames setObject:@"http://icecast.kab.tv/heb.mp3"  forKey:@"ערוץ 66 - אודיו"];
-        [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו ערוץ 66" ];
+        [self.streamNames setObject:@"http://icecast.kab.tv/heb.mp3"  forKey:@"ערוץ קבלה לעם - אודיו"];
+        [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו קבלה לעם" ];
         
-        [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ 66 - וידאו" ];
-        [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Канал 66 - Русском Аудио" ];
-        [self.streamNames setObject: @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8" forKey:@"Канал 66 - Русском Видео"];
+        [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ קבלה לעם - וידאו" ];
+        [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Кабала - Русском Аудио" ];
+        [self.streamNames setObject: @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8" forKey:@"Кабала - Русском Видео"];
         
         NSMutableArray *keyChannel66 = [[NSMutableArray alloc]init];
-        [keyChannel66 addObject:@"ערוץ 66 - אודיו"];
-        [keyChannel66 addObject:@"רדיו ערוץ 66"];
-        [keyChannel66 addObject:@"ערוץ 66 - וידאו"];
-        [keyChannel66 addObject:@"Канал 66 - Русском Аудио"];
-        [keyChannel66 addObject:@"Канал 66 - Русском Видео"];
+        [keyChannel66 addObject:@"ערוץ קבלה לעם - אודיו"];
+        [keyChannel66 addObject:@"רדיו קבלה לעם"];
+        [keyChannel66 addObject:@"ערוץ קבלה לעם - וידאו"];
+        [keyChannel66 addObject:@"Кабала - Русском Аудио"];
+        [keyChannel66 addObject:@"Кабала - Русском Видео"];
         
         
         
         dataSource = [[NSMutableArray alloc ]initWithCapacity:5];
       
         NSMutableDictionary *sectionChannel66 = [[NSMutableDictionary alloc]init];
-        [sectionChannel66 setValue:keyChannel66 forKey:@"Channel 66"];
+        [sectionChannel66 setValue:keyChannel66 forKey:@"קבלה לעם"];
         [dataSource addObject:sectionChannel66];
         
         //[self processSvivaTovaStreams];
@@ -396,7 +396,7 @@
     if(status == NotReachable)
     {
         [self dismissViewControllerAnimated:YES completion:nil];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Channel 66"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"קבלה לעם"
                                                         message:@"No Internet connection available" delegate:nil
                                               cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -423,7 +423,7 @@
 //
         
     }
-    NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"Channel 66", path];
+    NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"קבלה לעם", path];
     //googleAnalytic
     self.screenName = analyticPrm;
 
