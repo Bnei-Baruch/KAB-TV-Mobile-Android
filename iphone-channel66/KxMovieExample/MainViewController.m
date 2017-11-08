@@ -95,15 +95,15 @@
         [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו קבלה לעם" ];
         
         [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ קבלה לעם - וידאו" ];
-        [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Кабала - Русском Аудио" ];
-        [self.streamNames setObject: @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8" forKey:@"Кабала - Русском Видео"];
+        [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Каббала - Русском Аудио" ];
+        [self.streamNames setObject: @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8" forKey:@"Каббала - Русском Видео"];
         
         NSMutableArray *keyChannel66 = [[NSMutableArray alloc]init];
         [keyChannel66 addObject:@"ערוץ קבלה לעם - אודיו"];
         [keyChannel66 addObject:@"רדיו קבלה לעם"];
         [keyChannel66 addObject:@"ערוץ קבלה לעם - וידאו"];
-        [keyChannel66 addObject:@"Кабала - Русском Аудио"];
-        [keyChannel66 addObject:@"Кабала - Русском Видео"];
+        [keyChannel66 addObject:@"Каббала - Русском Аудио"];
+        [keyChannel66 addObject:@"Каббала - Русском Видео"];
         
         
         
