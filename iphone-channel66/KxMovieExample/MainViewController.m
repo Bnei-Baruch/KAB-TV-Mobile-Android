@@ -14,7 +14,8 @@
 #import "MenuViewController.h"
 #import "Reachability.h"
 //#import "AudioWebViewController.h"
-
+#define kCYCAppDelegatePlayNotificationName @"playNotification"
+#define kCYCAppDelegatePauseNotificationName @"pauseNotification"
 @interface MainViewController () {
     NSArray *_localMovies;
     NSArray *_remoteMovies;
@@ -162,6 +163,30 @@
         [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    }
+    
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")){
+        //NOTE: this is the only way that I find to make this work on IOS 11 its seems to be that togglePlayPauseCommand is not working anymore
+        MPRemoteCommandCenter* commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCYCAppDelegatePlayNotificationName object:nil];
+            return MPRemoteCommandHandlerStatusSuccess;
+        }];
+        
+        [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCYCAppDelegatePauseNotificationName object:nil];
+            return MPRemoteCommandHandlerStatusSuccess;
+        }];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"RemotePlayCommandNotification" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            
+            NSLog(@"Clicked the play button.");
+        }];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"RemotePauseCommandNotification" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            
+            NSLog(@"Clicked the pause button.");
+        }];
     }
     
 
@@ -482,6 +507,15 @@
     
 }
 
+- (void) play
+{
+    [self.mp play];
+}
+
+- (void) pause
+{
+    [self.mp pause];
+}
 
 #pragma mark - Audio playback using Apple's player to save resources
 
