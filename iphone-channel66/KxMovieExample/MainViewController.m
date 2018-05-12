@@ -70,6 +70,7 @@
 //            @"http://santai.tv/vod/test/test_format_1.mp4",
         @"http://icecast.kab.tv/heb.mp3",
         @"http://icecast.kab.tv/radiozohar2014.mp3",
+        @"http://icecast.kab.tv/newlife",
        @"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8",
         @"http://icecast.kab.tv/rus.mp3",
         @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8",
@@ -94,6 +95,7 @@
         
         [self.streamNames setObject:@"http://icecast.kab.tv/heb.mp3"  forKey:@"ערוץ קבלה לעם - אודיו"];
         [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו קבלה לעם" ];
+        [self.streamNames setObject:@"http://icecast.kab.tv/newlife" forKey:@"רדיו חיים חדשים" ];
         
         [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ קבלה לעם - וידאו" ];
         [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Каббала - Русском Аудио" ];
@@ -101,8 +103,10 @@
         
         NSMutableArray *keyChannel66 = [[NSMutableArray alloc]init];
         [keyChannel66 addObject:@"ערוץ קבלה לעם - אודיו"];
-        [keyChannel66 addObject:@"רדיו קבלה לעם"];
         [keyChannel66 addObject:@"ערוץ קבלה לעם - וידאו"];
+        [keyChannel66 addObject:@"רדיו קבלה לעם"];
+        [keyChannel66 addObject:@"רדיו חיים חדשים"];
+        
         [keyChannel66 addObject:@"Каббала - Русском Аудио"];
         [keyChannel66 addObject:@"Каббала - Русском Видео"];
         
