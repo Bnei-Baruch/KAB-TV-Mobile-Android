@@ -1,0 +1,6 @@
+framework module gtm_logger {
+  umbrella header "gtm-logger-umbrella.h"
+
+  export *
+  module * { export * }
+}

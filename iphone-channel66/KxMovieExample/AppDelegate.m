@@ -25,7 +25,7 @@
 #import <CoreData/CoreData.h>
 
 #import "DataStore.h"
-
+#import <OneSignal/OneSignal.h>
 
 @implementation AppDelegate
 //- (NSManagedObjectContext *)managedObjectContext
@@ -116,36 +116,100 @@
 //    }
     
    
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
-        UIUserNotificationType allNotificationTypes =
-        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-        UIUserNotificationSettings *settings =
-        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    } else {
-        // iOS 10 or later
-#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
-        UNAuthorizationOptions authOptions =
-        UNAuthorizationOptionAlert
-        | UNAuthorizationOptionSound
-        | UNAuthorizationOptionBadge;
-        [[UNUserNotificationCenter currentNotificationCenter]
-         requestAuthorizationWithOptions:authOptions
-         completionHandler:^(BOOL granted, NSError * _Nullable error) {
-         }
-         ];
-        
-        // For iOS 10 display notification (sent via APNS)
-        [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
-        // For iOS 10 data message (sent via FCM)
-        [[FIRMessaging messaging] setRemoteMessageDelegate:self];
-#endif
-    }
+//    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+//        UIUserNotificationType allNotificationTypes =
+//        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+//        UIUserNotificationSettings *settings =
+//        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    } else {
+//        // iOS 10 or later
+//#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+//        UNAuthorizationOptions authOptions =
+//        UNAuthorizationOptionAlert
+//        | UNAuthorizationOptionSound
+//        | UNAuthorizationOptionBadge;
+//        [[UNUserNotificationCenter currentNotificationCenter]
+//         requestAuthorizationWithOptions:authOptions
+//         completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//         }
+//         ];
+//
+//        // For iOS 10 display notification (sent via APNS)
+//        [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+//        // For iOS 10 data message (sent via FCM)
+//       // [[FIRMessaging messaging] setRemoteMessageDelegate:self];
+//#endif
+//    }
+//
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//
     
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [OneSignal initWithLaunchOptions:launchOptions
+                               appId:@"cc74f8f1-4494-4474-993c-dec8e27c60ee"
+     
+          handleNotificationReceived:^(OSNotification *notification) {
+              NSLog(@"Recieved Push Notification");
+              // [PFPush handlePush:userInfo];
+              
+              OSNotificationPayload* payload = notification.payload;
+              
+                  //        PFObject *messagesObject = [PFObject objectWithClassName:@"messages"];
+                  //        messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
+                  //        messagesObject[@"date"] = [NSDate date];
+                  //        [messagesObject pinInBackground];
+                  NSManagedObjectContext *context = [DataStore getInstance].managedObjectContext;
+
+                  // Create a new managed object
+                  NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
+                  [messages setValue:[payload body] forKey:@"text"];
+              NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+              [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            
+                  [messages setValue:[NSDate date] forKey:@"date"];
+                  [messages willSave];
+
+                  NSError *error = nil;
+                  // Save the object to persistent store
+                  if (![context save:&error]) {
+                      NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                  }
+
+
+//                  NSString *text = notification.payload.body;
+//                  NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+//                  NSArray* matches = [detector matchesInString:text options:0 range:NSMakeRange(0, [text length])];
+//                  if([matches count] > 0)
+//                  {
+//                      NSURL *url  = [[matches objectAtIndex:0] URL];
+//                      [[UIApplication sharedApplication] openURL:url];
+//                  }
+//                  else
+//                  {
+//                      BBmessagesTableViewController *bbm = [[BBmessagesTableViewController alloc]init];
+//                      UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+//                      [navController pushViewController:bbm animated:true];
+//                  }
+             
+             
+          }
+            handleNotificationAction:^(OSNotificationOpenedResult *result){
+                
+            }
+                            settings:@{kOSSettingsKeyAutoPrompt: @false}];
+    OneSignal.inFocusDisplayType = OSNotificationDisplayTypeNotification;
+    [OneSignal setSubscription:true];
     
+    // Recommend moving the below line to prompt for push after informing the user about
+    //   how your app will use them.
+    [OneSignal promptForPushNotificationsWithUserResponse:^(BOOL accepted) {
+        NSLog(@"User accepted notifications: %d", accepted);
+    }];
     
    
+        
+    
+    
         return YES;
 }
 
