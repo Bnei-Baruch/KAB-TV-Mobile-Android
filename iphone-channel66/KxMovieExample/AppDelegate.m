@@ -26,6 +26,7 @@
 
 #import "DataStore.h"
 #import <OneSignal/OneSignal.h>
+#import "IQKeyboardManager.h"
 
 @implementation AppDelegate
 //- (NSManagedObjectContext *)managedObjectContext
@@ -154,26 +155,44 @@
               
               OSNotificationPayload* payload = notification.payload;
               
+              NSManagedObjectContext *context = [DataStore  getInstance].managedObjectContext;
+              //            var context2 = PortDelegate.persistentContainer;
+              //
+                          // Create a new managed object
+                          NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
+                          [messages setValue:[payload body] forKey:@"text"];
+                          NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+                          [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+              
+                          [messages setValue:[NSDate date] forKey:@"date"];
+                          [messages willSave];
+              
+                          NSError *error = nil;
+                          // Save the object to persistent store
+                          if (![context save:&error]) {
+                              NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                          }
+              
                   //        PFObject *messagesObject = [PFObject objectWithClassName:@"messages"];
                   //        messagesObject[@"text"] = [apsInfo objectForKey:@"alert"];
                   //        messagesObject[@"date"] = [NSDate date];
                   //        [messagesObject pinInBackground];
-                  NSManagedObjectContext *context = [DataStore getInstance].managedObjectContext;
-
-                  // Create a new managed object
-                  NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
-                  [messages setValue:[payload body] forKey:@"text"];
-              NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-              [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-            
-                  [messages setValue:[NSDate date] forKey:@"date"];
-                  [messages willSave];
-
-                  NSError *error = nil;
-                  // Save the object to persistent store
-                  if (![context save:&error]) {
-                      NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                  }
+//                  NSManagedObjectContext *context = [DataStore getInstance].managedObjectContext;
+//
+//                  // Create a new managed object
+//                  NSManagedObject *messages = [NSEntityDescription insertNewObjectForEntityForName:@"Messages" inManagedObjectContext:context];
+//                  [messages setValue:[payload body] forKey:@"text"];
+//              NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+//              [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//            
+//                  [messages setValue:[NSDate date] forKey:@"date"];
+//                  [messages willSave];
+//
+//                  NSError *error = nil;
+//                  // Save the object to persistent store
+//                  if (![context save:&error]) {
+//                      NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+//                  }
 
 
 //                  NSString *text = notification.payload.body;
@@ -195,19 +214,90 @@
           }
             handleNotificationAction:^(OSNotificationOpenedResult *result){
                 
+                // get the current date and time
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                [dateFormat setDateFormat:@"YYYY-MM-dd\'T\'HH:mm:ssZZZZZ"];
+                
+                
+                NSString *now = [dateFormat stringFromDate:[NSDate date]];
+               
+                
+                // get the date time String from the date object
+               
+                
+                [OneSignal sendTag:now value:@"opened"];
+                
             }
                             settings:@{kOSSettingsKeyAutoPrompt: @false}];
     OneSignal.inFocusDisplayType = OSNotificationDisplayTypeNotification;
-    [OneSignal setSubscription:true];
+    [OneSignal setSubscription:false];
     
-    // Recommend moving the below line to prompt for push after informing the user about
+    
+    
+    UNNotificationAction* confirm = [UNNotificationAction  actionWithIdentifier:@"OK" title:@"OK" options:UNNotificationActionOptionForeground];
+    
+    
+    UNNotificationCategory * notifCategory =  [UNNotificationCategory categoryWithIdentifier:@"Confirm" actions:[NSArray arrayWithObject:confirm] intentIdentifiers:[NSArray array] options:[NSArray array]];
+    
+    
+    [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:[NSSet setWithObject:notifCategory]];
+    
+    
+    
     //   how your app will use them.
     [OneSignal promptForPushNotificationsWithUserResponse:^(BOOL accepted) {
         NSLog(@"User accepted notifications: %d", accepted);
     }];
     
    
-        
+    // Override point for customization after application launch.
+    
+    
+    
+    
+    
+    //Enabling keyboard manager
+    
+    [[IQKeyboardManager sharedManager] setEnable:YES];
+    
+    
+    
+    [[IQKeyboardManager sharedManager] setKeyboardDistanceFromTextField:15];
+    
+    //Enabling autoToolbar behaviour. If It is set to NO. You have to manually create IQToolbar for keyboard.
+    
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
+    
+    
+    
+    //Setting toolbar behavious to IQAutoToolbarBySubviews. Set it to IQAutoToolbarByTag to manage previous/next according to UITextField’s tag property in increasing order.
+    
+    [[IQKeyboardManager sharedManager] setToolbarManageBehaviour:IQAutoToolbarBySubviews];
+    
+    
+    
+    //Resign textField if touched outside of UITextField/UITextView.
+    
+    [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
+    
+    
+    
+    //Giving permission to modify TextView’s frame
+    
+//    [[IQKeyboardManager sharedManager] setCanAdjustTextView:YES];
+//
+//
+//
+//    //Show TextField placeholder texts on autoToolbar
+//
+//    [[IQKeyboardManager sharedManager] setShouldShowTextFieldPlaceholder:YES];
+//
+    
+    
+
+    
+    
+    
     
     
         return YES;

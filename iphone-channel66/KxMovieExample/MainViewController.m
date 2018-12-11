@@ -13,6 +13,7 @@
 #import "LoginControllerViewController.h"
 #import "MenuViewController.h"
 #import "Reachability.h"
+#import "KxMovieExample-Swift.h"
 //#import "AudioWebViewController.h"
 #define kCYCAppDelegatePlayNotificationName @"playNotification"
 #define kCYCAppDelegatePauseNotificationName @"pauseNotification"
@@ -473,6 +474,17 @@
     NSDictionary *svivaStreams = [userD objectForKey:@"currentSvivaTovaData"];
     if(svivaStreams !=nil)
         {
+            
+            
+            if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
+            {
+                RegisterViewController *reg = [[RegisterViewController alloc]init];
+                
+                [self.navigationController presentModalViewController:reg animated:YES];
+                
+            }
+            
+            
     NSDictionary *regular = [svivaStreams objectForKey:@"regular"];
     NSArray *urls = [regular objectForKey:@"urls"];
     svivaTovastreamNames = [[NSMutableDictionary alloc]init];

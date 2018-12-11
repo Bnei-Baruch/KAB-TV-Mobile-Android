@@ -28,6 +28,7 @@ pod 'Firebase/Analytics', '>= 2.5.1'
 pod 'Firebase/DynamicLinks', '>= 2.5.1'
 pod 'GoogleIPhoneUtilities'
 pod 'gtm-logger'
+pod 'IQKeyboardManager' 
 end
 
 

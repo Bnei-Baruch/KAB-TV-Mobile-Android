@@ -8,6 +8,7 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "LangSelectorViewController.h"
 #import "AudioWebViewController.h"
+#import "KxMovieExample-Swift.h"
 @interface LangSelectorViewController ()
 
 @end
@@ -254,6 +255,9 @@
 //        
 //        
 //   }
+    RegisterViewController *bbm = [[RegisterViewController alloc]init];
+   
+    [self.navigationController presentModalViewController:bbm animated:YES];
 
 }
 

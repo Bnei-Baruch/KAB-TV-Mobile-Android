@@ -137,12 +137,14 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-framework/GoogleToolboxForMac.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Protobuf-framework/Protobuf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb-framework/nanopb.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gtm-logger/gtm_logger.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-framework/GoogleToolboxForMac.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Protobuf-framework/Protobuf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb-framework/nanopb.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gtm-logger/gtm_logger.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

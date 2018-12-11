@@ -13,7 +13,7 @@
 #import "SvivaTovaLoginViewController.h"
 #import "LangSelectorViewController.h"
 #import "BBmessagesTableViewController.h"
-
+#import <OneSignal/OneSignal.h>
 @interface MenuViewController () {
     NSArray *menu_details;
 }
@@ -68,14 +68,16 @@
              menu_details = @[
                                @"Change language",
                               @"Choose Quality",
-                                @"BB messages"
+                               @"Messages history",
+                               @"Wakening system"
                               ];
          }
     } else {
         menu_details = @[
                          @"Change language",
                          @"Choose Quality",
-                         @"BB messages"
+                         @"Messages history",
+                         @"Wakening system"
                          ];
     }
     
@@ -165,6 +167,10 @@
     }
     
     cell.textLabel.text = menu_details[indexPath.row];
+    if([indexPath item] == 3)
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     
     return cell;
 }
@@ -187,6 +193,18 @@
             break;
         case 2:
             [self openBBmessages];
+            break;
+        case 3:
+            if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryCheckmark)
+            {
+                [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+                [OneSignal setSubscription:NO];
+            }
+            else
+            {
+                 [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+                [OneSignal setSubscription:YES];
+            }
             break;
         default:
             break;

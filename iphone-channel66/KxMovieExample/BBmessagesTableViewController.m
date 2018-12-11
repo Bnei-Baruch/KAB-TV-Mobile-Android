@@ -68,9 +68,27 @@ NSMutableArray *msgData;
 //        NSLog(@"error get object");
 //    }
     
+     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearMessages)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
 }
 
-
+- (void)clearMessages
+{
+    NSManagedObjectContext *managedObjectContext =  [self managedObjectContext];
+    
+    // NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Messages"];
+    
+    NSEntityDescription *entityDesc =
+    [NSEntityDescription entityForName:@"Messages"
+                inManagedObjectContext:managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Messages"];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    [managedObjectContext executeRequest:delete error: NULL];
+    [msgData removeAllObjects];
+    [self.tableView reloadData];
+}
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
 //    UIFont * font = [UIFont systemFontOfSize:15.0f];
