@@ -27,6 +27,7 @@
 #import "DataStore.h"
 #import <OneSignal/OneSignal.h>
 #import "IQKeyboardManager.h"
+#import "KxMovieExample-Swift.h"
 
 @implementation AppDelegate
 //- (NSManagedObjectContext *)managedObjectContext
@@ -230,7 +231,7 @@
             }
                             settings:@{kOSSettingsKeyAutoPrompt: @false}];
     OneSignal.inFocusDisplayType = OSNotificationDisplayTypeNotification;
-    [OneSignal setSubscription:false];
+   
     
     
     
@@ -293,6 +294,16 @@
 //    [[IQKeyboardManager sharedManager] setShouldShowTextFieldPlaceholder:YES];
 //
     
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
+    {
+        RegisterViewController *bbm = [[RegisterViewController alloc]init];
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        [navController  presentModalViewController:bbm animated:YES];
+    }
+    else
+    {
+        [OneSignal setSubscription:false];
+    }
     
 
     

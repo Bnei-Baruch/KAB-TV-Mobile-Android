@@ -11,7 +11,7 @@
 #define kSuccesfulLoginIndicator @"allow_archived_broadcasts"
 #define kFailedLoginIndicator @"אימייל או סיסמא שגויים"
 #define kSvivaTovaLoginURL @"http://kabbalahgroup.info/internet/he/users/login"
-#define kSvivaTovaLoginURLrest @"http://kabbalahgroup.info/internet/api/v1/tokens.json"
+#define kSvivaTovaLoginURLrest @"https://kabbalahgroup.info/internet/api/v1/tokens.json"
 @class FBSDKAccessToken;
 
 @implementation SvivaTovaLoginController

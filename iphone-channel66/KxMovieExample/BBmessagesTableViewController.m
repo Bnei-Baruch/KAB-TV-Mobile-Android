@@ -42,6 +42,9 @@ NSMutableArray *msgData;
     
     NSManagedObjectContext *managedObjectContext =  [self managedObjectContext];
     
+    
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
    // NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Messages"];
     
     NSEntityDescription *entityDesc =
