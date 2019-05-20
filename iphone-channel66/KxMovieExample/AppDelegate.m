@@ -294,16 +294,16 @@
 //    [[IQKeyboardManager sharedManager] setShouldShowTextFieldPlaceholder:YES];
 //
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
-    {
-        RegisterViewController *bbm = [[RegisterViewController alloc]init];
-        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        [navController  presentModalViewController:bbm animated:YES];
-    }
-    else
-    {
+//    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
+//    {
+//        RegisterViewController *bbm = [[RegisterViewController alloc]init];
+//        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+//        [navController  presentModalViewController:bbm animated:YES];
+//    }
+//    else
+//    {
         [OneSignal setSubscription:false];
-    }
+//    }
     
 
     

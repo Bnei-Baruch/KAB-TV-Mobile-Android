@@ -255,9 +255,9 @@
 //        
 //        
 //   }
-    RegisterViewController *bbm = [[RegisterViewController alloc]init];
-   
-    [self.navigationController presentModalViewController:bbm animated:YES];
+//    RegisterViewController *bbm = [[RegisterViewController alloc]init];
+//   
+//    [self.navigationController presentModalViewController:bbm animated:YES];
 
 }
 

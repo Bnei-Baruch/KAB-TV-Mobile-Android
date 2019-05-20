@@ -68,16 +68,16 @@
              menu_details = @[
                                @"Change language",
                               @"Choose Quality",
-                               @"Messages history",
-                               @"Wakening system"
+                               @"Messages history"
+                              // ,                               @"Wakening system"
                               ];
          }
     } else {
         menu_details = @[
                          @"Change language",
                          @"Choose Quality",
-                         @"Messages history",
-                         @"Wakening system"
+                         @"Messages history"
+//                         ,                         @"Wakening system"
                          ];
     }
     

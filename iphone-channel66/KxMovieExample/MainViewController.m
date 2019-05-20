@@ -476,13 +476,13 @@
         {
             
             
-            if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
-            {
-                RegisterViewController *reg = [[RegisterViewController alloc]init];
-                
-                [self.navigationController presentModalViewController:reg animated:YES];
-                
-            }
+//            if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
+//            {
+//                RegisterViewController *reg = [[RegisterViewController alloc]init];
+//                
+//                [self.navigationController presentModalViewController:reg animated:YES];
+//                
+//            }
             
             
     NSDictionary *regular = [svivaStreams objectForKey:@"regular"];
