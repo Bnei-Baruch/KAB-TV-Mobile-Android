@@ -1199,6 +1199,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2.6.4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3ZYLPBKYWW;
 				ENABLE_BITCODE = NO;
@@ -1233,6 +1234,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
+				MARKETING_VERSION = 2.2.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1277,6 +1279,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 2.6.4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3ZYLPBKYWW;
 				ENABLE_BITCODE = NO;
@@ -1304,6 +1307,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
+				MARKETING_VERSION = 2.2.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
