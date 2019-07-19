@@ -14,7 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
-
+#import <AVKit/AVKit.h>
 @interface LangSelectorViewController : UITableViewController <UITableViewDataSource>
 
 {
@@ -22,11 +22,11 @@
     NSArray * locales;
     Boolean mFromActionview;
    // AudioWebViewController *audiocontroller;
-    MPMoviePlayerController *mp;
-	MPMoviePlayerViewController *mpVC;
+    AVPlayer *mp;
+	AVPlayerViewController *mpVC;
 }
-@property (nonatomic, strong) MPMoviePlayerController *mp;
-@property (nonatomic, strong) MPMoviePlayerViewController *mpVC;
+@property (nonatomic, strong) AVPlayer *mp;
+@property (nonatomic, strong) AVPlayerViewController *mpVC;
 
 
 //@property (retain, nonatomic) AudioWebViewController *audiocontroller;

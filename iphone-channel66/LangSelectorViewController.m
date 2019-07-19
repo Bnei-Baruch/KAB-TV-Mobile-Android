@@ -377,32 +377,29 @@
                             NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Video", urlToPlay];
                             //self.trackedViewName = analyticPrm;
 //                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
-                            self.mpVC = [[MPMoviePlayerViewController alloc] init];// initWithContentURL:URL];
+                            self.mpVC = [[AVPlayerViewController alloc] init];// initWithContentURL:URL];
                             
                             
                             if (self.mpVC)
                             {
                                 [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-                                self.mp = [mpVC moviePlayer];
-                                self.mp.movieSourceType = MPMovieSourceTypeStreaming;
-                                [self.mp setContentURL:[NSURL URLWithString:urlToPlay]];
-                                [self.mp prepareToPlay];
-                                self.mp.fullscreen = YES;
-                                self.mp.allowsAirPlay =YES;
-                                [self.mp prepareToPlay];
-                                self.mp.useApplicationAudioSession = YES;// for audio playing in background. (3.x)
+                                mpVC.player = [AVPlayer playerWithURL:[[NSURL alloc]initWithString:urlToPlay]];
+                                self.mp = mpVC.player;
+                               
+                                
                                 
                                 // Register to receive a notification when the movie has finished playing
                                 [[NSNotificationCenter defaultCenter] addObserver:self
                                                                          selector:@selector(moviePlayBackDidFinish:)
-                                                                             name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                             name:AVPlayerItemFailedToPlayToEndTimeErrorKey
                                                                            object:nil];
                                 
                                 ////        CGRect viewInsetRect = CGRectInset ([self.view bounds],0.0, 0.0 );
                                 ////        [[self.mpVC view] setFrame: viewInsetRect ];
                                 ////        [self.view addSubview:self.mpVC.view];
-                                [self presentMoviePlayerViewControllerAnimated:mpVC];
-                                [self.mp play];
+                                [self presentViewController:mpVC animated:YES completion:^{
+                                    [mpVC.player play];
+                                }];
                             }
                             
                             //                            [self.navigationController pushViewController:vc animated:YES completion:nil];
@@ -505,7 +502,7 @@
 
 -(void) moviePlayBackDidFinish:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                    name:AVPlayerItemFailedToPlayToEndTimeErrorKey
                                                   object:nil];
     
     NSError *error = [[notification userInfo] objectForKey:@"error"];

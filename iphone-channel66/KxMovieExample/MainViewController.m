@@ -538,32 +538,31 @@
 
 -(void)playFromURL:(NSURL *)URL {
     
-    
-	self.mpVC = [[MPMoviePlayerViewController alloc] initWithContentURL:URL];
+    self.mpVC = [[AVPlayerViewController alloc] init];
+	
 	if (self.mpVC)
 	{
-		self.mp = [mpVC moviePlayer];
+		self.mpVC.player = [AVPlayer playerWithURL:URL];
         
-        self.mp.useApplicationAudioSession = NO;// for audio playing in background. (3.x)
         
 		// Register to receive a notification when the movie has finished playing
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(moviePlayBackDidFinish:)
-													 name:MPMoviePlayerPlaybackDidFinishNotification
+													 name:AVPlayerItemFailedToPlayToEndTimeErrorKey
 												   object:nil];
         
         
-		[self presentMoviePlayerViewControllerAnimated:mpVC];
-		[self.mp play];
-        
-        
+        [self presentViewController:mpVC animated:YES completion:^{
+            [mpVC.player play];
+        }];
+		
         
 	}
 }
 
 -(void) moviePlayBackDidFinish:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                    name:AVPlayerItemFailedToPlayToEndTimeErrorKey
                                                   object:nil];
     NSError *error = [[notification userInfo] objectForKey:@"error"];
     if (error) {
