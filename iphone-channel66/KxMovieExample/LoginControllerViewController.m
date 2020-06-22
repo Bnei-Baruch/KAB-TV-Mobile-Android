@@ -36,7 +36,7 @@
     // Do any additional setup after loading the view from its nib.
     
     //googleAnalytic
-    self.screenName = @"Login Sviva Tova Screen";
+    //self.screenName = @"Login Sviva Tova Screen";
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"menu" style:UIBarButtonItemStylePlain target:self action:@selector(openMenu)];
     self.navigationItem.rightBarButtonItem = anotherButton;
@@ -157,7 +157,7 @@
                         if (urlToPlay) {
                             //googleAnalytic
                             NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Video", urlToPlay];
-                            self.screenName = analyticPrm;
+//                            self.screenName = analyticPrm;
 //                            KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:urlToPlay];
 //                            [self presentViewController:vc animated:YES completion:nil];
                         }
@@ -179,7 +179,7 @@
             {
             //googleAnalytic
             NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"sviva Tova Audio", actionSheet];
-            self.screenName = analyticPrm;
+//            self.screenName = analyticPrm;
             //Audio
             mFromActionview = YES;
             [mWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:actionSheet.accessibilityValue]]];

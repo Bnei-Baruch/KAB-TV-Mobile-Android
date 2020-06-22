@@ -6,13 +6,16 @@ target 'kxmovie' do
   # use_frameworks!
 
   # Pods for kxmovie
+
+
    pod 'OneSignal', '>= 2.6.2', '< 3.0'
-   pod 'Firebase', '>= 2.5.1'
- pod 'Firebase/Messaging', '>= 2.5.1'
-pod 'Firebase/Analytics', '>= 2.5.1'
-#pod 'Firebase/Firestore', '>= 2.5.1'
-pod 'Firebase/DynamicLinks', '>= 2.5.1'
-pod 'GoogleIPhoneUtilities'
+   pod 'Firebase' #, '>= 2.5.1'
+ pod 'Firebase/Messaging' #, '>= 2.5.1'
+pod 'Firebase/Analytics' #, '>= 2.5.1'
+pod 'Firebase/Firestore' #, '>= 2.5.1'
+pod 'Firebase/DynamicLinks' #, '>= 2.5.1'
+#pod 'GoogleIPhoneUtilities'
+pod 'Google-Mobile-Ads-SDK'
 end
 
 target 'KxMovieExample' do
@@ -21,14 +24,16 @@ target 'KxMovieExample' do
 
   # Pods for KxMovieExample
  pod 'OneSignal', '>= 2.6.2', '< 3.0'
-   pod 'Firebase', '>= 2.5.1'
- pod 'Firebase/Messaging', '>= 2.5.1'
-pod 'Firebase/Analytics', '>= 2.5.1'
-#pod 'Firebase/Firestore', '>= 2.5.1'
-pod 'Firebase/DynamicLinks', '>= 2.5.1'
-pod 'GoogleIPhoneUtilities'
-pod 'gtm-logger'
+
+   pod 'Firebase' #, '>= 2.5.1'
+ pod 'Firebase/Messaging' #, '>= 2.5.1'
+pod 'Firebase/Analytics' #, '>= 2.5.1'
+pod 'Firebase/Firestore', '>= 2.5.1'
+pod 'Firebase/DynamicLinks' #, '>= 2.5.1'
+#pod 'GoogleIPhoneUtilities'
+#pod 'gtm-logger'
 pod 'IQKeyboardManager' 
+pod 'Google-Mobile-Ads-SDK'
 end
 
 

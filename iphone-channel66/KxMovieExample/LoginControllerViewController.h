@@ -12,7 +12,7 @@
 #import "GAITrackedViewController.h"
 
 
-@interface LoginControllerViewController : GAITrackedViewController <UIActionSheetDelegate, UIWebViewDelegate>
+@interface LoginControllerViewController : UIViewController <UIActionSheetDelegate, UIWebViewDelegate>
 {
    IBOutlet UIWebView *mWebview;
     Boolean mFromActionview;

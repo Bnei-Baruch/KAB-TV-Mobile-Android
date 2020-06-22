@@ -39,6 +39,8 @@
 	<string>243615172677749</string>
 	<key>FacebookDisplayName</key>
 	<string>Bnei Baruch Kabbalah</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-5716767383344062~4405665863</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

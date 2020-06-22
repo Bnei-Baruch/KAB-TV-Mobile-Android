@@ -14,6 +14,8 @@
 #import "MenuViewController.h"
 #import "Reachability.h"
 #import "KxMovieExample-Swift.h"
+@import GoogleMobileAds;
+
 //#import "AudioWebViewController.h"
 #define kCYCAppDelegatePlayNotificationName @"playNotification"
 #define kCYCAppDelegatePauseNotificationName @"pauseNotification"
@@ -24,6 +26,8 @@
 }
 
 @property (strong, nonatomic) UITableView *tableView;
+@property(nonatomic, strong) GADBannerView *bannerView;
+
 @end
 
 
@@ -143,11 +147,37 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)addBannerViewToView:(UIView *)bannerView {
+  bannerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:bannerView];
+  [self.view addConstraints:@[
+    [NSLayoutConstraint constraintWithItem:bannerView
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.bottomLayoutGuide
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:0],
+    [NSLayoutConstraint constraintWithItem:bannerView
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:1
+                                constant:0]
+                                ]];
+}
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    
+    self.bannerView = [[GADBannerView alloc]
+         initWithAdSize:kGADAdSizeBanner];
+
+     [self addBannerViewToView:self.bannerView];
     
     
     //for audio playing in background:
@@ -455,7 +485,7 @@
     }
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"קבלה לעם", path];
     //googleAnalytic
-    self.screenName = analyticPrm;
+  //  self.screenName = analyticPrm;
 
         [self playFromURL:[NSURL URLWithString:path]]; // to save memory
 }

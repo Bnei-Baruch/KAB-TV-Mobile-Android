@@ -11,7 +11,7 @@
 //#define TESTING 0
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "GAI.h"
+//#import "GAI.h"
 #ifdef TESTING
 #import "TestFlight.h"
 #endif
@@ -28,6 +28,7 @@
 #import <OneSignal/OneSignal.h>
 #import "IQKeyboardManager.h"
 #import "KxMovieExample-Swift.h"
+@import GoogleMobileAds;
 
 @implementation AppDelegate
 //- (NSManagedObjectContext *)managedObjectContext
@@ -48,18 +49,20 @@
      [FBSDKLoginButton class];
     
     
+    [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+   // [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].dispatchInterval = 20;
+   // [GAI sharedInstance].dispatchInterval = 20;
     // Optional: set debug to YES for extra debugging information.
     //[GAI sharedInstance].debug = YES;
     // Create tracker instance.
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-36608494-1"];
+//    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-36608494-1"];
     
 
 #ifdef TESTING

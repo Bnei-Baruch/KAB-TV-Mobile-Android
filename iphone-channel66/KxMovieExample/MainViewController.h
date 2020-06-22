@@ -10,14 +10,14 @@
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 
 #import <UIKit/UIKit.h>
-#import "GAITrackedViewController.h"
+//#import "GAITrackedViewController.h"
 
 // for background audio playback &| apple's internal player:
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
-@interface MainViewController : GAITrackedViewController<UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate> {
+@interface MainViewController :UIViewController< UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate> {
     NSMutableDictionary *streamNames;
      NSMutableDictionary *svivaTovastreamNames;
     NSMutableDictionary  *joinedStreamNames;
