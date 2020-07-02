@@ -56,7 +56,7 @@
     self = [super init];
     if (self) {
         self.title = @"Bnei Baruch Kabbalah";
-    
+        
         // current SvivaTova links for testing:
         // http://streams.kab.tv/heb-special-fNgO58zb_medium.asx
         // http://streams.kab.tv/heb-special-fNgO58zb.asx
@@ -68,39 +68,39 @@
         // http://streams.kab.tv/spa-special-fNgO58zb_medium.asx
         
         _remoteMovies = @[
-//            @"http://www.wowza.com/_h264/BigBuckBunny_175k.mov",
-//            // @"http://www.wowza.com/_h264/BigBuckBunny_115k.mov",
-//            @"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
-//            @"http://santai.tv/vod/test/test_format_1.3gp",
-//            @"http://santai.tv/vod/test/test_format_1.mp4",
-        @"http://icecast.kab.tv/heb.mp3",
-        @"http://icecast.kab.tv/radiozohar2014.mp3",
-        @"http://icecast.kab.tv/newlife",
-       @"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8",
-        @"http://icecast.kab.tv/rus.mp3",
-        @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8",
-        //@"http://icecast.kab.tv/live1-heb-574bcfd5.mp3"
-        
+            //            @"http://www.wowza.com/_h264/BigBuckBunny_175k.mov",
+            //            // @"http://www.wowza.com/_h264/BigBuckBunny_115k.mov",
+            //            @"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
+            //            @"http://santai.tv/vod/test/test_format_1.3gp",
+            //            @"http://santai.tv/vod/test/test_format_1.mp4",
+            @"http://icecast.kab.tv/heb.mp3",
+            @"http://icecast.kab.tv/radiozohar2014.mp3",
+            @"http://icecast.kab.tv/newlife",
+            @"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8",
+            @"http://icecast.kab.tv/rus.mp3",
+            @"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8",
+            //@"http://icecast.kab.tv/live1-heb-574bcfd5.mp3"
+            
             //@"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov",
             //@"http://santai.tv/vod/test/BigBuckBunny_175k.mov",
         ];
         self.streamNames = [[ NSMutableDictionary alloc]
-         init];
+                            init];
         self.joinedStreamNames = [[ NSMutableDictionary alloc]
                                   init];
-
-//        [self.streamNames setObject:@"ערוץ 66 - אודיו" forKey:@"http://icecast.kab.tv/heb.mp3"];
-//        [self.streamNames setObject:@"רדיו ערוץ 66" forKey:@"http://icecast.kab.tv/radiozohar2014.mp3"];
-//
-//        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8"];
-//        [self.streamNames setObject:@"Канал 66 - Русском Аудио" forKey:@"http://icecast.kab.tv/rus.mp3"];
-//        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8"];
-//        
-//        
+        
+        //        [self.streamNames setObject:@"ערוץ 66 - אודיו" forKey:@"http://icecast.kab.tv/heb.mp3"];
+        //        [self.streamNames setObject:@"רדיו ערוץ 66" forKey:@"http://icecast.kab.tv/radiozohar2014.mp3"];
+        //
+        //        [self.streamNames setObject:@"ערוץ 66 - וידאו" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8"];
+        //        [self.streamNames setObject:@"Канал 66 - Русском Аудио" forKey:@"http://icecast.kab.tv/rus.mp3"];
+        //        [self.streamNames setObject:@"Канал 66 - Русском Видео" forKey:@"http://edge1.il.kab.tv/rtplive/tv66-rus-medium.stream/playlist.m3u8"];
+        //
+        //
         
         [self.streamNames setObject:@"http://icecast.kab.tv/heb.mp3"  forKey:@"ערוץ קבלה לעם - אודיו"];
         [self.streamNames setObject:@"http://icecast.kab.tv/radiozohar2014.mp3" forKey:@"רדיו קבלה לעם" ];
-        [self.streamNames setObject:@"http://icecast.kab.tv/newlife" forKey:@"רדיו חיים חדשים" ];
+        
         
         [self.streamNames setObject:@"http://edge1.il.kab.tv/rtplive/tv66-heb-medium.stream/playlist.m3u8" forKey:@"ערוץ קבלה לעם - וידאו" ];
         [self.streamNames setObject:@"http://icecast.kab.tv/rus.mp3" forKey:@"Каббала - Русском Аудио" ];
@@ -110,7 +110,7 @@
         [keyChannel66 addObject:@"ערוץ קבלה לעם - אודיו"];
         [keyChannel66 addObject:@"ערוץ קבלה לעם - וידאו"];
         [keyChannel66 addObject:@"רדיו קבלה לעם"];
-        [keyChannel66 addObject:@"רדיו חיים חדשים"];
+        
         
         [keyChannel66 addObject:@"Каббала - Русском Аудио"];
         [keyChannel66 addObject:@"Каббала - Русском Видео"];
@@ -118,7 +118,7 @@
         
         
         dataSource = [[NSMutableArray alloc ]initWithCapacity:5];
-      
+        
         NSMutableDictionary *sectionChannel66 = [[NSMutableDictionary alloc]init];
         [sectionChannel66 setValue:keyChannel66 forKey:@"קבלה לעם"];
         [dataSource addObject:sectionChannel66];
@@ -148,36 +148,107 @@
 }
 
 - (void)addBannerViewToView:(UIView *)bannerView {
-  bannerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:bannerView];
-  [self.view addConstraints:@[
-    [NSLayoutConstraint constraintWithItem:bannerView
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.bottomLayoutGuide
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:0],
-    [NSLayoutConstraint constraintWithItem:bannerView
-                               attribute:NSLayoutAttributeCenterX
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeCenterX
-                              multiplier:1
-                                constant:0]
-                                ]];
+    bannerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:bannerView];
+    [self.view addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:bannerView
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.bottomLayoutGuide
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1
+                                      constant:0],
+        [NSLayoutConstraint constraintWithItem:bannerView
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.view
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1
+                                      constant:0]
+    ]];
 }
 
+
+/// Tells the delegate an ad request loaded an ad.
+- (void)adViewDidReceiveAd:(GADBannerView *)adView {
+    NSLog(@"adViewDidReceiveAd");
+    [self addBannerViewToView:self.bannerView];
+    
+}
+
+/// Tells the delegate an ad request failed.
+- (void)adView:(GADBannerView *)adView
+didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error localizedDescription]);
+}
+
+/// Tells the delegate that a full-screen view will be presented in response
+/// to the user clicking on an ad.
+- (void)adViewWillPresentScreen:(GADBannerView *)adView {
+    NSLog(@"adViewWillPresentScreen");
+}
+
+/// Tells the delegate that the full-screen view will be dismissed.
+- (void)adViewWillDismissScreen:(GADBannerView *)adView {
+    NSLog(@"adViewWillDismissScreen");
+}
+
+/// Tells the delegate that the full-screen view has been dismissed.
+- (void)adViewDidDismissScreen:(GADBannerView *)adView {
+    NSLog(@"adViewDidDismissScreen");
+}
+
+/// Tells the delegate that a user click will open another app (such as
+/// the App Store), backgrounding the current app.
+- (void)adViewWillLeaveApplication:(GADBannerView *)adView {
+    NSLog(@"adViewWillLeaveApplication");
+}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers = @[ kGADSimulatorID ];
+    
     self.bannerView = [[GADBannerView alloc]
-         initWithAdSize:kGADAdSizeBanner];
-
-     [self addBannerViewToView:self.bannerView];
+                       initWithAdSize:kGADAdSizeSmartBannerPortrait];
+    
+    
+    [self addBannerViewToView:self.bannerView];
+    
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSDictionary *languageDic = [NSLocale componentsFromLocaleIdentifier:language];
+    NSString *languageCode = [languageDic objectForKey:@"kCFLocaleLanguageCodeKey"];
+    
+  
+    
+  
+    
+    if([languageCode isEqualToString:@"he"])
+    {
+        self.bannerView.adUnitID = @"ca-app-pub-4525606414173317/2693563718";
+    }
+    else
+    if([languageCode isEqualToString:@"ru"])
+       {
+           self.bannerView.adUnitID = @"ca-app-pub-4525606414173317/8589173632";
+       }
+    else
+    if([languageCode isEqualToString:@"es"])
+       {
+           self.bannerView.adUnitID = @"ca-app-pub-4525606414173317/6996604953";
+       }
+    else{
+    
+          self.bannerView.adUnitID = @"ca-app-pub-4525606414173317/5369642604";
+      }
+    
+    self.bannerView.rootViewController = self;
+    [self.bannerView loadRequest:[GADRequest request]];
+    self.bannerView.delegate = self;
+    
+    
     
     
     //for audio playing in background:
@@ -224,13 +295,13 @@
         }];
     }
     
-
+    
     
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];    
+    [super didReceiveMemoryWarning];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -309,80 +380,80 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-//    
-//    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
-//    return 1;
-//    else
-//        return 2;
+    //    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    //
+    //    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+    //    return 1;
+    //    else
+    //        return 2;
     
     return [dataSource count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//    switch (section) {
-//            //check if login is done then show sviva tovs first
-//        case 0:
-//        {
-//            NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-//            
-//            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
-//                return @"Channel 66";
-//            else
-//                return [@"Sviva Tova" stringByAppendingString:@" Hebrew"];
-//            break;
-//           
-////            case 0:
-////                break;
-//        }
-//        case 1:
-//                return @"Channel 66";
-//                break;
-//            }
-//        //case 1:     return @"Extra";
-//    
-//    return @"";
+    //    switch (section) {
+    //            //check if login is done then show sviva tovs first
+    //        case 0:
+    //        {
+    //            NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    //
+    //            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+    //                return @"Channel 66";
+    //            else
+    //                return [@"Sviva Tova" stringByAppendingString:@" Hebrew"];
+    //            break;
+    //
+    ////            case 0:
+    ////                break;
+    //        }
+    //        case 1:
+    //                return @"Channel 66";
+    //                break;
+    //            }
+    //        //case 1:     return @"Extra";
+    //
+    //    return @"";
     
     
     NSString *title =    [[[(NSMutableDictionary*)[dataSource objectAtIndex:section] keyEnumerator]allObjects]objectAtIndex:0];
     return title;
-                    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-     //if app activated then show the sviva tova with selected language on activation
-//    switch (section) {
-//        case 0:     3; //2 video types quality and 1 audio
-//            
-//        case 1:     return _remoteMovies.count;;
-//    }
-
-//    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-//    
-//    switch (section) {
-//            
-//            
-//           case 0:
-//            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
-//                return _remoteMovies.count;
-//            
-//            else
-//                3;
-//            break;
-//            
-//           
-//        case 1:
-//                if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
-//
-//                return 0;
-//            else
-//                return _remoteMovies.count;
-//            break;
-//    }
-//    return 0;
+    //if app activated then show the sviva tova with selected language on activation
+    //    switch (section) {
+    //        case 0:     3; //2 video types quality and 1 audio
+    //
+    //        case 1:     return _remoteMovies.count;;
+    //    }
+    
+    //    NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    //
+    //    switch (section) {
+    //
+    //
+    //           case 0:
+    //            if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+    //                return _remoteMovies.count;
+    //
+    //            else
+    //                3;
+    //            break;
+    //
+    //
+    //        case 1:
+    //                if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+    //
+    //                return 0;
+    //            else
+    //                return _remoteMovies.count;
+    //            break;
+    //    }
+    //    return 0;
     
     return [[[(NSDictionary*)[dataSource objectAtIndex:section] allValues]objectAtIndex:0] count];
 }
@@ -397,33 +468,33 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-//    NSString *path;
-//    
-//     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
-//    
-//    //if activated then put sviva tova as first menu
-//    
-//    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
-//    {
-//    if (indexPath.section == 0) {
-//        
-////        path = 'get the url from urls saved from language selector'
-////        cell.textLabel.text = 'get the description from urls saved from language selector';
-////        
-//    }
-//    if (indexPath.section == 1) {
-//        
-//        path = _remoteMovies[indexPath.row];
-//        cell.textLabel.text = [self.streamNames objectForKey:path];
-//        
-//    }
-//    }
-//    else if (indexPath.section == 0) {
-//        
-//        path = _remoteMovies[indexPath.row];
-//        cell.textLabel.text = [self.streamNames objectForKey:path];
-//        
-//    } 
+    //    NSString *path;
+    //
+    //     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+    //
+    //    //if activated then put sviva tova as first menu
+    //
+    //    if (![@"1" isEqualToString:[userD objectForKey:@"isLogin"]])
+    //    {
+    //    if (indexPath.section == 0) {
+    //
+    ////        path = 'get the url from urls saved from language selector'
+    ////        cell.textLabel.text = 'get the description from urls saved from language selector';
+    ////
+    //    }
+    //    if (indexPath.section == 1) {
+    //
+    //        path = _remoteMovies[indexPath.row];
+    //        cell.textLabel.text = [self.streamNames objectForKey:path];
+    //
+    //    }
+    //    }
+    //    else if (indexPath.section == 0) {
+    //
+    //        path = _remoteMovies[indexPath.row];
+    //        cell.textLabel.text = [self.streamNames objectForKey:path];
+    //
+    //    }
     
     cell.textLabel.text = [(NSMutableArray*)[[(NSDictionary*)[dataSource objectAtIndex:indexPath.section] allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
     return cell;
@@ -434,10 +505,10 @@
 {
     NSIndexPath *indexPath;
     if([self.tableView numberOfSections]>1)
-     indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-   else
-       indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-
+        indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    else
+        indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    
     
     
     [self.tableView selectRowAtIndexPath:indexPath
@@ -480,14 +551,14 @@
         
         if( video && !quality)
             path = [path stringByReplacingOccurrencesOfString:@"medium" withString:@"high"];
-//
+        //
         
     }
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"קבלה לעם", path];
     //googleAnalytic
-  //  self.screenName = analyticPrm;
-
-        [self playFromURL:[NSURL URLWithString:path]]; // to save memory
+    //  self.screenName = analyticPrm;
+    
+    [self playFromURL:[NSURL URLWithString:path]]; // to save memory
 }
 
 
@@ -503,40 +574,40 @@
     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
     NSDictionary *svivaStreams = [userD objectForKey:@"currentSvivaTovaData"];
     if(svivaStreams !=nil)
-        {
-            
-            
-//            if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
-//            {
-//                RegisterViewController *reg = [[RegisterViewController alloc]init];
-//                
-//                [self.navigationController presentModalViewController:reg animated:YES];
-//                
-//            }
-            
-            
-    NSDictionary *regular = [svivaStreams objectForKey:@"regular"];
-    NSArray *urls = [regular objectForKey:@"urls"];
-    svivaTovastreamNames = [[NSMutableDictionary alloc]init];
-    NSMutableArray *sectionSviva = [[NSMutableArray alloc]init];
-    for(int i =0;i<urls.count;i++)
     {
-        NSDictionary *urlData = [urls objectAtIndex:i];
-        [svivaTovastreamNames setObject:[urlData objectForKey:@"url_value"] forKey: [urlData objectForKey:@"url_quality_name"]];
-        [sectionSviva addObject:[urlData objectForKey:@"url_quality_name"]];
         
         
-    }
-    NSMutableDictionary *svivaTova = [[NSMutableDictionary alloc]init];
-    [svivaTova setObject:sectionSviva forKey:[regular valueForKey:@"description"]];
-            if([dataSource count]>1)
-            [dataSource removeObjectAtIndex:0];
-    [dataSource insertObject:svivaTova atIndex:0];
+        //            if(![[NSUserDefaults standardUserDefaults] boolForKey:@"Registered"])
+        //            {
+        //                RegisterViewController *reg = [[RegisterViewController alloc]init];
+        //
+        //                [self.navigationController presentModalViewController:reg animated:YES];
+        //
+        //            }
+        
+        
+        NSDictionary *regular = [svivaStreams objectForKey:@"regular"];
+        NSArray *urls = [regular objectForKey:@"urls"];
+        svivaTovastreamNames = [[NSMutableDictionary alloc]init];
+        NSMutableArray *sectionSviva = [[NSMutableArray alloc]init];
+        for(int i =0;i<urls.count;i++)
+        {
+            NSDictionary *urlData = [urls objectAtIndex:i];
+            [svivaTovastreamNames setObject:[urlData objectForKey:@"url_value"] forKey: [urlData objectForKey:@"url_quality_name"]];
+            [sectionSviva addObject:[urlData objectForKey:@"url_quality_name"]];
             
-            [self.joinedStreamNames addEntriesFromDictionary:self.svivaTovastreamNames];
-            [self.joinedStreamNames addEntriesFromDictionary:self.streamNames];
             
         }
+        NSMutableDictionary *svivaTova = [[NSMutableDictionary alloc]init];
+        [svivaTova setObject:sectionSviva forKey:[regular valueForKey:@"description"]];
+        if([dataSource count]>1)
+            [dataSource removeObjectAtIndex:0];
+        [dataSource insertObject:svivaTova atIndex:0];
+        
+        [self.joinedStreamNames addEntriesFromDictionary:self.svivaTovastreamNames];
+        [self.joinedStreamNames addEntriesFromDictionary:self.streamNames];
+        
+    }
     else
         [self.joinedStreamNames addEntriesFromDictionary:self.streamNames];
     
@@ -569,25 +640,25 @@
 -(void)playFromURL:(NSURL *)URL {
     
     self.mpVC = [[AVPlayerViewController alloc] init];
-	
-	if (self.mpVC)
-	{
-		self.mpVC.player = [AVPlayer playerWithURL:URL];
+    
+    if (self.mpVC)
+    {
+        self.mpVC.player = [AVPlayer playerWithURL:URL];
         
         
-		// Register to receive a notification when the movie has finished playing
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(moviePlayBackDidFinish:)
-													 name:AVPlayerItemFailedToPlayToEndTimeErrorKey
-												   object:nil];
+        // Register to receive a notification when the movie has finished playing
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(moviePlayBackDidFinish:)
+                                                     name:AVPlayerItemFailedToPlayToEndTimeErrorKey
+                                                   object:nil];
         
         
         [self presentViewController:mpVC animated:YES completion:^{
             [mpVC.player play];
         }];
-		
         
-	}
+        
+    }
 }
 
 -(void) moviePlayBackDidFinish:(NSNotification*)notification {
@@ -608,25 +679,25 @@
 
 
 /*tmp4test
-#pragma mark - Shake Gesture
--(BOOL)canBecomeFirstResponder {
-    return YES;
-}
-
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-    NSLog(@"{motion ended event ");
-    if (motion == UIEventSubtypeMotionShake) {
-        NSLog(@"{shaken state ");
-        [self resignFirstResponder];  // deny double shake gesture
-
-        //SvivaTovaLoginViewController *svivaTovaLoginViewController = [[SvivaTovaLoginViewController alloc] init];
-        //[self presentModalViewController:svivaTovaLoginViewController animated:YES];
-        
-    }
-    else {
-        NSLog(@"{not shaken state ");
-    }
-}
-*/
+ #pragma mark - Shake Gesture
+ -(BOOL)canBecomeFirstResponder {
+ return YES;
+ }
+ 
+ - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+ NSLog(@"{motion ended event ");
+ if (motion == UIEventSubtypeMotionShake) {
+ NSLog(@"{shaken state ");
+ [self resignFirstResponder];  // deny double shake gesture
+ 
+ //SvivaTovaLoginViewController *svivaTovaLoginViewController = [[SvivaTovaLoginViewController alloc] init];
+ //[self presentModalViewController:svivaTovaLoginViewController animated:YES];
+ 
+ }
+ else {
+ NSLog(@"{not shaken state ");
+ }
+ }
+ */
 
 @end
