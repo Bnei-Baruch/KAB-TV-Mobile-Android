@@ -14,7 +14,7 @@
 #import <FBSDKCoreKit/FBSDKProfile.h>
 #import <FBSDKCoreKit/FBSDKGraphRequest.h>
 #import <FBSDKCoreKit/FBSDKSettings.h>
-
+@import Firebase;
 
 #define kActivityViewTagId 8439
 #define kLoadingViewTagId 1993
@@ -325,6 +325,11 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 #pragma mark - Login request status
 
 - (void) loginSuccesful {
+    
+    [FIRAnalytics logEventWithName:@"login"
+                          parameters:@{
+                              @"name": @"success"
+                                       }];
    //LogDebug(@"");
     [self loginProgressEnded];
     //[self dismissModalViewControllerAnimated:YES];
@@ -360,7 +365,10 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 - (void) loginFailed {
 
     //LogDebug(@"");
-    
+    [FIRAnalytics logEventWithName:@"login"
+    parameters:@{
+        @"name": @"failed"
+                 }];
     [self loginProgressEnded];
     
     FBSDKLoginManager *manager = [[FBSDKLoginManager alloc] init];

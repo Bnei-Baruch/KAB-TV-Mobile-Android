@@ -15,6 +15,7 @@
 #import "Reachability.h"
 #import "KxMovieExample-Swift.h"
 @import GoogleMobileAds;
+@import Firebase;
 
 //#import "AudioWebViewController.h"
 #define kCYCAppDelegatePlayNotificationName @"playNotification"
@@ -208,8 +209,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers = @[ kGADSimulatorID ];
+    //GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers = @[ kGADSimulatorID ];
     
     self.bannerView = [[GADBannerView alloc]
                        initWithAdSize:kGADAdSizeSmartBannerPortrait];
@@ -639,6 +639,11 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 -(void)playFromURL:(NSURL *)URL {
     
+    [FIRAnalytics logEventWithName:@"play"
+                       parameters:@{
+                           @"name": [URL.absoluteString containsString:@"mp3"]?@"Audio":@"Video",
+                                    @"URL": URL.absoluteString
+                                    }];
     self.mpVC = [[AVPlayerViewController alloc] init];
     
     if (self.mpVC)
