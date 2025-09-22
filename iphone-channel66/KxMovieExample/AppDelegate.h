@@ -10,7 +10,7 @@
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 
 #import <UIKit/UIKit.h>
-
+#import "AppAuth.h"
 
 @class KxMovieViewController;
 
@@ -21,5 +21,7 @@
 @property (strong,nonatomic) NSManagedObjectContext * _context;
 @property (strong,nonatomic) NSManagedObjectContext * managedObjectContext;
 @property (strong,nonatomic) UIViewController * vc;
+@property(nonatomic, strong, nullable) id<OIDExternalUserAgentSession> currentAuthorizationFlow;
+
 - (void)saveContext;
 @end

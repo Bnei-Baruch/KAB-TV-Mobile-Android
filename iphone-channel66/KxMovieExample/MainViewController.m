@@ -14,8 +14,15 @@
 #import "MenuViewController.h"
 #import "Reachability.h"
 #import "KxMovieExample-Swift.h"
+#import <AVFoundation/AVFoundation.h>
+#import "AppAuth.h"
+
 @import GoogleMobileAds;
 @import Firebase;
+
+#ifndef AVURLAssetHTTPHeaderFieldsKey
+#define AVURLAssetHTTPHeaderFieldsKey @"AVURLAssetHTTPHeaderFieldsKey"
+#endif
 
 //#import "AudioWebViewController.h"
 #define kCYCAppDelegatePlayNotificationName @"playNotification"
@@ -28,6 +35,8 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property(nonatomic, strong) GADBannerView *bannerView;
+@property (nonatomic, strong) id timeObserver;
+@property (nonatomic, strong) NSTimer *stallTimer;
 
 @end
 
@@ -179,8 +188,8 @@
 
 /// Tells the delegate an ad request failed.
 - (void)adView:(GADBannerView *)adView
-didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error localizedDescription]);
+    didFailToReceiveAdWithError:(GADRequest *)error {
+    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error description]);
 }
 
 /// Tells the delegate that a full-screen view will be presented in response
@@ -455,7 +464,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     //    }
     //    return 0;
     
-    return [[[(NSDictionary*)[dataSource objectAtIndex:section] allValues]objectAtIndex:0] count];
+    return [(NSArray*)[[(NSDictionary*)[dataSource objectAtIndex:section] allValues]objectAtIndex:0] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -557,8 +566,8 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"קבלה לעם", path];
     //googleAnalytic
     //  self.screenName = analyticPrm;
-    
-    [self playFromURL:[NSURL URLWithString:path]]; // to save memory
+    path = [path stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
+    [self playURL:[NSURL URLWithString:path]]; // to save memory
 }
 
 
@@ -567,13 +576,15 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     NSLog(@"textFieldDidEndEditing");
 }
 
+
 - (void) processSvivaTovaStreams
 {
-    
+    if([dataSource count]>1)
+        [dataSource removeObjectAtIndex:0];
     [joinedStreamNames removeAllObjects];
     NSUserDefaults *userD = [[NSUserDefaults alloc] init];
     NSDictionary *svivaStreams = [userD objectForKey:@"currentSvivaTovaData"];
-    if(svivaStreams !=nil)
+    if(svivaStreams !=nil && [[userD objectForKey:@"isLogin"] isEqual:@"1"] )
     {
         
         
@@ -704,5 +715,247 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
  }
  }
  */
+- (void)playerViewController:(AVPlayerViewController *)playerViewController
+restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL restored))completionHandler {
+
+    // If your player VC isn’t visible, present it so playback continues in-app
+    if (self.presentedViewController != playerViewController) {
+        [self presentViewController:playerViewController animated:YES completion:^{
+            completionHandler(YES); // UI restored
+        }];
+    } else {
+        completionHandler(YES);
+    }
+}
+
+- (void)playURL:(NSURL *)url {
+    
+    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.net.openid.appauth.Example"];
+    NSData *archivedAuthState = [userDefaults objectForKey:@"authState"];
+    OIDAuthState *authState = [NSKeyedUnarchiver unarchiveObjectWithData:archivedAuthState];
+    
+    
+    NSDictionary *hdr = @{ @"Authorization": authState.lastTokenResponse.accessToken };
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url
+                                            options:@{ AVURLAssetHTTPHeaderFieldsKey: hdr }];
+    
+    
+    [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];
+    
+    
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+
+    // Observe item + player
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemEnded:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:item];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemFailedToEnd:)
+                                                 name:AVPlayerItemFailedToPlayToEndTimeNotification
+                                               object:item];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemStalled:)
+                                                 name:AVPlayerItemPlaybackStalledNotification
+                                               object:item];
+
+    [item addObserver:self forKeyPath:@"status"
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+              context:NULL];
+
+    self.mp = [AVPlayer playerWithPlayerItem:item];
+    if (@available(iOS 10.0, *)) {
+        // If you don’t want AVPlayer to wait forever to “minimize stalls”
+        self.mp.automaticallyWaitsToMinimizeStalling = NO;
+    }
+
+    AVPlayerViewController *vc = [AVPlayerViewController new];
+    vc.player = self.mp;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    vc.showsPlaybackControls = YES;
+    self.mpVC = vc;
+    self.mpVC.delegate = self;
+
+    if (@available(iOS 12.0, *)) {
+        vc.entersFullScreenWhenPlaybackBegins = YES;
+        vc.exitsFullScreenWhenPlaybackEnds = YES; // works only when the item actually ends
+    }
+
+    [self presentViewController:vc animated:YES completion:^{
+        [self.mp play];
+    }];
+    
+
+    // Optional: watch timeControlStatus to detect “waiting” states
+    if (@available(iOS 10.0, *)) {
+        [self.mp addObserver:self forKeyPath:@"timeControlStatus"
+                         options:NSKeyValueObservingOptionNew context:NULL];
+    }
+}
+
+#pragma mark - Notifications
+
+- (void)itemEnded:(NSNotification *)n {
+    [self cleanupAndDismiss:@"ended"];
+}
+
+- (void)itemFailedToEnd:(NSNotification *)n {
+    NSError *err = n.userInfo[AVPlayerItemFailedToPlayToEndTimeErrorKey];
+    NSLog(@"Playback failed to end: %@", err);
+    [self cleanupAndDismiss:@"failed"];
+}
+
+- (void)itemStalled:(NSNotification *)n {
+    NSLog(@"Playback stalled");
+    // 1) Why is the player waiting?
+    if (@available(iOS 10.0, *)) {
+        NSLog(@"timeControlStatus=%ld reason=%@", (long)self.mp.timeControlStatus,
+              self.mp.reasonForWaitingToPlay); // e.g. AVPlayerWaitingToMinimizeStallsReason
+    }
+
+    // 2) Buffer health
+    AVPlayerItem *item = self.mp.currentItem;
+    NSArray *ranges = item.loadedTimeRanges;
+    if (ranges.count) {
+        CMTimeRange r = [ranges.firstObject CMTimeRangeValue];
+        Float64 cur = CMTimeGetSeconds(item.currentTime);
+        Float64 end = CMTimeGetSeconds(CMTimeRangeGetEnd(r));
+        NSLog(@"buffered=%.2fs likely=%d empty=%d full=%d",
+              end - cur,
+              item.playbackLikelyToKeepUp,
+              item.playbackBufferEmpty,
+              item.playbackBufferFull);
+    }
+
+    // 3) Network access log (tells you stalls, bitrates, errors per segment)
+    AVPlayerItemAccessLogEvent *e = item.accessLog.events.lastObject;
+    NSLog(@"observedBitrate=%.0f indicatedBitrate=%.0f stalls=%ld transfers=%ld",
+          e.observedBitrate, e.indicatedBitrate,
+          (long)e.numberOfStalls, (long)e.numberOfServerAddressChanges);
+
+    // 4) Errors (404/403, key failures, etc.)
+    for (AVPlayerItemErrorLogEvent *errEvt in item.errorLog.events) {
+        NSLog(@"error: %@", errEvt.errorComment);
+    }
+    
+    AVPlayerItemErrorLogEvent *err = self.mp.currentItem.errorLog.events.lastObject;
+    NSLog(@"fail URL=%@ status=%ld domain=%@ comment=%@",
+          err.URI, (long)err.errorStatusCode, err.errorDomain, err.errorComment);
+    [self startStallTimer]; // treat as “ended” if we’re stuck too long
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)obj
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+    if ([keyPath isEqualToString:@"status"]) {
+        AVPlayerItemStatus st = ((AVPlayerItem *)obj).status;
+        if (st == AVPlayerItemStatusFailed) {
+            NSLog(@"Item error: %@", ((AVPlayerItem *)obj).error);
+            [self cleanupAndDismiss:@"item-status-failed"];
+        }
+    }
+    if (@available(iOS 10.0, *)) {
+        if ([keyPath isEqualToString:@"timeControlStatus"]) {
+            switch (self.mp.timeControlStatus) {
+                case AVPlayerTimeControlStatusPlaying:
+                    [self invalidateStallTimer];
+                    break;
+                case AVPlayerTimeControlStatusPaused:
+                    // user paused or we paused; no action
+                    break;
+                case AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate:
+                    NSLog(@"Waiting reason: %@", self.mp.reasonForWaitingToPlay);
+                    [self startStallTimer];
+                    break;
+            }
+        }
+    }
+}
+
+#pragma mark - Stall handling
+
+- (void)startStallTimer {
+    [self invalidateStallTimer];
+    self.stallTimer = [NSTimer scheduledTimerWithTimeInterval:12.0
+                                                       target:self
+                                                     selector:@selector(stallTimeout)
+                                                     userInfo:nil
+                                                      repeats:NO];
+}
+
+- (void)invalidateStallTimer {
+    [self.stallTimer invalidate];
+    self.stallTimer = nil;
+}
+
+- (void)stallTimeout {
+    NSLog(@"Stall timeout → dismissing player");
+    [self cleanupAndDismiss:@"stall-timeout"];
+}
+
+#pragma mark - Cleanup & dismiss
+
+- (void)cleanupAndDismiss:(NSString *)reason {
+    NSLog(@"Dismissing player due to: %@", reason);
+    [self invalidateStallTimer];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    @try { [self.mp removeObserver:self forKeyPath:@"timeControlStatus"]; } @catch (...) {}
+    @try { [self.mp.currentItem removeObserver:self forKeyPath:@"status"]; } @catch (...) {}
+
+    [self.mpVC dismissViewControllerAnimated:YES completion:^{
+        self.mpVC = nil;
+    }];
+}
+
+
+#pragma mark - AVAssetResourceLoaderDelegate
+
+- (BOOL)resourceLoader:(AVAssetResourceLoader *)loader
+shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
+
+    
+    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.net.openid.appauth.Example"];
+    NSData *archivedAuthState = [userDefaults objectForKey:@"authState"];
+    OIDAuthState *authState = [NSKeyedUnarchiver unarchiveObjectWithData:archivedAuthState];
+    // Restore original https scheme
+    NSURLComponents *c = [NSURLComponents componentsWithURL:loadingRequest.request.URL resolvingAgainstBaseURL:NO];
+    c.scheme = @"https";
+    NSURL *realURL = c.URL;
+
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:realURL];
+    [req setValue:[NSString stringWithFormat:@"Bearer %@", authState.lastTokenResponse.accessToken] forHTTPHeaderField:@"Authorization"];
+
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:req
+                                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            [loadingRequest finishLoadingWithError:error];
+            return;
+        }
+
+        // Fill out content info if available (helps with HLS keys/segments)
+        if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+            NSHTTPURLResponse *http = (NSHTTPURLResponse *)response;
+            loadingRequest.response = http;
+            loadingRequest.contentInformationRequest.contentType = http.MIMEType;
+            NSNumber *len = http.allHeaderFields[@"Content-Length"];
+            if (len) loadingRequest.contentInformationRequest.contentLength = len.longLongValue;
+        }
+
+        // Provide data
+        [loadingRequest.dataRequest respondWithData:data];
+        [loadingRequest finishLoading];
+    }];
+
+    [task resume];
+    return YES; // we’ll call finishLoading/finishLoadingWithError when done
+}
+
+- (void)resourceLoader:(AVAssetResourceLoader *)loader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest {
+    // Handle cancellation if you track tasks
+}
+
 
 @end

@@ -1,47 +1,52 @@
-# Uncomment the next line to define a global platform for your project
-platform :ios, '12.0'
+platform :ios, '15.0'
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks! :linkage => :static
 
 target 'kxmovie' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
-
-  # Pods for kxmovie
-
-
-   pod 'OneSignal', '>= 2.6.2', '< 3.0'
-   pod 'Firebase' #, '>= 2.5.1'
- pod 'Firebase/Messaging' #, '>= 2.5.1'
-pod 'Firebase/Analytics' #, '>= 2.5.1'
-pod 'Firebase/Firestore' #, '>= 2.5.1'
-pod 'Firebase/DynamicLinks' #, '>= 2.5.1'
-#pod 'GoogleIPhoneUtilities'
-pod 'Google-Mobile-Ads-SDK'
+  pod 'AppAuth'
+  pod 'OneSignal', '>= 2.6.2', '< 3.0'
+  pod 'Firebase/Analytics',  '>= 12.2.0'
+  pod 'Firebase/Messaging',  '>= 12.2.0'
+  pod 'Firebase/Firestore',  '>= 12.2.0'
+  pod 'Google-Mobile-Ads-SDK'
 end
 
 target 'KxMovieExample' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for KxMovieExample
- pod 'OneSignal', '>= 2.6.2', '< 3.0'
-
-   pod 'Firebase' #, '>= 2.5.1'
- pod 'Firebase/Messaging' #, '>= 2.5.1'
-pod 'Firebase/Analytics' #, '>= 2.5.1'
-pod 'Firebase/Firestore', '>= 2.5.1'
-pod 'Firebase/DynamicLinks' #, '>= 2.5.1'
-#pod 'GoogleIPhoneUtilities'
-#pod 'gtm-logger'
-pod 'IQKeyboardManager' 
-pod 'Google-Mobile-Ads-SDK'
+  pod 'AppAuth'
+  pod 'OneSignal', '>= 2.6.2', '< 3.0'
+  pod 'Firebase/Analytics',  '>= 12.2.0'
+  pod 'Firebase/Messaging',  '>= 12.2.0'
+  pod 'Firebase/Firestore',  '>= 12.2.0'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'IQKeyboardManager'
 end
 
-
 target 'OneSignalNotificationServiceExtension' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+  pod 'OneSignal', '>= 2.6.2', '< 3.0'
+end
 
-  # Pods for OneSignalNotificationServiceExtension
- pod 'OneSignal', '>= 2.6.2', '< 3.0'
-  
+post_install do |installer|
+  scrub = ->(v) {
+    case v
+    when Array  then v.reject { |x| x =~ /^-G(=|$)/i }
+    when String then v.split(/\s+/).reject { |x| x =~ /^-G(=|$)/i }.join(' ')
+    else v
+    end
+  }
+  installer.pods_project.targets.each do |t|
+    t.build_configurations.each do |c|
+      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+      c.build_settings['ALWAYS_SEARCH_USER_PATHS'] = 'NO'
+      c.build_settings['SWIFT_VERSION'] = '5.0' if c.build_settings['SWIFT_VERSION']
+      if t.respond_to?(:product_type) && t.product_type == 'com.apple.product-type.framework'
+        c.build_settings['MACH_O_TYPE'] = 'staticlib'
+      end
+      c.build_settings.keys.each do |k|
+        next unless k.to_s =~ /(FLAGS|OTHER_.*|WARNING_.*)/i
+        cur = c.build_settings[k]
+        next unless cur
+        c.build_settings[k] = scrub.call(cur)
+      end
+    end
+  end
 end

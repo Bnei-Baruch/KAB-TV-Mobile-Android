@@ -55,6 +55,8 @@
     
     
     
+    
+    
     // Optional: automatically send uncaught exceptions to Google Analytics.
    // [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
@@ -99,7 +101,7 @@
     
 //    [Parse setApplicationId:@"ayoTJHpHAVbwWEprqxzQeYpYCIaxz98HY19DbQiF" clientKey:@"imLHqDJYiH6S3iPtZ3gw1yilsXna8wHM0oSiGktp"];
     
-    [FIROptions defaultOptions].deepLinkURLScheme = @"fjca5.app.goo.gl";
+//    [FIROptions defaultOptions].deepLinkURLScheme = @"fjca5.app.goo.gl";
       [FIRApp configure];
     
 //    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
@@ -276,7 +278,7 @@
     
     //Setting toolbar behavious to IQAutoToolbarBySubviews. Set it to IQAutoToolbarByTag to manage previous/next according to UITextField’s tag property in increasing order.
     
-    [[IQKeyboardManager sharedManager] setToolbarManageBehaviour:IQAutoToolbarBySubviews];
+    [[IQKeyboardManager sharedManager] setToolbarManageBehavior:IQAutoToolbarBySubviews];
     
     
     
@@ -311,7 +313,9 @@
 
     
     
-    
+    NSError *err = nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&err];
+    [[AVAudioSession sharedInstance] setActive:YES error:&err];
     
     
         return YES;
@@ -336,7 +340,17 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<NSString *, id> *)options {
-    return [self application:app openURL:url sourceApplication:nil annotation:@{}];
+    
+    if ([_currentAuthorizationFlow resumeExternalUserAgentFlowWithURL:url]) {
+       _currentAuthorizationFlow = nil;
+       return YES;
+     }
+
+     // Your additional URL handling (if any) goes here.
+
+     return NO;
+    
+    //return [self application:app openURL:url sourceApplication:nil annotation:@{}];
 }
 
 //- (BOOL)application:(UIApplication *)application
@@ -439,21 +453,22 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 continueUserActivity:(NSUserActivity *)userActivity
  restorationHandler:(void (^)(NSArray *))restorationHandler {
     
-    BOOL handled = [[FIRDynamicLinks dynamicLinks]
-                    handleUniversalLink:userActivity.webpageURL
-                    completion:^(FIRDynamicLink * _Nullable dynamicLink,
-                                 NSError * _Nullable error) {
-                        // ...
-                        if([[[dynamicLink url ] absoluteString] isEqualToString:@"https://channel66.com/radio"])
-                        {
-                            NSLog(@"Got a link");
-                            //play radio
-                            [((MainViewController*)_vc) startRadio];
-                        }
-                    }];
-    
-    
-    return handled;
+//    BOOL handled = [[FIRDynamicLinks dynamicLinks]
+//                    handleUniversalLink:userActivity.webpageURL
+//                    completion:^(FIRDynamicLink * _Nullable dynamicLink,
+//                                 NSError * _Nullable error) {
+//                        // ...
+//                        if([[[dynamicLink url ] absoluteString] isEqualToString:@"https://channel66.com/radio"])
+//                        {
+//                            NSLog(@"Got a link");
+//                            //play radio
+//                            [((MainViewController*)_vc) startRadio];
+//                        }
+//                    }];
+//    
+//    
+//    return handled;
+    return false;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -488,15 +503,15 @@ continueUserActivity:(NSUserActivity *)userActivity
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     
-    FIRDynamicLink *dynamicLink =
-    [[FIRDynamicLinks dynamicLinks] dynamicLinkFromCustomSchemeURL:url];
-    
-    if (dynamicLink) {
-        // Handle the deep link. For example, show the deep-linked content or
-        // apply a promotional offer to the user's account.
-        // ...
-        return YES;
-    }
+//    FIRDynamicLink *dynamicLink =
+//    [[FIRDynamicLinks dynamicLinks] dynamicLinkFromCustomSchemeURL:url];
+//    
+//    if (dynamicLink) {
+//        // Handle the deep link. For example, show the deep-linked content or
+//        // apply a promotional offer to the user's account.
+//        // ...
+//        return YES;
+//    }
 
     
     

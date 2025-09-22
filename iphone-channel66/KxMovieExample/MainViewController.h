@@ -17,7 +17,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
-@interface MainViewController :UIViewController< UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate> {
+@interface MainViewController :UIViewController< UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate,AVAssetResourceLoaderDelegate,AVPlayerViewControllerDelegate> {
     NSMutableDictionary *streamNames;
      NSMutableDictionary *svivaTovastreamNames;
     NSMutableDictionary  *joinedStreamNames;

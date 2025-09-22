@@ -12,6 +12,8 @@
 #import "ChooseQualityViewController.h"
 #import "SvivaTovaLoginViewController.h"
 #import "LangSelectorViewController.h"
+#import "KeycloakController.h"
+#import "UserInfoController.h"
 #import "BBmessagesTableViewController.h"
 #import <OneSignal/OneSignal.h>
 @interface MenuViewController () {
@@ -68,7 +70,9 @@
              menu_details = @[
                                @"Change language",
                               @"Choose Quality",
-                               @"Messages history"
+                               @"Messages history",
+                               @"Info",
+                               @"Logout"
                               // ,                               @"Wakening system"
                               ];
          }
@@ -76,7 +80,9 @@
         menu_details = @[
                          @"Change language",
                          @"Choose Quality",
-                         @"Messages history"
+                         @"Messages history",
+                         @"Info",
+                         @"Logout"
 //                         ,                         @"Wakening system"
                          ];
     }
@@ -124,8 +130,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if(!([defaults valueForKey:@"password"]!=NULL && [defaults valueForKey:@"username"]!=NULL))
     {
-        SvivaTovaLoginViewController * login = [[SvivaTovaLoginViewController alloc]init];
-        [self.navigationController pushViewController:login animated:YES];
+        KeycloakController  *key = [[KeycloakController alloc]init];
+        key.logout = false;
+        [self.navigationController pushViewController:key animated:YES];
     }
     else
     {
@@ -167,10 +174,10 @@
     }
     
     cell.textLabel.text = menu_details[indexPath.row];
-    if([indexPath item] == 3)
-    {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
+//    if([indexPath item] == 3)
+//    {
+//        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//    }
     
     return cell;
 }
@@ -194,18 +201,20 @@
         case 2:
             [self openBBmessages];
             break;
+        
         case 3:
-            if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryCheckmark)
-            {
-                [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-                [OneSignal setSubscription:NO];
-            }
-            else
-            {
-                 [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-                [OneSignal setSubscription:YES];
-            }
+        {
+            UserInfoController *user = [[UserInfoController alloc]init];
+            [self.navigationController pushViewController:user animated:YES];
             break;
+        }
+        case 4:
+        {
+            KeycloakController *login = [[KeycloakController alloc]init];
+            login.logout = true;
+            [self.navigationController pushViewController:login animated:YES];
+            break;
+        }
         default:
             break;
     }
