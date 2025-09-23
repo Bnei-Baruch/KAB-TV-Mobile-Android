@@ -304,11 +304,20 @@
         }];
     }
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    keycloakFirstRun = [defaults boolForKey:@"firstKeycloakRun"];
     
-    
+    if(!keycloakFirstRun)
+    {
+        [defaults setObject:@"0" forKey:@"isLogin"];
+        [defaults setBool:false forKey:@"firstKeycloakRun"];
+        [defaults synchronize];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
+
 {
     [super didReceiveMemoryWarning];
 }

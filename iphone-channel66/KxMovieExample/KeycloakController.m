@@ -8,6 +8,7 @@
 #import "KeycloakController.h"
 
 
+#import "ProfileChecker.h"
 
 #import "AppAuth.h"
 #import "AppDelegate.h"
@@ -113,6 +114,9 @@ NS_ASSUME_NONNULL_BEGIN
   // Notify UI you’re signed out...
 }
 
+-(void)requestLogout{
+    [self logoutCall];
+}
 - (void)logoutCall {
     
     NSURL *issuer = [NSURL URLWithString:kIssuer];
@@ -472,8 +476,17 @@ NS_ASSUME_NONNULL_BEGIN
 
         // success response
         [self logMessage:@"Success: %@", jsonDictionaryOrArray];
+          
+          //check user is active:
+          
+          ProfileChecker *profile = [[ProfileChecker alloc] initWithPresentingViewController:self];
+          
+          [profile checkUserProfileAndShowPopupIfInactiveForUserId:[jsonDictionaryOrArray objectForKey:@"sub"]
+                                                                         authToken:__authState.lastTokenResponse.accessToken
+                                                                        endSession:self];
+          
           [[NSUserDefaults standardUserDefaults] setObject:jsonDictionaryOrArray forKey:@"userData"];
-          [self loginSuccesful];
+//          [self loginSuccesful];
           
       });
     }];
@@ -481,6 +494,8 @@ NS_ASSUME_NONNULL_BEGIN
     [postDataTask resume];
   }];
 }
+
+
 
 -(void) loginFalied{
     [self.navigationController popToRootViewControllerAnimated:false];

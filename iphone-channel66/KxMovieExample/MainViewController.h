@@ -27,6 +27,8 @@
 	AVPlayerViewController *mpVC;
     
     NSMutableArray *dataSource;
+    
+    Boolean keycloakFirstRun;
 }
 @property (nonatomic, strong) AVPlayer *mp;
 @property (nonatomic, strong) AVPlayerViewController *mpVC;

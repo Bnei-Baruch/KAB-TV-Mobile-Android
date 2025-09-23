@@ -10,6 +10,7 @@
 		29BFF7CAE423E2ED791FACD5 /* Pods_kxmovie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F230FD7C86FFC957F50CBB7 /* Pods_kxmovie.framework */; };
 		309C49322DE29FC90085D1A0 /* KeycloakController.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C49312DE29FC90085D1A0 /* KeycloakController.m */; };
 		30C3E6AD2E77A13D006BCFE0 /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C3E6AC2E77A13D006BCFE0 /* UserInfoController.m */; };
+		30C3E6B12E824FEC006BCFE0 /* ProfileChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C3E6B02E824E04006BCFE0 /* ProfileChecker.m */; };
 		4D2E802321BF648200D5C42D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E802121BF648200D5C42D /* RegisterViewController.swift */; };
 		4D2E802421BF648200D5C42D /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D2E802221BF648200D5C42D /* RegisterViewController.xib */; };
 		4D2E802621BF677C00D5C42D /* KL_TV_iPhone_APP_TreeNeto_120.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D2E802521BF677C00D5C42D /* KL_TV_iPhone_APP_TreeNeto_120.jpg */; };
@@ -159,6 +160,8 @@
 		309C49312DE29FC90085D1A0 /* KeycloakController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeycloakController.m; sourceTree = "<group>"; };
 		30C3E6AB2E77A13D006BCFE0 /* UserInfoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoController.h; sourceTree = "<group>"; };
 		30C3E6AC2E77A13D006BCFE0 /* UserInfoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoController.m; sourceTree = "<group>"; };
+		30C3E6AF2E824DED006BCFE0 /* ProfileChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileChecker.h; sourceTree = "<group>"; };
+		30C3E6B02E824E04006BCFE0 /* ProfileChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileChecker.m; sourceTree = "<group>"; };
 		3DC4999D19294E1C8154D3C1 /* Pods_KxMovieExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KxMovieExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D24BA7321BDB33A00A8E4A4 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		4D2E802121BF648200D5C42D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = KxMovieExample/RegisterViewController.swift; sourceTree = "<group>"; };
@@ -633,6 +636,8 @@
 		87E7940216390F6D000A0848 /* channel66 */ = {
 			isa = PBXGroup;
 			children = (
+				30C3E6B02E824E04006BCFE0 /* ProfileChecker.m */,
+				30C3E6AF2E824DED006BCFE0 /* ProfileChecker.h */,
 				4D4A48B9167ABA49006380C6 /* StreamFetcher.h */,
 				4D4A48BA167ABA49006380C6 /* StreamFetcher.m */,
 				87E7942B1639108E000A0848 /* AppDelegate.h */,
@@ -947,6 +952,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30C3E6B12E824FEC006BCFE0 /* ProfileChecker.m in Sources */,
 				4D5A0CBB1A4671910008F4E5 /* CXMLDocument.m in Sources */,
 				87E7940916390F6D000A0848 /* main.m in Sources */,
 				4D5A0CB81A4671910008F4E5 /* CXMLDocument_CreationExtensions.m in Sources */,
@@ -1292,7 +1298,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.2;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -1371,7 +1377,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.2;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
