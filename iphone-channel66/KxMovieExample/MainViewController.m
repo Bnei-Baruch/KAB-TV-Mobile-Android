@@ -309,8 +309,9 @@
     
     if(!keycloakFirstRun)
     {
+        keycloakFirstRun = true;
         [defaults setObject:@"0" forKey:@"isLogin"];
-        [defaults setBool:false forKey:@"firstKeycloakRun"];
+        [defaults setBool:true forKey:@"firstKeycloakRun"];
         [defaults synchronize];
     }
 
