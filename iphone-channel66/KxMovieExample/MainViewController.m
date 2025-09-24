@@ -576,7 +576,10 @@
     NSString *analyticPrm = [NSString stringWithFormat:@"%@ - %@", @"קבלה לעם", path];
     //googleAnalytic
     //  self.screenName = analyticPrm;
-    path = [path stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
+    if(![path containsString:@"https"])
+    {
+        path = [path stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
+    }
     [self playURL:[NSURL URLWithString:path]]; // to save memory
 }
 
@@ -739,67 +742,107 @@ restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL 
 }
 
 - (void)playURL:(NSURL *)url {
-    
-    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.net.openid.appauth.Example"];
+    // 0) Activate audio session FIRST (before creating asset/player)
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *sessErr = nil;
+    [session setCategory:AVAudioSessionCategoryPlayback mode:AVAudioSessionModeDefault options:0 error:&sessErr];
+    [session setActive:YES error:&sessErr];
+
+    // 1) Get token and build proper headers
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.net.openid.appauth.Example"];
     NSData *archivedAuthState = [userDefaults objectForKey:@"authState"];
     OIDAuthState *authState = [NSKeyedUnarchiver unarchiveObjectWithData:archivedAuthState];
-    
-    
-    NSDictionary *hdr = @{ @"Authorization": authState.lastTokenResponse.accessToken };
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url
-                                            options:@{ AVURLAssetHTTPHeaderFieldsKey: hdr }];
-    
-    
-    [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];
-    
-    
-    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+    NSString *accessToken = authState.lastTokenResponse.accessToken ?: @"";
 
-    // Observe item + player
+    // IMPORTANT: Bearer prefix + disable ICY metadata
+    NSDictionary *headers = @{
+        @"Authorization": accessToken.length ? [NSString stringWithFormat:@"Bearer %@", accessToken] : @"",
+        @"Icy-MetaData": @"0",
+        @"Accept": @"audio/mpeg",
+        @"User-Agent": @"AVPlayer-iOS"
+    };
+
+    // 2) Build asset (NO resourceLoader delegate unless you implement it)
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url
+                                            options:@{ AVURLAssetHTTPHeaderFieldsKey: headers }];
+
+    // (Remove this — it can stall if not implemented)
+    // [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];
+
+    // 3) Build item/player
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+    item.preferredForwardBufferDuration = 0;
+    item.canUseNetworkResourcesForLiveStreamingWhilePaused = YES;
+
+    // Observe readiness and waiting reasons
+    [item addObserver:self forKeyPath:@"status"
+             options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+             context:NULL];
+
+    if (!self.mp) {
+        self.mp = [AVPlayer playerWithPlayerItem:item];
+    } else {
+        [self.mp replaceCurrentItemWithPlayerItem:item];
+    }
+
+    if (@available(iOS 10.0, *)) {
+        self.mp.automaticallyWaitsToMinimizeStalling = NO;
+    }
+
+    // 4) Notifications (fix the wrong one)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemEnded:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:item];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemFailedToEnd:)
                                                  name:AVPlayerItemFailedToPlayToEndTimeNotification
                                                object:item];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemStalled:)
                                                  name:AVPlayerItemPlaybackStalledNotification
                                                object:item];
 
-    [item addObserver:self forKeyPath:@"status"
-              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
-              context:NULL];
-
-    self.mp = [AVPlayer playerWithPlayerItem:item];
-    if (@available(iOS 10.0, *)) {
-        // If you don’t want AVPlayer to wait forever to “minimize stalls”
-        self.mp.automaticallyWaitsToMinimizeStalling = NO;
-    }
-
-    AVPlayerViewController *vc = [AVPlayerViewController new];
-    vc.player = self.mp;
-    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    vc.showsPlaybackControls = YES;
-    self.mpVC = vc;
-    self.mpVC.delegate = self;
-
-    if (@available(iOS 12.0, *)) {
-        vc.entersFullScreenWhenPlaybackBegins = YES;
-        vc.exitsFullScreenWhenPlaybackEnds = YES; // works only when the item actually ends
-    }
-
-    [self presentViewController:vc animated:YES completion:^{
-        [self.mp play];
-    }];
-    
-
-    // Optional: watch timeControlStatus to detect “waiting” states
     if (@available(iOS 10.0, *)) {
         [self.mp addObserver:self forKeyPath:@"timeControlStatus"
-                         options:NSKeyValueObservingOptionNew context:NULL];
+                     options:NSKeyValueObservingOptionNew context:NULL];
+    }
+
+    // 5) Present player VC, then start when ready
+    if (!self.mpVC) {
+        self.mpVC = [[AVPlayerViewController alloc] init];
+        self.mpVC.player = self.mp;
+        self.mpVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        self.mpVC.showsPlaybackControls = YES;
+        if (@available(iOS 12.0, *)) {
+            self.mpVC.entersFullScreenWhenPlaybackBegins = YES;
+            self.mpVC.exitsFullScreenWhenPlaybackEnds = YES;
+        }
+    } else {
+        self.mpVC.player = self.mp;
+    }
+
+    [self presentViewController:self.mpVC animated:YES completion:nil];
+}
+
+// KVO: force start as soon as item is ready (removes need for manual delay)
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)obj change:(NSDictionary *)chg context:(void *)ctx {
+    if ([keyPath isEqualToString:@"status"] && [obj isKindOfClass:[AVPlayerItem class]]) {
+        AVPlayerItem *it = (AVPlayerItem *)obj;
+        if (it.status == AVPlayerItemStatusReadyToPlay) {
+            // Start immediately at rate 1.0 (avoids "waiting to minimize stalling")
+            [self.mp playImmediatelyAtRate:1.0];
+        } else if (it.status == AVPlayerItemStatusFailed) {
+            NSLog(@"Item failed: %@", it.error);
+        }
+    } else if ([keyPath isEqualToString:@"timeControlStatus"] && obj == self.mp) {
+        if (@available(iOS 10.0, *)) {
+            if (self.mp.timeControlStatus == AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate) {
+                NSLog(@"Waiting reason: %@", self.mp.reasonForWaitingToPlay);
+            }
+        }
     }
 }
 
@@ -856,34 +899,7 @@ restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL 
 
 #pragma mark - KVO
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)obj
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
-                       context:(void *)context {
-    if ([keyPath isEqualToString:@"status"]) {
-        AVPlayerItemStatus st = ((AVPlayerItem *)obj).status;
-        if (st == AVPlayerItemStatusFailed) {
-            NSLog(@"Item error: %@", ((AVPlayerItem *)obj).error);
-            [self cleanupAndDismiss:@"item-status-failed"];
-        }
-    }
-    if (@available(iOS 10.0, *)) {
-        if ([keyPath isEqualToString:@"timeControlStatus"]) {
-            switch (self.mp.timeControlStatus) {
-                case AVPlayerTimeControlStatusPlaying:
-                    [self invalidateStallTimer];
-                    break;
-                case AVPlayerTimeControlStatusPaused:
-                    // user paused or we paused; no action
-                    break;
-                case AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate:
-                    NSLog(@"Waiting reason: %@", self.mp.reasonForWaitingToPlay);
-                    [self startStallTimer];
-                    break;
-            }
-        }
-    }
-}
+
 
 #pragma mark - Stall handling
 
@@ -917,6 +933,7 @@ restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL 
 
     [self.mpVC dismissViewControllerAnimated:YES completion:^{
         self.mpVC = nil;
+        self.mp = nil;
     }];
 }
 
