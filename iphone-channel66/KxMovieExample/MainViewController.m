@@ -816,6 +816,9 @@ restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL 
         self.mpVC.player = self.mp;
         self.mpVC.modalPresentationStyle = UIModalPresentationFullScreen;
         self.mpVC.showsPlaybackControls = YES;
+        self.mpVC.allowsPictureInPicturePlayback = YES; // default YES, but set explicitly
+        self.mpVC.delegate = self;
+
         if (@available(iOS 12.0, *)) {
             self.mpVC.entersFullScreenWhenPlaybackBegins = YES;
             self.mpVC.exitsFullScreenWhenPlaybackEnds = YES;
