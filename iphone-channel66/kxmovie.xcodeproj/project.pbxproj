@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		29BFF7CAE423E2ED791FACD5 /* Pods_kxmovie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F230FD7C86FFC957F50CBB7 /* Pods_kxmovie.framework */; };
+		2A6507F76317E1E5A00DE2C9 /* Pods_KxMovieExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B2725D193EAA61B676E71D7 /* Pods_KxMovieExample.framework */; };
 		309C49322DE29FC90085D1A0 /* KeycloakController.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C49312DE29FC90085D1A0 /* KeycloakController.m */; };
 		30C3E6AD2E77A13D006BCFE0 /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C3E6AC2E77A13D006BCFE0 /* UserInfoController.m */; };
 		30C3E6B12E824FEC006BCFE0 /* ProfileChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C3E6B02E824E04006BCFE0 /* ProfileChecker.m */; };
@@ -85,7 +85,6 @@
 		4DDC6F361A47B6CD00B71A57 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC6F351A47B6CD00B71A57 /* Images-2.xcassets */; };
 		4DED3460167D6EE600050304 /* LoginControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED345E167D6EE600050304 /* LoginControllerViewController.m */; };
 		4DED3462167D6EE600050304 /* LoginControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DED345F167D6EE600050304 /* LoginControllerViewController.xib */; };
-		7DBD6033E99D385CF32ABFC0 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C00DDB7886677445DC5CD33 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FC16390F6D000A0848 /* UIKit.framework */; };
 		87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FE16390F6D000A0848 /* Foundation.framework */; };
 		87E7940116390F6D000A0848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7940016390F6D000A0848 /* CoreGraphics.framework */; };
@@ -115,7 +114,8 @@
 		87FD6191163A75DC0090956E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E79437163910D0000A0848 /* QuartzCore.framework */; };
 		87FD6192163A75DF0090956E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E79439163910EA000A0848 /* Accelerate.framework */; };
 		87FD6193163A75E10090956E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E79435163910CA000A0848 /* OpenGLES.framework */; };
-		E6506C4078F32313E16BD4FB /* Pods_KxMovieExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC4999D19294E1C8154D3C1 /* Pods_KxMovieExample.framework */; };
+		D4D7D6F1156431D6002F3B03 /* Pods_kxmovie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD75D4B33D3A8585BC317BD /* Pods_kxmovie.framework */; };
+		EF47E41E11DA2579F35E8891 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002866F202B193205A375E6F /* Pods_OneSignalNotificationServiceExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,9 +152,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		006F68169E56112F6FDB450D /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		2ACD919F19A8A53CCA332FC9 /* Pods-kxmovie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kxmovie.release.xcconfig"; path = "Target Support Files/Pods-kxmovie/Pods-kxmovie.release.xcconfig"; sourceTree = "<group>"; };
-		2C35BDC95D0C63E28895A9FA /* Pods-kxmovie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kxmovie.debug.xcconfig"; path = "Target Support Files/Pods-kxmovie/Pods-kxmovie.debug.xcconfig"; sourceTree = "<group>"; };
+		002866F202B193205A375E6F /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F7FE921432A428E33699A27 /* Pods-KxMovieExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KxMovieExample.debug.xcconfig"; path = "Target Support Files/Pods-KxMovieExample/Pods-KxMovieExample.debug.xcconfig"; sourceTree = "<group>"; };
 		309C492E2DE29D790085D1A0 /* AppAuthCore_Privacy.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AppAuthCore_Privacy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		309C49302DE29FC90085D1A0 /* KeycloakController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeycloakController.h; sourceTree = "<group>"; };
 		309C49312DE29FC90085D1A0 /* KeycloakController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeycloakController.m; sourceTree = "<group>"; };
@@ -162,7 +161,6 @@
 		30C3E6AC2E77A13D006BCFE0 /* UserInfoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoController.m; sourceTree = "<group>"; };
 		30C3E6AF2E824DED006BCFE0 /* ProfileChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileChecker.h; sourceTree = "<group>"; };
 		30C3E6B02E824E04006BCFE0 /* ProfileChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileChecker.m; sourceTree = "<group>"; };
-		3DC4999D19294E1C8154D3C1 /* Pods_KxMovieExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KxMovieExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D24BA7321BDB33A00A8E4A4 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		4D2E802121BF648200D5C42D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = KxMovieExample/RegisterViewController.swift; sourceTree = "<group>"; };
 		4D2E802221BF648200D5C42D /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RegisterViewController.xib; path = KxMovieExample/RegisterViewController.xib; sourceTree = "<group>"; };
@@ -284,9 +282,7 @@
 		4DED345E167D6EE600050304 /* LoginControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginControllerViewController.m; sourceTree = "<group>"; };
 		4DED345F167D6EE600050304 /* LoginControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginControllerViewController.xib; sourceTree = "<group>"; };
 		4DEE5D5F1ED4B10A0072682C /* FirebaseDynamicLinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseDynamicLinks.framework; sourceTree = "<group>"; };
-		5F230FD7C86FFC957F50CBB7 /* Pods_kxmovie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kxmovie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C00DDB7886677445DC5CD33 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BE027C40A7DB613F5C68E3F /* Pods-KxMovieExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KxMovieExample.release.xcconfig"; path = "Target Support Files/Pods-KxMovieExample/Pods-KxMovieExample.release.xcconfig"; sourceTree = "<group>"; };
+		6B2725D193EAA61B676E71D7 /* Pods_KxMovieExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KxMovieExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E793F816390F6D000A0848 /* KxMovieExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KxMovieExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E793FC16390F6D000A0848 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		87E793FE16390F6D000A0848 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -313,8 +309,12 @@
 		87E7945016391BC1000A0848 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		87E7945216391BD2000A0848 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		87FD6175163A75440090956E /* libkxmovie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkxmovie.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E8023C96BF9C8EFE76961EC /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		E09358C8187A43A990F1DE6C /* Pods-KxMovieExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KxMovieExample.debug.xcconfig"; path = "Target Support Files/Pods-KxMovieExample/Pods-KxMovieExample.debug.xcconfig"; sourceTree = "<group>"; };
+		A50262DA4C3D940A80B62398 /* Pods-KxMovieExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KxMovieExample.release.xcconfig"; path = "Target Support Files/Pods-KxMovieExample/Pods-KxMovieExample.release.xcconfig"; sourceTree = "<group>"; };
+		ABD75D4B33D3A8585BC317BD /* Pods_kxmovie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kxmovie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06E7F8007AF3954348167A4 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		C96342255BECB95CA1115E96 /* Pods-kxmovie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kxmovie.release.xcconfig"; path = "Target Support Files/Pods-kxmovie/Pods-kxmovie.release.xcconfig"; sourceTree = "<group>"; };
+		CB02BDF325CA01350123F79F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F64AB1D1CC17F57F1FB934CC /* Pods-kxmovie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kxmovie.debug.xcconfig"; path = "Target Support Files/Pods-kxmovie/Pods-kxmovie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,7 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DBD6033E99D385CF32ABFC0 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+				EF47E41E11DA2579F35E8891 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +370,7 @@
 				87E794411639110F000A0848 /* Accelerate.framework in Frameworks */,
 				87E794421639110F000A0848 /* QuartzCore.framework in Frameworks */,
 				87E794431639110F000A0848 /* OpenGLES.framework in Frameworks */,
-				E6506C4078F32313E16BD4FB /* Pods_KxMovieExample.framework in Frameworks */,
+				2A6507F76317E1E5A00DE2C9 /* Pods_KxMovieExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +396,7 @@
 				4D6EC0181D04FC2400A475F1 /* FBSDKCoreKit.framework in Frameworks */,
 				87FD6191163A75DC0090956E /* QuartzCore.framework in Frameworks */,
 				87FD6193163A75E10090956E /* OpenGLES.framework in Frameworks */,
-				29BFF7CAE423E2ED791FACD5 /* Pods_kxmovie.framework in Frameworks */,
+				D4D7D6F1156431D6002F3B03 /* Pods_kxmovie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,12 +502,12 @@
 		61FA4CE8CCCD2FC80E49CE5F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E09358C8187A43A990F1DE6C /* Pods-KxMovieExample.debug.xcconfig */,
-				7BE027C40A7DB613F5C68E3F /* Pods-KxMovieExample.release.xcconfig */,
-				9E8023C96BF9C8EFE76961EC /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
-				006F68169E56112F6FDB450D /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
-				2C35BDC95D0C63E28895A9FA /* Pods-kxmovie.debug.xcconfig */,
-				2ACD919F19A8A53CCA332FC9 /* Pods-kxmovie.release.xcconfig */,
+				1F7FE921432A428E33699A27 /* Pods-KxMovieExample.debug.xcconfig */,
+				A50262DA4C3D940A80B62398 /* Pods-KxMovieExample.release.xcconfig */,
+				C06E7F8007AF3954348167A4 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				CB02BDF325CA01350123F79F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				F64AB1D1CC17F57F1FB934CC /* Pods-kxmovie.debug.xcconfig */,
+				C96342255BECB95CA1115E96 /* Pods-kxmovie.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -626,9 +626,9 @@
 				87E79439163910EA000A0848 /* Accelerate.framework */,
 				87E79437163910D0000A0848 /* QuartzCore.framework */,
 				87E79435163910CA000A0848 /* OpenGLES.framework */,
-				3DC4999D19294E1C8154D3C1 /* Pods_KxMovieExample.framework */,
-				6C00DDB7886677445DC5CD33 /* Pods_OneSignalNotificationServiceExtension.framework */,
-				5F230FD7C86FFC957F50CBB7 /* Pods_kxmovie.framework */,
+				6B2725D193EAA61B676E71D7 /* Pods_KxMovieExample.framework */,
+				002866F202B193205A375E6F /* Pods_OneSignalNotificationServiceExtension.framework */,
+				ABD75D4B33D3A8585BC317BD /* Pods_kxmovie.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -677,7 +677,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DB3824E21A947BA00CBC993 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
 			buildPhases = (
-				8FDDAE226D8DC5225F843E65 /* [CP] Check Pods Manifest.lock */,
+				D279672F8D2F7013470BAA1C /* [CP] Check Pods Manifest.lock */,
 				4DB3824021A947BA00CBC993 /* Sources */,
 				4DB3824121A947BA00CBC993 /* Frameworks */,
 				4DB3824221A947BA00CBC993 /* Resources */,
@@ -695,12 +695,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87E7941A16390F6D000A0848 /* Build configuration list for PBXNativeTarget "KxMovieExample" */;
 			buildPhases = (
-				265CE1536623A1AAC11516A8 /* [CP] Check Pods Manifest.lock */,
+				39CEB10CE4A38887CC97DC4D /* [CP] Check Pods Manifest.lock */,
 				87E793F416390F6D000A0848 /* Sources */,
 				87E793F516390F6D000A0848 /* Frameworks */,
 				87E793F616390F6D000A0848 /* Resources */,
 				4DB3824F21A947BA00CBC993 /* Embed Foundation Extensions */,
-				A47B2BADD3CEF0CD480DBD7B /* [CP] Copy Pods Resources */,
+				3D7E5F02044F8CED5D6569F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -716,7 +716,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87FD6180163A75440090956E /* Build configuration list for PBXNativeTarget "kxmovie" */;
 			buildPhases = (
-				9F549C74AE9F9594017EE760 /* [CP] Check Pods Manifest.lock */,
+				138EDA51FB83D900A8F6D133 /* [CP] Check Pods Manifest.lock */,
 				87FD6171163A75440090956E /* Sources */,
 				87FD6172163A75440090956E /* Frameworks */,
 				87FD6173163A75440090956E /* CopyFiles */,
@@ -813,51 +813,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		265CE1536623A1AAC11516A8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KxMovieExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8FDDAE226D8DC5225F843E65 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9F549C74AE9F9594017EE760 /* [CP] Check Pods Manifest.lock */ = {
+		138EDA51FB83D900A8F6D133 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -879,7 +835,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A47B2BADD3CEF0CD480DBD7B /* [CP] Copy Pods Resources */ = {
+		39CEB10CE4A38887CC97DC4D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KxMovieExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3D7E5F02044F8CED5D6569F9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -935,6 +913,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KxMovieExample/Pods-KxMovieExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D279672F8D2F7013470BAA1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1021,7 +1021,7 @@
 /* Begin XCBuildConfiguration section */
 		4DB3824C21A947BA00CBC993 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9E8023C96BF9C8EFE76961EC /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = C06E7F8007AF3954348167A4 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1095,7 +1095,7 @@
 		};
 		4DB3824D21A947BA00CBC993 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 006F68169E56112F6FDB450D /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			baseConfigurationReference = CB02BDF325CA01350123F79F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1241,7 +1241,7 @@
 		};
 		87E7941B16390F6D000A0848 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E09358C8187A43A990F1DE6C /* Pods-KxMovieExample.debug.xcconfig */;
+			baseConfigurationReference = 1F7FE921432A428E33699A27 /* Pods-KxMovieExample.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
@@ -1258,7 +1258,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.9;
+				CURRENT_PROJECT_VERSION = 2.7.0;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3ZYLPBKYWW;
 				ENABLE_BITCODE = NO;
@@ -1298,7 +1298,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -1327,7 +1327,7 @@
 		};
 		87E7941C16390F6D000A0848 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7BE027C40A7DB613F5C68E3F /* Pods-KxMovieExample.release.xcconfig */;
+			baseConfigurationReference = A50262DA4C3D940A80B62398 /* Pods-KxMovieExample.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
@@ -1344,7 +1344,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 2.6.9;
+				CURRENT_PROJECT_VERSION = 2.7.0;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3ZYLPBKYWW;
 				ENABLE_BITCODE = NO;
@@ -1377,7 +1377,7 @@
 					"\"$(SRCROOT)/libs\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1407,7 +1407,7 @@
 		};
 		87FD617E163A75440090956E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C35BDC95D0C63E28895A9FA /* Pods-kxmovie.debug.xcconfig */;
+			baseConfigurationReference = F64AB1D1CC17F57F1FB934CC /* Pods-kxmovie.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -1456,7 +1456,7 @@
 		};
 		87FD617F163A75440090956E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2ACD919F19A8A53CCA332FC9 /* Pods-kxmovie.release.xcconfig */;
+			baseConfigurationReference = C96342255BECB95CA1115E96 /* Pods-kxmovie.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;

@@ -127,8 +127,9 @@
     //    LoginControllerViewController *web = [[LoginControllerViewController alloc]init];
     //   [self.navigationController pushViewController:web animated:YES];
     //
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(!([defaults valueForKey:@"password"]!=NULL && [defaults valueForKey:@"username"]!=NULL))
+    if(![[defaults objectForKey:@"isLogin"] isEqual:@"1"])
     {
         KeycloakController  *key = [[KeycloakController alloc]init];
         key.logout = false;

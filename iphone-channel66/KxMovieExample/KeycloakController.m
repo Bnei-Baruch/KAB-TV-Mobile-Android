@@ -133,6 +133,13 @@ NS_ASSUME_NONNULL_BEGIN
       NSString *idToken = self._authState.lastTokenResponse.idToken;
       if (!idToken) { // fall back to local clear if we don't have one
           [self clearLocalSessionOnly];
+          NSUserDefaults *userD = [[NSUserDefaults alloc] init];
+          [userD setObject:@"0" forKey:@"isLogin"];
+          [userD synchronize];
+          
+          [self setAuthState:nil];
+          
+          [self.navigationController popToRootViewControllerAnimated:FALSE];
           return;
       }
       
